@@ -125,6 +125,11 @@
           </div>
         </div>
 
+        <button type="button" onclick="handleVerifyAndShowAnswers()" class="bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-extrabold px-3.5 py-2 rounded-lg border border-emerald-500/40 transition flex items-center gap-1.5" title="응시 완료자 전용 정답 및 해설 확인">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>정답 확인</span>
+        </button>
+
         <a href="admin.html" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold px-3.5 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
           <i class="fa-solid fa-chart-pie text-amber-400"></i>
           <span>관리자 콘솔</span>
@@ -385,6 +390,12 @@
                 <i class="fa-solid fa-play"></i>
                 <span>시험 시작하기</span>
               </button>
+
+              <button type="button" id="btn-check-answers" onclick="handleVerifyAndShowAnswers()"
+                class="w-full bg-slate-900 hover:bg-emerald-600/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 font-extrabold text-sm py-3 px-6 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>정답 확인 · 정답 및 해설 보기 (응시 완료자 전용)</span>
+              </button>
             </form>
           </div>
         </div>
@@ -543,24 +554,28 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 mt-6 pt-6 border-t border-slate-800" id="res-area-cards"></div>
       </div>
 
-      <div class="glass-card rounded-2xl p-6 shadow-xl">
+      <div id="res-review-section" class="glass-card rounded-2xl p-6 shadow-xl">
         <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
           <div>
             <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
               <i class="fa-solid fa-lightbulb text-amber-400"></i>
-              <span>문항별 채점 결과 및 수학·코드 핵심 해설</span>
+              <span>문항별 정답 및 상세 해설 (응시 완료자 전용)</span>
             </h3>
-            <p class="text-xs text-slate-400">시험 종료 후에만 공개되는 상세 해설입니다.</p>
+            <p class="text-xs text-slate-400">시험 응시를 완료한 수강생에게만 공개되는 문항별 정답과 핵심 해설입니다.</p>
           </div>
 
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <button type="button" onclick="filterResultReview('all')" data-rfilter="all"
               class="res-filter-btn bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
-              전체 문항
+              응시 문항 전체 (정답+해설)
             </button>
             <button type="button" onclick="filterResultReview('wrong')" data-rfilter="wrong"
               class="res-filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg transition">
               틀린 문항만
+            </button>
+            <button type="button" onclick="filterResultReview('bank')" data-rfilter="bank"
+              class="res-filter-btn bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+              전체 문제은행 정답·해설
             </button>
             <button type="button" onclick="returnToStartScreen()"
               class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/40 text-xs font-bold px-3.5 py-1.5 rounded-lg transition ml-2">
