@@ -125,7 +125,7 @@
     '구명회', '김윤준', '김제형', '김지선', '남유진', '방호원',
     '백선병', '신상아', '오주원', '이인애', '정호연', '조진훈'
   ];
-  const ALLOWED_EXAM_DATE = '2026-11-05';
+  const ALLOWED_EXAM_DATE = '2026-11-09';
 
   function getKstDateString() {
     try {
@@ -162,23 +162,23 @@
     if (settings.enforceAllowedStudents !== false) {
       if (!allowedList.includes(normalizedInputName)) {
         if (errorEl) {
-          errorEl.textContent = '⛔ 등록된 응시자 명단(12명) 이외의 사람은 응시할 수 없습니다. 성명을 정확히 입력해 주세요.';
+          errorEl.textContent = '⛔ 사전 등록된 교육생 명단 이외의 사람은 응시할 수 없습니다. 성명을 정확히 입력해 주세요.';
           errorEl.classList.remove('hidden');
         }
-        showToast('⛔ 응시자 명단에 등록되지 않은 성명입니다.');
+        showToast('⛔ 사전 등록된 응시 대상자가 아닙니다.');
         return;
       }
     }
 
-    // 2. 응시 지정일 (2026-11-05 하루만) 검증
-    const targetDate = settings.allowedExamDate || ALLOWED_EXAM_DATE;
+    // 2. 응시 지정일 (2026-11-09 하루만) 검증
+    const targetDate = ALLOWED_EXAM_DATE;
     const todayKst = getKstDateString();
     if (settings.enforceExamDate !== false && todayKst !== targetDate) {
       if (errorEl) {
-        errorEl.textContent = '⛔ 본 평가는 지정된 시험일(2026.11.05 하루만)에만 응시 가능합니다. (현재 한국 시각 기준 일자: ' + todayKst + ')';
+        errorEl.textContent = '⛔ 본 평가는 지정된 시험일(2026.11.09 하루만)에만 응시 가능합니다. (현재 한국 시각 기준 일자: ' + todayKst + ')';
         errorEl.classList.remove('hidden');
       }
-      showToast('⛔ 2026.11.05 당일에만 응시할 수 있습니다.');
+      showToast('⛔ 2026.11.09 당일에만 응시할 수 있습니다.');
       return;
     }
 
