@@ -1,0 +1,2873 @@
+# 파이썬 · 판다스 · 넘파이 · ML/DL 역량 평가 문제은행 (총 145문항)
+
+> **구성 요약**: 총 8개 카테고리 · 145문항 (객관식 4지선다, 점프 투 파이썬 원문 연습문제 배제 및 100% 자체 제작 실전 문항)
+
+| 파트 | 카테고리명 | 문항 수 | 문항 번호 |
+| :--- | :--- | :---: | :---: |
+| Part 1 | `1. 파이썬 프로그래밍의 기초, 자료형` | 15문항 | Q1 ~ Q15 |
+| Part 2 | `2. 프로그램의 구조를 쌓는다! 제어문` | 15문항 | Q16 ~ Q30 |
+| Part 3 | `3. 파이썬의 입출력` | 15문항 | Q31 ~ Q45 |
+| Part 4 | `4. 파이썬 날개 달기` | 15문항 | Q46 ~ Q60 |
+| Part 5 | `5. 파이썬 프로그래밍, 어떻게 시작해야 할까?` | 15문항 | Q61 ~ Q75 |
+| Part 6 | `6. 판다스` | 20문항 | Q76 ~ Q95 |
+| Part 7 | `7. 넘파이` | 20문항 | Q96 ~ Q115 |
+| Part 8 | `8. ML/DL` | 30문항 | Q116 ~ Q145 |
+| **합계** | **전체 8대 카테고리** | **145문항** | **Q1 ~ Q145** |
+
+---
+
+## 1. 파이썬 프로그래밍의 기초, 자료형
+
+### Q1. [초급] 파이썬의 정수 나눗셈 연산자(//)와 나머지 연산자(%)는 음수 피연산자에 대해 내림(Floor) 규칙을 따릅니다. 아래 코드의 실행 결과로 올바른 것은?
+
+```python
+q, r = -17 // 5, -17 % 5
+p = 2 ** 3 ** 2
+print(q, r, p)
+```
+
+- **(1)** -4 3 512
+- **(2)** -3 -2 512
+- **(3)** -4 3 64
+- **(4)** -3 3 64
+
+- **정답**: `0` (보기 1번: -4 3 512)
+- **해설**: 파이썬에서 -17 // 5는 -3.4보다 작거나 같은 최대 정수(Floor)인 -4가 되며, 나머지는 r = a - (a // b) * b 공식에 따라 -17 - (-4 * 5) = 3이 됩니다. 또한 거듭제곱 연산자(**)는 우측 결합(Right-associative)을 하므로 2 ** (3 ** 2) = 2 ** 9 = 512입니다.
+
+---
+
+### Q2. [중급] 부동소수점(float) 연산의 IEEE 754 이진 표현 한계와 이를 극복하기 위한 파이썬의 수치 비교 방법에 대한 설명 및 아래 코드의 출력 결과로 올바른 것은?
+
+```python
+import math
+a = 0.1 + 0.2
+print(a == 0.3, math.isclose(a, 0.3))
+```
+
+- **(1)** True True
+- **(2)** False False
+- **(3)** False True
+- **(4)** True False
+
+- **정답**: `2` (보기 3번: False True)
+- **해설**: 0.1과 0.2는 이진 부동소수점으로 정확히 표현할 수 없어 0.1 + 0.2는 0.30000000000000004가 되므로 a == 0.3은 False입니다. 실수 비교 시에는 허용 오차(Tolerance) 내에 있는지 판별하는 math.isclose(a, 0.3) 또는 decimal.Decimal을 사용해야 하며, math.isclose(a, 0.3)은 True를 반환합니다.
+
+---
+
+### Q3. [초급] 문자열 슬라이싱(Slicing)에서 시작 인덱스, 끝 인덱스, 증감폭(step)을 조합한 아래 코드의 실행 결과는?
+
+```python
+code_str = 'PYTHON_AI_2026'
+res1 = code_str[7:9]
+res2 = code_str[::-1][:4]
+print(f'{res1}-{res2}')
+```
+
+- **(1)** AI-2026
+- **(2)** AI-6202
+- **(3)** _A-6202
+- **(4)** AI_-2026
+
+- **정답**: `1` (보기 2번: AI-6202)
+- **해설**: code_str[7:9]는 인덱스 7('A')부터 8('I')까지 추출하여 'AI'가 됩니다. code_str[::-1]은 전체 문자열을 역순으로 뒤집어 '6202_IA_NOHTYP'을 만들고, 그 앞 4글자 [:4]를 슬라이싱하면 '6202'가 되어 'AI-6202'가 출력됩니다.
+
+---
+
+### Q4. [중급] 파이썬 f-string 포매팅에서 소수점 자릿수 반올림, 천 단위 콤마(,) 구분자, 정렬 폭 지정 기능을 사용한 아래 코드의 출력 결과는?
+
+```python
+metric = 'Accuracy'
+score = 1234.5678
+print(f'{metric:>10} | {score:,.2f}')
+```
+
+- **(1)** Accuracy   | 1,234.57
+- **(2)**   Accuracy | 1234.56
+- **(3)** Accuracy   | 1,234.568
+- **(4)**   Accuracy | 1,234.57
+
+- **정답**: `3` (보기 4번:   Accuracy | 1,234.57)
+- **해설**: f'{metric:>10}'은 10칸 폭에서 오른쪽 정렬(>)을 수행하므로 8글자인 'Accuracy' 앞에 공백 2칸이 붙습니다. f'{score:,.2f}'는 천 단위 콤마(,)를 넣고 소수점 둘째 자리까지 반올림하여 '1,234.57'을 출력합니다.
+
+---
+
+### Q5. [중급] 문자열 내장 메서드인 strip(), split(), join()과 탐색 메서드 find() 및 index()의 차이를 확인하는 아래 코드의 실행 결과는?
+
+```python
+raw = '  gpu,tpu,npu  '
+tokens = raw.strip().split(',')
+joined = '/'.join(tokens)
+Pos_a = joined.find('cpu')
+print(joined, Pos_a)
+```
+
+- **(1)** gpu/tpu/npu None
+- **(2)** gpu/tpu/npu -1
+- **(3)** gpu,tpu,npu -1
+- **(4)** ValueError 예외 발생
+
+- **정답**: `1` (보기 2번: gpu/tpu/npu -1)
+- **해설**: raw.strip()으로 양끝 공백을 제거한 뒤 split(',')으로 나누면 ['gpu', 'tpu', 'npu']가 되고, '/'.join()으로 결합하면 'gpu/tpu/npu'가 됩니다. str.find()는 찾는 부분 문자열이 없을 때 -1을 반환하는 반면, str.index()는 없을 때 ValueError를 발생시킵니다.
+
+---
+
+### Q6. [초급] 파이썬 문자열(str)의 불변성(Immutability)에 관한 설명 중 옳지 않은 것은?
+
+```python
+word = 'tensor'
+# word[0] = 'T'  # 실행 시 어떻게 되는가?
+```
+
+- **(1)** 문자열은 불변(Immutable) 객체이므로 word[0] = 'T'와 같이 인덱스를 통해 특정 문자를 직접 수정하려고 하면 TypeError가 발생한다.
+- **(2)** 문자열을 수정하려면 슬라이싱과 연결 연산('T' + word[1:]) 또는 replace()를 통해 새로운 문자열 객체를 생성해야 한다.
+- **(3)** 불변 객체인 문자열은 해시 가능(Hashable)하므로 딕셔너리(dict)의 키(Key)나 집합(set)의 원소로 사용할 수 있다.
+- **(4)** word.upper()나 word.replace('t', 'T')를 호출하면 원본 문자열 word 자체가 메모리상에서 제자리(In-place) 변경된다.
+
+- **정답**: `3` (보기 4번: word.upper()나 word.replace('t', 'T')를 호출하면 원본 문자열 word 자체가 메모리상에서 제자리(In-place) 변경된다.)
+- **해설**: 문자열은 불변(Immutable) 자료형이므로 word.upper()나 word.replace()를 호출하더라도 원본 word는 전혀 바뀌지 않으며, 변환된 새로운 문자열 객체가 반환됩니다.
+
+---
+
+### Q7. [중급] 리스트의 append() 메서드와 extend() 메서드의 동작 차이를 보여주는 아래 코드의 실행 결과로 올바른 것은?
+
+```python
+layers = ['conv', 'relu']
+layers.append(['pool', 'fc'])
+layers.extend(['dropout'])
+print(len(layers), layers[2])
+```
+
+- **(1)** 4 ['pool', 'fc']
+- **(2)** 5 pool
+- **(3)** 4 pool
+- **(4)** 5 ['pool', 'fc']
+
+- **정답**: `0` (보기 1번: 4 ['pool', 'fc'])
+- **해설**: append(x)는 인자 x 자체(리스트 ['pool', 'fc'])를 하나의 단일 원소로 리스트 끝에 추가하고, extend(iterable)는 이터러블의 각 원소를 풀어서 추가합니다. 따라서 layers는 ['conv', 'relu', ['pool', 'fc'], 'dropout']이 되어 길이는 4이고 layers[2]는 ['pool', 'fc']입니다.
+
+---
+
+### Q8. [중급] 리스트의 제자리 정렬 메서드 list.sort()와 내장 함수 sorted()의 반환값 차이를 묻는 아래 코드의 출력 결과는?
+
+```python
+scores = [88, 95, 72, 100]
+ret1 = scores.sort(reverse=True)
+ret2 = sorted(scores)
+print(ret1, scores[0], ret2[0])
+```
+
+- **(1)** [100, 95, 88, 72] 100 72
+- **(2)** None 88 72
+- **(3)** None 100 72
+- **(4)** None 100 100
+
+- **정답**: `2` (보기 3번: None 100 72)
+- **해설**: list.sort()는 원본 리스트를 직접 정렬(In-place)하고 반환값으로 None을 돌려줍니다. 따라서 ret1은 None이고 내림차순 정렬된 scores[0]은 100입니다. 반면 내장 함수 sorted(scores)는 원본과 별개로 오름차순 정렬된 새 리스트 [72, 88, 95, 100]을 반환하므로 ret2[0]은 72입니다.
+
+---
+
+### Q9. [초급] 리스트에서 슬라이스 대입(Slice Assignment)과 pop() 메서드를 수행한 아래 코드의 최종 출력 결과는?
+
+```python
+nums = [10, 20, 30, 40, 50]
+nums[1:3] = [200]
+removed = nums.pop(1)
+print(nums, removed)
+```
+
+- **(1)** [10, 30, 40, 50] 200
+- **(2)** [10, 200, 50] 40
+- **(3)** [10, 40, 50] 200
+- **(4)** [200, 40, 50] 10
+
+- **정답**: `2` (보기 3번: [10, 40, 50] 200)
+- **해설**: nums[1:3]인 [20, 30] 구간이 [200] 하나로 대체되어 nums는 [10, 200, 40, 50]이 됩니다. 이후 nums.pop(1)은 인덱스 1의 원소 200을 꺼내어 반환하고 리스트에서 제거하므로 nums는 [10, 40, 50], removed는 200입니다.
+
+---
+
+### Q10. [중급] 튜플(Tuple)의 단일 원소 표기법과 확장 언패킹(Extended Unpacking, *) 문법을 사용한 아래 코드의 출력 결과는?
+
+```python
+t1 = (42)
+t2 = (42,)
+first, *middle, last = (10, 20, 30, 40, 50)
+print(type(t1).__name__, type(t2).__name__, type(middle).__name__, middle)
+```
+
+- **(1)** int tuple list [20, 30, 40]
+- **(2)** tuple tuple tuple (20, 30, 40)
+- **(3)** int tuple tuple (20, 30, 40)
+- **(4)** tuple tuple list [20, 30, 40]
+
+- **정답**: `0` (보기 1번: int tuple list [20, 30, 40])
+- **해설**: 소괄호 안에 쉼표 없이 (42)만 쓰면 단순 수식 괄호로 인식되어 int 타입이 되며, (42,)처럼 끝에 쉼표를 붙여야 1원소 tuple이 됩니다. 또한 언패킹 시 별표(*middle)로 묶인 변수는 원본이 튜플이더라도 항상 리스트(list) 타입인 [20, 30, 40]으로 수집됩니다.
+
+---
+
+### Q11. [중급] 파이썬 딕셔너리(dict)의 키(Key)로 사용할 수 있는 조건(Hashable)과 get() 메서드의 동작을 확인하는 아래 코드에서 예외가 발생하는 줄이나 출력 결과로 올바른 설명은?
+
+```python
+config = {('lr', 1): 0.001, 'epochs': 50}
+val1 = config.get('batch_size', 32)
+val2 = config.get('epochs', 100)
+print(val1, val2)
+```
+
+- **(1)** 튜플 ('lr', 1)은 키로 사용할 수 없어 첫 줄에서 TypeError가 발생한다.
+- **(2)** 32 100 이 출력된다.
+- **(3)** None 50 이 출력된다.
+- **(4)** 32 50 이 출력된다.
+
+- **정답**: `3` (보기 4번: 32 50 이 출력된다.)
+- **해설**: 내부 원소가 모두 불변 객체인 튜플 ('lr', 1)은 해시 가능(Hashable)하므로 딕셔너리 키로 사용할 수 있습니다(단, 리스트가 포함된 튜플은 불가). dict.get(key, default)는 키가 없을 때만 기본값을 반환하므로 'batch_size'는 32를, 이미 존재하는 'epochs'는 원래 값 50을 반환합니다.
+
+---
+
+### Q12. [고급] 딕셔너리의 keys(), values(), items()가 반환하는 뷰 객체(Dictionary View Object)의 동적 반영 특성에 대한 아래 코드의 실행 결과는?
+
+```python
+model_info = {'arch': 'ResNet', 'depth': 50}
+keys_view = model_info.keys()
+model_info['pretrained'] = True
+print(len(keys_view), 'pretrained' in keys_view)
+```
+
+- **(1)** 2 False
+- **(2)** 3 True
+- **(3)** 2 True
+- **(4)** 3 False
+
+- **정답**: `1` (보기 2번: 3 True)
+- **해설**: 파이썬 3에서 dict.keys(), dict.values(), dict.items()가 반환하는 뷰 객체는 복사본이 아니라 원본 딕셔너리를 실시간으로 바라보는 동적 뷰(Dynamic View)입니다. 따라서 딕셔너리에 새 키 'pretrained'가 추가되면 keys_view에도 즉시 반영되어 길이는 3, 멤버십 검사는 True가 됩니다.
+
+---
+
+### Q13. [초급] 집합(Set) 자료형의 집합 연산자(교집합 &, 합집합 |, 차집합 -, 대칭차집합 ^)를 수행한 아래 코드의 실행 결과는?
+
+```python
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+print(a & b, a - b, a ^ b)
+```
+
+- **(1)** {3, 4} {1, 2, 5, 6} {1, 2}
+- **(2)** {1, 2, 3, 4, 5, 6} {1, 2} {3, 4}
+- **(3)** {3, 4} {5, 6} {1, 2, 5, 6}
+- **(4)** {3, 4} {1, 2} {1, 2, 5, 6}
+
+- **정답**: `3` (보기 4번: {3, 4} {1, 2} {1, 2, 5, 6})
+- **해설**: 교집합(a & b)은 공통 원소인 {3, 4}, 차집합(a - b)은 a에서 b의 원소를 뺀 {1, 2}, 대칭차집합(a ^ b)은 합집합에서 교집합을 제외한 {1, 2, 5, 6}입니다.
+
+---
+
+### Q14. [중급] 파이썬의 불(bool) 자료형 평가 규칙에서 Truthy와 Falsy 판별에 따른 아래 코드의 출력 결과는?
+
+```python
+items = [0, 0.0, '', [], [0], {}, None, 'False']
+true_count = sum(bool(x) for x in items)
+print(true_count)
+```
+
+- **(1)** 1
+- **(2)** 2
+- **(3)** 3
+- **(4)** 4
+
+- **정답**: `1` (보기 2번: 2)
+- **해설**: 숫자 0, 0.0, 빈 문자열 '', 빈 리스트 [], 빈 딕셔너리 {}, None은 모두 Falsy(False)로 평가됩니다. 반면 원소 0을 하나 담고 있는 비어 있지 않은 리스트 [0]과 길이가 5인 비어 있지 않은 문자열 'False'는 모두 Truthy(True)로 평가되므로 참인 원소의 개수는 2입니다.
+
+---
+
+### Q15. [고급] 중첩 리스트(Nested List)에 대해 얕은 복사(Shallow Copy)와 깊은 복사(Deep Copy)를 수행한 아래 코드의 실행 결과로 올바른 것은?
+
+```python
+import copy
+orig = [[1, 2], [3, 4]]
+shallow = orig[:]
+deep = copy.deepcopy(orig)
+orig[0].append(99)
+orig.append([5, 6])
+print(shallow[0], len(shallow), deep[0], len(deep))
+```
+
+- **(1)** [1, 2] 2 [1, 2] 2
+- **(2)** [1, 2, 99] 3 [1, 2] 2
+- **(3)** [1, 2, 99] 2 [1, 2] 2
+- **(4)** [1, 2, 99] 2 [1, 2, 99] 2
+
+- **정답**: `2` (보기 3번: [1, 2, 99] 2 [1, 2] 2)
+- **해설**: 슬라이싱 orig[:]는 얕은 복사(Shallow Copy)이므로 바깥쪽 리스트는 새로 생성되지만(따라서 orig.append([5, 6])은 shallow에 영향을 주지 않아 len(shallow)는 2), 내부 리스트 객체 orig[0]의 참조는 공유합니다(따라서 orig[0].append(99)로 인해 shallow[0]은 [1, 2, 99]가 됨). 반면 copy.deepcopy()는 내부 중첩 객체까지 완전히 독립적으로 복제하므로 deep[0]은 [1, 2]로 유지됩니다.
+
+---
+
+## 2. 프로그램의 구조를 쌓는다! 제어문
+
+### Q16. [초급] 파이썬의 비교 연산자 체이닝(Chained Comparison)과 if-elif-else 분기 구조를 사용한 아래 코드의 실행 결과는?
+
+```python
+f1_score = 0.82
+if 0.9 <= f1_score <= 1.0:
+    grade = 'S'
+elif 0.8 <= f1_score < 0.9:
+    grade = 'A'
+elif 0.7 <= f1_score < 0.8:
+    grade = 'B'
+else:
+    grade = 'C'
+print(grade)
+```
+
+- **(1)** A
+- **(2)** S
+- **(3)** B
+- **(4)** C
+
+- **정답**: `0` (보기 1번: A)
+- **해설**: 파이썬은 수학 표기처럼 0.8 <= f1_score < 0.9 형태의 연쇄 비교(0.8 <= f1_score and f1_score < 0.9와 동일하되 중간 식을 한 번만 평가)를 지원합니다. f1_score가 0.82이므로 첫 번째 if 조건은 거짓이고 두 번째 elif 조건이 참이 되어 'A'가 출력됩니다.
+
+---
+
+### Q17. [중급] 파이썬의 논리 연산자 and와 or는 단순 불리언(True/False)이 아니라 단락 평가(Short-circuit evaluation)를 결정짓는 마지막 피연산자 값 자체를 반환합니다. 아래 코드의 출력 결과는?
+
+```python
+user_input = ''
+default_model = 'gpt-4o'
+selected = user_input or default_model
+check = [1, 2] and 0 and 'unreachable'
+print(selected, check)
+```
+
+- **(1)** gpt-4o 0
+- **(2)** True False
+- **(3)** '' 0
+- **(4)** gpt-4o False
+
+- **정답**: `0` (보기 1번: gpt-4o 0)
+- **해설**: x or y는 x가 Truthy이면 x를 즉시 반환하고, Falsy이면 y를 반환합니다. user_input이 빈 문자열('')로 Falsy이므로 default_model인 'gpt-4o'가 반환됩니다. x and y는 Falsy를 만나는 즉시 평가를 멈추고 그 Falsy 값을 반환하므로 [1, 2](Truthy) 다음의 0(Falsy)에서 평가가 중단되어 0을 반환합니다.
+
+---
+
+### Q18. [초급] 멤버십 연산자 in / not in을 각 컨테이너 자료형(문자열, 리스트, 딕셔너리)에 적용한 아래 코드의 실행 결과는?
+
+```python
+meta = {'model': 'bert', 'vocab': 30522}
+c1 = 'bert' in meta
+c2 = 'model' in meta
+c3 = 'py' in 'python'
+print(c1, c2, c3)
+```
+
+- **(1)** True True True
+- **(2)** False True False
+- **(3)** False True True
+- **(4)** True False True
+
+- **정답**: `2` (보기 3번: False True True)
+- **해설**: 딕셔너리에 대해 key in dict 연산을 수행하면 값(Value)이 아니라 키(Key)의 존재 여부를 해시 테이블(평균 O(1))로 검사합니다. 따라서 값인 'bert'는 False, 키인 'model'은 True이며, 문자열에 대한 'py' in 'python'은 부분 문자열 포함 여부를 검사하여 True입니다.
+
+---
+
+### Q19. [중급] 조건부 표현식(삼항 연산자, Conditional Expression)을 중첩하여 사용한 아래 코드의 실행 결과는?
+
+```python
+val = -5
+label = 'pos' if val > 0 else ('zero' if val == 0 else 'neg')
+print(label)
+```
+
+- **(1)** pos
+- **(2)** neg
+- **(3)** zero
+- **(4)** SyntaxError 발생
+
+- **정답**: `1` (보기 2번: neg)
+- **해설**: 파이썬의 조건부 표현식은 <참일 때 값> if <조건> else <거짓일 때 값> 구문을 가집니다. val이 -5이므로 val > 0은 거짓이고, else 절의 ('zero' if val == 0 else 'neg')에서 val == 0도 거짓이므로 최종적으로 'neg'가 반환됩니다.
+
+---
+
+### Q20. [중급] while 반복문에서 조건 변수 갱신과 복합 대입 연산자를 사용한 아래 이진 탐색 스타일 루프의 실행 후 count와 n의 값은?
+
+```python
+n = 64
+count = 0
+while n > 1:
+    n //= 2
+    count += 1
+print(count, n)
+```
+
+- **(1)** 5 2
+- **(2)** 6 0
+- **(3)** 7 0
+- **(4)** 6 1
+
+- **정답**: `3` (보기 4번: 6 1)
+- **해설**: n = 64(2^6)에서 시작하여 매 반복마다 2로 몫 나눗셈을 수행하면 32 -> 16 -> 8 -> 4 -> 2 -> 1로 총 6번 나눈 시점에 n이 1이 되어 while n > 1 조건이 거짓이 되고 루프가 종료됩니다. 따라서 count는 6, n은 1입니다.
+
+---
+
+### Q21. [초급] 반복문 제어 키워드인 break, continue, pass의 동작 차이를 확인할 수 있는 아래 코드의 실행 결과는?
+
+```python
+result = []
+for x in [1, 2, 3, 4, 5, 6]:
+    if x % 2 == 0:
+        pass
+    if x == 3:
+        continue
+    if x == 5:
+        break
+    result.append(x)
+print(result)
+```
+
+- **(1)** [1, 3, 4]
+- **(2)** [1, 2, 4]
+- **(3)** [1, 2, 3, 4]
+- **(4)** [1]
+
+- **정답**: `1` (보기 2번: [1, 2, 4])
+- **해설**: pass는 아무 동작도 하지 않고 다음 줄로 넘어가는 빈 문장(Null operation)이므로 x=2, 4일 때도 result.append(x)가 실행됩니다. x=3일 때는 continue를 만나 현재 반복의 나머지 코드를 건너뛰고, x=5일 때는 break를 만나 반복문 전체를 즉시 탈출하므로 result는 [1, 2, 4]가 됩니다.
+
+---
+
+### Q22. [고급] 파이썬 고유의 for-else(또는 while-else) 구문에서 else 블록이 실행되는 정확한 조건과 아래 코드의 출력 결과는?
+
+```python
+def check_prime(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return 'Composite'
+    else:
+        return 'Prime'
+
+print(check_prime(9), check_prime(7))
+```
+
+- **(1)** Prime Prime
+- **(2)** Composite None
+- **(3)** for문에는 else를 붙일 수 없어 SyntaxError 발생
+- **(4)** Composite Prime
+
+- **정답**: `3` (보기 4번: Composite Prime)
+- **해설**: for-else 구문에서 else 블록은 for 반복문이 중간에 break나 return 등으로 강제 중단되지 않고 끝까지 정상적으로 순회를 마쳤을 때만 실행됩니다. num=9일 때는 i=3에서 나누어떨어져 'Composite'를 반환하고, num=7일 때는 루프가 끝까지 완주한 뒤 else 블록이 실행되어 'Prime'을 반환합니다.
+
+---
+
+### Q23. [초급] range(start, stop, step) 함수의 역방향 수열 생성과 메모리 특성에 대한 아래 코드의 출력 결과는?
+
+```python
+r = range(10, 2, -3)
+print(list(r), len(r), 4 in r, 5 in r)
+```
+
+- **(1)** [10, 7, 4] 3 True False
+- **(2)** [10, 7, 4, 1] 4 True False
+- **(3)** [10, 7, 4] 3 False True
+- **(4)** [7, 4] 2 True False
+
+- **정답**: `0` (보기 1번: [10, 7, 4] 3 True False)
+- **해설**: range(10, 2, -3)은 10에서 시작해 -3씩 감소하면서 끝값 2보다 큰 값까지만 생성하므로 10, 7, 4를 포함합니다. 따라서 리스트 변환 시 [10, 7, 4], 길이는 3이며, 4는 포함(True), 5는 미포함(False)입니다.
+
+---
+
+### Q24. [중급] 내장 함수 enumerate()의 start 매개변수를 활용한 아래 코드의 실행 결과는?
+
+```python
+models = ['CNN', 'RNN', 'Transformer']
+out = [f'{idx}:{name}' for idx, name in enumerate(models, start=1)]
+print(' | '.join(out))
+```
+
+- **(1)** 0:CNN | 1:RNN | 2:Transformer
+- **(2)** 1:RNN | 2:Transformer
+- **(3)** 1:CNN | 2:RNN | 3:Transformer
+- **(4)** CNN:1 | RNN:2 | Transformer:3
+
+- **정답**: `2` (보기 3번: 1:CNN | 2:RNN | 3:Transformer)
+- **해설**: enumerate(iterable, start=1)은 첫 번째 원소부터そのまま 순회하되 부여하는 인덱스 번호만 0 대신 1부터 시작하도록 설정합니다. 따라서 '1:CNN | 2:RNN | 3:Transformer'가 출력됩니다.
+
+---
+
+### Q25. [중급] 길이가 서로 다른 두 시퀀스를 내장 함수 zip()으로 묶었을 때의 기본 동작과 zip(*matrix)를 이용한 행렬 전치(Transpose) 결과로 올바른 것은?
+
+```python
+keys = ['a', 'b', 'c', 'd']
+vals = [10, 20]
+d = dict(zip(keys, vals))
+mat = [[1, 2, 3], [4, 5, 6]]
+transposed = [list(col) for col in zip(*mat)]
+print(len(d), transposed[0])
+```
+
+- **(1)** 4 [1, 4]
+- **(2)** 2 [1, 2]
+- **(3)** 2 [1, 4]
+- **(4)** ValueError 발생 (길이 불일치)
+
+- **정답**: `2` (보기 3번: 2 [1, 4])
+- **해설**: 기본 zip()은 인자로 전달된 이터러블 중 가장 짧은 길이(vals의 길이 2)에 맞춰 짝을 짓고 멈추므로 len(d)는 2입니다(단, strict=True 옵션 사용 시에만 길이 불일치 ValueError 발생). 또한 zip(*mat)는 행들을 언패킹하여 같은 열끼리 묶어주므로 첫 번째 열인 [1, 4]가 transposed[0]이 됩니다.
+
+---
+
+### Q26. [중급] 리스트 컴프리헨션(List Comprehension)에서 필터링 조건문( 끝에 오는 if )과 값 변환 조건부 표현식( 앞에 오는 if-else )의 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+data = [1, -2, 3, -4, 5]
+filtered = [x for x in data if x > 0]
+relu = [x if x > 0 else 0 for x in data]
+print(filtered, relu)
+```
+
+- **(1)** [1, 3, 5] [1, 0, 3, 0, 5]
+- **(2)** [1, 0, 3, 0, 5] [1, 3, 5]
+- **(3)** [1, 3, 5] [1, 3, 5]
+- **(4)** SyntaxError 발생
+
+- **정답**: `0` (보기 1번: [1, 3, 5] [1, 0, 3, 0, 5])
+- **해설**: for 절 뒤에 오는 if(filtered)는 조건을 만족하는 원소만 추려내는 필터 역할을 하므로 [1, 3, 5]가 되어 길이가 줄어듭니다. 반면 for 절 앞에 오는 x if x > 0 else 0(relu)은 모든 원소에 대해 조건부 값을 매핑하므로 원소 개수는 그대로 유지되며 음수가 0으로 바뀐 [1, 0, 3, 0, 5]가 됩니다.
+
+---
+
+### Q27. [고급] 2차원 리스트를 1차원으로 평탄화(Flatten)하는 다중 for 루프 리스트 컴프리헨션에서 for 절의 작성 순서와 실행 결과로 올바른 것은?
+
+```python
+matrix = [[1, 2], [3, 4, 5]]
+flat = [num for row in matrix for num in row if num % 2 == 1]
+print(flat)
+```
+
+- **(1)** [2, 4]
+- **(2)** [[1], [3, 5]]
+- **(3)** NameError: name 'row' is not defined
+- **(4)** [1, 3, 5]
+
+- **정답**: `3` (보기 4번: [1, 3, 5])
+- **해설**: 다중 루프 리스트 컴프리헨션에서 for 절의 순서는 일반 중첩 for문의 바깥쪽 루프부터 안쪽 루프 순서(for row in matrix -> for num in row)와 동일합니다. 따라서 각 행의 원소 중 홀수만 추출되어 [1, 3, 5]가 출력됩니다.
+
+---
+
+### Q28. [중급] 딕셔너리 컴프리헨션(Dictionary Comprehension)을 이용해 기존 딕셔너리의 키와 값을 뒤집고 특정 조건만 필터링한 아래 코드의 실행 결과는?
+
+```python
+label_to_id = {'cat': 0, 'dog': 1, 'bird': 2, 'fish': 1}
+id_to_label = {v: k for k, v in label_to_id.items() if v > 0}
+print(len(id_to_label), id_to_label[1])
+```
+
+- **(1)** 3 dog
+- **(2)** 2 fish
+- **(3)** 2 dog
+- **(4)** 3 fish
+
+- **정답**: `1` (보기 2번: 2 fish)
+- **해설**: v > 0 조건에 의해 'cat': 0은 제외되고 (1: 'dog'), (2: 'bird'), (1: 'fish') 순서로 딕셔너리가 구성됩니다. 딕셔너리의 키는 중복될 수 없으므로 키 1의 값은 나중에 들어온 'fish'로 덮어써지며, 최종 키는 1과 2 두 개(len=2)이고 id_to_label[1]은 'fish'입니다.
+
+---
+
+### Q29. [고급] 리스트를 순회(Iteration)하는 도중에 원본 리스트의 원소를 직접 remove()로 삭제할 때 발생하는 인덱스 밀림 현상을 보여주는 아래 코드의 실제 출력 결과는?
+
+```python
+nums = [2, 4, 5, 6]
+for x in nums:
+    if x % 2 == 0:
+        nums.remove(x)
+print(nums)
+```
+
+- **(1)** [5]
+- **(2)** []
+- **(3)** RuntimeError: list changed size during iteration
+- **(4)** [4, 5]
+
+- **정답**: `3` (보기 4번: [4, 5])
+- **해설**: 첫 번째 반복(인덱스 0)에서 2가 삭제되면 리스트가 [4, 5, 6]으로 당겨지는데, 루프의 내부 인덱스 포인터는 인덱스 1로 이동하므로 인덱스 0으로 밀려온 4를 건너뛰고 5를 검사하게 됩니다. 이후 6이 삭제되어 최종 결과는 [4, 5]가 남습니다. 이를 방지하려면 nums[:] 복사본을 순회하거나 리스트 컴프리헨션을 써야 합니다.
+
+---
+
+### Q30. [중급] 파이썬 3.8+에서 도입된 바다코끼리 연산자(Walrus Operator, :=, 대입 표현식)를 제어문 조건식에서 활용한 아래 코드의 실행 결과는?
+
+```python
+texts = ['hi', 'deep learning', 'ai', 'transformer']
+long_lengths = [n for t in texts if (n := len(t)) >= 10]
+print(long_lengths)
+```
+
+- **(1)** ['deep learning', 'transformer']
+- **(2)** [13, 11]
+- **(3)** [True, True]
+- **(4)** [2, 13, 2, 11]
+
+- **정답**: `1` (보기 2번: [13, 11])
+- **해설**: 대입 표현식 (n := len(t))는 len(t)를 계산하여 변수 n에 바인딩함과 동시에 그 값을 반환합니다. 따라서 len(t)를 두 번 호출할 필요 없이 if 조건에서 10 이상인지 검사하고, 참일 때 계산된 길이 n(13과 11)을 바로 리스트 원소로 수집합니다.
+
+---
+
+## 3. 파이썬의 입출력
+
+### Q31. [초급] 파이썬 함수 정의 시 위치 인자(Positional Argument), 키워드 인자(Keyword Argument), 기본값 매개변수(Default Parameter)의 문법 규칙으로 올바른 것은?
+
+```python
+def train(model, epochs=10, lr=0.001):
+    return f'{model}:{epochs}:{lr}'
+```
+
+- **(1)** 함수 정의 시 기본값이 있는 매개변수를 기본값이 없는 일반 매개변수보다 앞에 선언할 수 있다 (예: def f(a=1, b):).
+- **(2)** 함수 호출 시 키워드 인자를 위치 인자보다 앞에 전달할 수 있다 (예: train(epochs=20, 'CNN')).
+- **(3)** train('ViT', lr=0.01)처럼 호출하면 epochs는 기본값 10이 적용되고 lr은 0.01로 전달되어 'ViT:10:0.01'을 반환한다.
+- **(4)** 기본값 매개변수는 함수 호출 시 반드시 값을 생략해야 하며 새 값을 전달하면 TypeError가 발생한다.
+
+- **정답**: `2` (보기 3번: train('ViT', lr=0.01)처럼 호출하면 epochs는 기본값 10이 적용되고 lr은 0.01로 전달되어 'ViT:10:0.01'을 반환한다.)
+- **해설**: 파이썬 문법상 함수 정의 시 기본값이 없는 매개변수가 앞에 와야 하며, 호출 시에도 위치 인자가 키워드 인자보다 항상 앞에 위치해야 합니다. train('ViT', lr=0.01)은 위치 인자로 model='ViT', 키워드 인자로 lr=0.01을 넘기고 epochs는 기본값 10을 사용하여 'ViT:10:0.01'을 반환합니다.
+
+---
+
+### Q32. [고급] 함수의 기본값 매개변수(Default Parameter)에 리스트나 딕셔너리 같은 가변 객체(Mutable Object)를 지정했을 때 발생하는 현상을 보여주는 아래 코드의 출력 결과는?
+
+```python
+def add_log(msg, history=[]):
+    history.append(msg)
+    return history
+
+r1 = add_log('init')
+r2 = add_log('train')
+print(r1, r2 is r1)
+```
+
+- **(1)** ['init', 'train'] True
+- **(2)** ['init'] False
+- **(3)** ['init'] True
+- **(4)** ['train'] False
+
+- **정답**: `0` (보기 1번: ['init', 'train'] True)
+- **해설**: 함수의 기본값 매개변수는 함수가 호출될 때마다가 아니라 함수가 처음 정의(def 실행)될 때 단 한 번만 평가되어 함수 객체의 __defaults__ 속성에 저장됩니다. 따라서 두 번의 호출이 동일한 리스트 객체를 공유하므로 r1과 r2는 같은 객체(True)이며 둘 다 ['init', 'train']이 됩니다. 이를 방지하려면 기본값으로 None을 쓰고 함수 내부에서 초기화해야 합니다.
+
+---
+
+### Q33. [중급] 가변 위치 인자(*args)와 가변 키워드 인자(**kwargs)를 함께 사용하는 함수에서 각 매개변수가 함수 내부에서 가지는 자료형과 아래 코드의 출력 결과는?
+
+```python
+def build_pipeline(name, *steps, **options):
+    return (type(steps).__name__, len(steps), type(options).__name__, options.get('device'))
+
+res = build_pipeline('bert', 'tokenize', 'embed', 'pool', device='cuda', fp16=True)
+print(res)
+```
+
+- **(1)** ('tuple', 3, 'dict', 'cuda')
+- **(2)** ('list', 3, 'dict', 'cuda')
+- **(3)** ('tuple', 4, 'dict', 'cuda')
+- **(4)** ('list', 4, 'set', 'cuda')
+
+- **정답**: `0` (보기 1번: ('tuple', 3, 'dict', 'cuda'))
+- **해설**: 첫 번째 인자 'bert'는 매개변수 name에 바인딩되고, 나머지 위치 인자 3개('tokenize', 'embed', 'pool')는 *steps에 의해 튜플(tuple)로 묶이며, 키워드 인자들은 **options에 의해 딕셔너리(dict)로 묶입니다. 따라서 ('tuple', 3, 'dict', 'cuda')가 출력됩니다.
+
+---
+
+### Q34. [초급] 파이썬 함수에서 return 문에 여러 개의 값을 쉼표로 구분해 작성하거나 return 문이 없을 때의 반환값에 대한 아래 코드의 출력 결과는?
+
+```python
+def calc_stats(arr):
+    return min(arr), max(arr), sum(arr)
+
+def log_only(x):
+    y = x * 2
+
+s = calc_stats([2, 5, 8])
+p = log_only(10)
+print(type(s).__name__, s[1], p)
+```
+
+- **(1)** list 8 None
+- **(2)** tuple 8 20
+- **(3)** tuple 8 None
+- **(4)** tuple 5 0
+
+- **정답**: `2` (보기 3번: tuple 8 None)
+- **해설**: return a, b, c처럼 여러 값을 반환하면 파이썬은 이를 하나의 튜플(tuple)로 자동 패킹하여 (2, 8, 15)라는 단일 튜플 객체를 반환하므로 s[1]은 8입니다. 또한 return 문이 없는 함수는 자동으로 None을 반환합니다.
+
+---
+
+### Q35. [중급] 익명 함수 lambda를 sorted()의 key 함수로 활용하여 다중 정렬 기준(첫 번째 기준 내림차순, 두 번째 기준 오름차순)을 적용한 아래 코드의 실행 결과는?
+
+```python
+candidates = [('model_B', 90), ('model_A', 95), ('model_C', 90)]
+sorted_cands = sorted(candidates, key=lambda x: (-x[1], x[0]))
+print([name for name, _ in sorted_cands])
+```
+
+- **(1)** ['model_A', 'model_C', 'model_B']
+- **(2)** ['model_A', 'model_B', 'model_C']
+- **(3)** ['model_B', 'model_C', 'model_A']
+- **(4)** ['model_C', 'model_B', 'model_A']
+
+- **정답**: `1` (보기 2번: ['model_A', 'model_B', 'model_C'])
+- **해설**: key=lambda x: (-x[1], x[0])는 점수 x[1]에 음수 부호를 붙여 내림차순(95 -> 90)으로 먼저 정렬하고, 점수가 90으로 동점인 경우 이름 x[0]을 사전순 오름차순('model_B' -> 'model_C')으로 정렬합니다. 따라서 ['model_A', 'model_B', 'model_C']가 됩니다.
+
+---
+
+### Q36. [고급] 파이썬의 이름 공간 탐색 규칙(LEGB Rule)과 global / nonlocal 키워드의 동작을 확인하는 아래 코드의 실행 결과는?
+
+```python
+count = 100
+def outer():
+    count = 10
+    def inner():
+        nonlocal count
+        count += 5
+    inner()
+    return count
+
+print(outer(), count)
+```
+
+- **(1)** 15 105
+- **(2)** 10 105
+- **(3)** UnboundLocalError 예외 발생
+- **(4)** 15 100
+
+- **정답**: `3` (보기 4번: 15 100)
+- **해설**: nonlocal 키워드는 전역(Global) 변수가 아니라 가장 가까운 바깥쪽 감싸는 함수(Enclosing scope, 여기서는 outer 함수)의 지역 변수 count=10을 참조하여 수정하게 합니다. 따라서 outer() 내부의 count는 15가 되어 반환되고, 전역 변수 count는 100 그대로 유지됩니다.
+
+---
+
+### Q37. [중급] 함수 내부에서 전역 변수와 동일한 이름의 변수에 대입 연산을 시도할 때 발생하는 예외와 그 원인으로 올바른 것은?
+
+```python
+total = 10
+def update():
+    print(total)
+    total = 20
+
+update()
+```
+
+- **(1)** 10이 정상 출력된 후 지역 변수 total이 20으로 생성된다.
+- **(2)** 함수 본문에 total = 20 대입문이 존재하므로 파이썬 컴파일러가 total을 지역 변수로 분류하며, 값이 할당되기 전에 print(total)을 실행하여 UnboundLocalError가 발생한다.
+- **(3)** 전역 변수 total이 20으로 변경되고 10이 출력된다.
+- **(4)** NameError: name 'total' is not defined가 발생한다.
+
+- **정답**: `1` (보기 2번: 함수 본문에 total = 20 대입문이 존재하므로 파이썬 컴파일러가 total을 지역 변수로 분류하며, 값이 할당되기 전에 print(total)을 실행하여 UnboundLocalError가 발생한다.)
+- **해설**: 파이썬은 함수를 컴파일할 때 함수 본문 어디에서든 변수에 값을 대입(total = 20)하는 문장이 있으면(global 선언이 없는 한) 해당 변수를 함수 전체에서 지역(Local) 변수로 취급합니다. 따라서 대입 전 줄인 print(total)에서 아직 초기화되지 않은 지역 변수를 읽으려 시도하여 UnboundLocalError가 발생합니다.
+
+---
+
+### Q38. [초급] 표준 입력 함수 input()의 반환 자료형과 표준 출력 함수 print()의 sep, end 매개변수 동작을 확인하는 아래 코드에서 사용자가 키보드로 25 를 입력하고 엔터를 쳤을 때의 출력 결과는?
+
+```python
+val = input()
+print(type(val).__name__, val * 2, sep=':', end='!')
+print('END')
+```
+
+- **(1)** int:50!END
+- **(2)** str:2525!
+END
+- **(3)** int:50!
+END
+- **(4)** str:2525!END
+
+- **정답**: `3` (보기 4번: str:2525!END)
+- **해설**: input() 함수는 사용자가 숫자를 입력하더라도 개행 문자를 제거한 뒤 항상 문자열(str) 타입으로 반환합니다. 따라서 val은 '25'이고 val * 2는 문자열 반복 연산인 '2525'가 됩니다. sep=':'로 인자 사이가 ':'로 구분되고 end='!'로 줄바꿈 대신 '!'가 붙어 다음 print('END')가 같은 줄에 이어져 'str:2525!END'가 출력됩니다.
+
+---
+
+### Q39. [초급] 내장 함수 open()을 사용하여 파일을 열 때 사용하는 파일 열기 모드(mode)에 대한 설명으로 옳지 않은 것은?
+
+```python
+# open(file, mode='r', encoding='utf-8')
+```
+
+- **(1)** 'x' 모드는 배타적 생성 모드로, 대상 파일이 이미 존재하면 기존 내용 뒤에 이어서 쓰고 파일이 없을 때만 에러를 발생시킨다.
+- **(2)** 'r' 모드는 기본값으로 읽기 전용이며, 대상 파일이 존재하지 않으면 FileNotFoundError가 발생한다.
+- **(3)** 'w' 모드는 쓰기 모드로, 대상 파일이 이미 존재하면 기존 내용을 모두 삭제(Truncate)하고 처음부터 새로 쓴다.
+- **(4)** 'a' 모드는 추가(Append) 모드로, 기존 파일이 존재하면 기존 내용을 유지한 채 파일의 맨 끝부분에 새로운 내용을 이어서 쓴다.
+
+- **정답**: `0` (보기 1번: 'x' 모드는 배타적 생성 모드로, 대상 파일이 이미 존재하면 기존 내용 뒤에 이어서 쓰고 파일이 없을 때만 에러를 발생시킨다.)
+- **해설**: 'x'(Exclusive creation) 모드는 새 파일을 독점 생성하는 모드로, 파일이 없을 때 새 파일을 만들고 만약 대상 파일이 이미 존재하면 덮어쓰기 사고를 막기 위해 FileExistsError 예외를 발생시킵니다.
+
+---
+
+### Q40. [중급] 파일 객체의 읽기 메서드인 read(), readline(), readlines()의 반환 타입과 동작에 대한 설명으로 올바른 것은?
+
+```python
+# log.txt 내용:
+# epoch 1
+# epoch 2
+# epoch 3
+```
+
+- **(1)** f.read()는 파일 전체 내용을 줄 단위로 쪼개어 문자열 리스트(list)로 반환한다.
+- **(2)** f.readline()은 한 번 호출할 때마다 파일 전체 내용을 문자열 하나로 반환한다.
+- **(3)** f.readlines()는 파일의 모든 줄을 읽어서 각 줄(개행 문자 '\n' 포함)을 원소로 하는 리스트(list)로 반환한다.
+- **(4)** f.read()를 한 번 호출하여 파일 끝(EOF)까지 읽은 직후 f.seek(0) 없이 다시 f.read()를 호출하면 처음부터 다시 전체 문자열을 반환한다.
+
+- **정답**: `2` (보기 3번: f.readlines()는 파일의 모든 줄을 읽어서 각 줄(개행 문자 '\n' 포함)을 원소로 하는 리스트(list)로 반환한다.)
+- **해설**: read()는 전체 내용을 단일 문자열(str)로, readline()은 한 줄씩 문자열(str)로, readlines()는 모든 줄을 리스트(list[str])로 반환합니다. 또한 파일 포인터가 끝(EOF)에 도달한 상태에서 다시 read()를 호출하면 빈 문자열 ''이 반환되며, 처음부터 다시 읽으려면 f.seek(0)으로 포인터를 이동해야 합니다.
+
+---
+
+### Q41. [중급] 파일 입출력 시 with open(...) as f: 구문(Context Manager)을 권장하는 가장 핵심적인 이유는 무엇인가?
+
+```python
+with open('metrics.log', 'w', encoding='utf-8') as f:
+    f.write('loss: 0.123\n')
+```
+
+- **(1)** with 구문을 사용하면 디스크 대신 GPU VRAM에만 파일을 저장하여 입출력 속도가 100배 빨라지기 때문이다.
+- **(2)** with 구문을 사용하면 encoding 매개변수를 생략해도 모든 이진 파일이 자동으로 UTF-8 텍스트로 변환되기 때문이다.
+- **(3)** with 블록 내부에서 예외(Exception)가 발생하더라도 블록을 빠져나올 때 __exit__() 메서드가 자동 호출되어 파일 객체가 안전하게 닫힘(f.close())을 보장하기 때문이다.
+- **(4)** with 블록이 끝나도 파일 핸들이 열린 상태로 영구 유지되어 블록 밖에서도 f.write()를 계속 호출할 수 있기 때문이다.
+
+- **정답**: `2` (보기 3번: with 블록 내부에서 예외(Exception)가 발생하더라도 블록을 빠져나올 때 __exit__() 메서드가 자동 호출되어 파일 객체가 안전하게 닫힘(f.close())을 보장하기 때문이다.)
+- **해설**: with 문은 컨텍스트 매니저 프로토콜(__enter__, __exit__)을 사용하여 블록이 정상 종료되든 중간에 예외가 발생하든 관계없이 블록을 벗어나는 순간 자동으로 f.close()를 수행하여 파일 디스크립터 누수와 버퍼 미플러시 문제를 방지합니다.
+
+---
+
+### Q42. [중급] 터미널에서 `python train.py --lr 0.01 --epochs 20` 명령어로 스크립트를 실행했을 때, sys 모듈의 sys.argv 리스트에 담기는 값과 아래 코드의 출력 결과는?
+
+```python
+import sys
+print(len(sys.argv), sys.argv[0], sys.argv[2], type(sys.argv[2]).__name__)
+```
+
+- **(1)** 5 train.py 0.01 str
+- **(2)** 4 --lr 0.01 float
+- **(3)** 5 train.py 0.01 float
+- **(4)** 4 train.py --epochs str
+
+- **정답**: `0` (보기 1번: 5 train.py 0.01 str)
+- **해설**: sys.argv는 실행된 스크립트 파일명(sys.argv[0])을 첫 번째 원소로 포함하고 뒤따르는 명령행 인자들을 모두 문자열(str)로 저장한 리스트입니다. 따라서 sys.argv는 ['train.py', '--lr', '0.01', '--epochs', '20']이 되어 길이는 5, sys.argv[0]은 'train.py', sys.argv[2]는 문자열 '0.01'(str)입니다.
+
+---
+
+### Q43. [고급] 파이썬 3.8+에서 지원하는 위치 전용 매개변수(Positional-only, /)와 키워드 전용 매개변수(Keyword-only, *) 문법이 적용된 아래 함수에 대해 올바르게 호출한 코드는?
+
+```python
+def evaluate(dataset, /, batch_size=32, *, metric='f1'):
+    return f'{dataset}-{batch_size}-{metric}'
+```
+
+- **(1)** evaluate(dataset='mnist', batch_size=64, metric='acc')
+- **(2)** evaluate('mnist', 64, 'acc')
+- **(3)** evaluate(dataset='mnist', 64, metric='acc')
+- **(4)** evaluate('mnist', 64, metric='acc')
+
+- **정답**: `3` (보기 4번: evaluate('mnist', 64, metric='acc'))
+- **해설**: 슬래시(/) 앞의 매개변수(dataset)는 위치 전용(Positional-only)이므로 키워드 인자(dataset='mnist')로 넘기면 TypeError가 발생합니다. 별표(*) 뒤의 매개변수(metric)는 키워드 전용(Keyword-only)이므로 반드시 metric='acc'처럼 키워드를 명시해야 합니다. 사이에 있는 batch_size는 위치/키워드 모두 가능하므로 evaluate('mnist', 64, metric='acc')만 올바른 호출입니다.
+
+---
+
+### Q44. [중급] 수십 기가바이트(GB) 크기의 대용량 텍스트 로그 파일을 메모리 부족(Out-Of-Memory) 없이 한 줄씩 스트리밍 방식으로 읽어서 처리하는 가장 파이썬다운(Pythonic) 방법은?
+
+```python
+# 대용량 파일 large_server.log (50GB) 처리
+```
+
+- **(1)** lines = f.readlines()로 모든 줄을 리스트에 적재한 후 for line in lines: 로 순회한다.
+- **(2)** 파일 객체 자체가 이터레이터(Iterator)임을 활용하여 with open('large_server.log', encoding='utf-8') as f: 블록 안에서 for line in f: 로 한 줄씩 순회한다.
+- **(3)** text = f.read().split('\n')으로 전체 문자열을 메모리에 올린 뒤 분할하여 순회한다.
+- **(4)** list(f)를 호출하여 전체 줄을 튜플로 변환한 뒤 인덱싱으로 접근한다.
+
+- **정답**: `1` (보기 2번: 파일 객체 자체가 이터레이터(Iterator)임을 활용하여 with open('large_server.log', encoding='utf-8') as f: 블록 안에서 for line in f: 로 한 줄씩 순회한다.)
+- **해설**: f.read(), f.readlines(), list(f)는 모두 파일 전체 내용을 한꺼번에 RAM에 적재하므로 대용량 파일에서 MemoryError를 유발합니다. 반면 파일 객체 f를 직접 for line in f:로 순회하면 내부 버퍼를 사용해 한 번에 한 줄씩만 메모리에 읽어들이므로 메모리 사용량이 일정(O(1))하게 유지됩니다.
+
+---
+
+### Q45. [초급] 메모리 상의 리스트나 딕셔너리 데이터를 언패킹하여 함수 인자로 전달할 때 사용하는 *와 ** 연산자의 활용 결과로 올바른 것은?
+
+```python
+def connect(host, port, timeout=10):
+    return f'{host}:{port} (t={timeout})'
+
+addr = ['127.0.0.1', 8080]
+cfg = {'port': 9000, 'timeout': 30}
+print(connect(*addr), '|', connect('localhost', **cfg))
+```
+
+- **(1)** ['127.0.0.1', 8080]:10 | localhost:9000 (t=30)
+- **(2)** 127.0.0.1:8080 (t=30) | localhost:8080 (t=10)
+- **(3)** TypeError 예외 발생
+- **(4)** 127.0.0.1:8080 (t=10) | localhost:9000 (t=30)
+
+- **정답**: `3` (보기 4번: 127.0.0.1:8080 (t=10) | localhost:9000 (t=30))
+- **해설**: 호출 시 *addr는 리스트의 원소를 위치 인자로 풀어서 connect('127.0.0.1', 8080)으로 전달하며 timeout은 기본값 10을 사용합니다. **cfg는 딕셔너리의 키-값 쌍을 키워드 인자로 풀어서 connect('localhost', port=9000, timeout=30)으로 전달합니다.
+
+---
+
+## 4. 파이썬 날개 달기
+
+### Q46. [초급] 파이썬 클래스에서 생성자 메서드 `__init__`과 첫 번째 매개변수 `self`의 역할에 대한 설명 및 아래 코드의 실행 결과로 올바른 것은?
+
+```python
+class Optimizer:
+    def __init__(self, lr=0.01):
+        self.lr = lr
+    def step(self, factor):
+        self.lr *= factor
+
+opt = Optimizer(0.1)
+opt.step(0.5)
+print(opt.lr)
+```
+
+- **(1)** 0.1
+- **(2)** 0.05
+- **(3)** 0.01
+- **(4)** 0.005
+
+- **정답**: `1` (보기 2번: 0.05)
+- **해설**: Optimizer(0.1)로 인스턴스를 생성하면 __init__이 자동 호출되어 self(생성된 인스턴스 자신)의 인스턴스 속성 self.lr에 0.1이 저장됩니다. 이후 opt.step(0.5)를 호출하면 파이썬이 자동으로 첫 번째 인자 self에 opt를 전달하고 self.lr *= 0.5를 수행하므로 0.05가 됩니다.
+
+---
+
+### Q47. [고급] 클래스 변수(Class Variable)와 인스턴스 변수(Instance Variable)의 네임스페이스 조회 및 가변/불변 객체 조작 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+class Worker:
+    shared_tags = []
+    count = 0
+    def __init__(self, name):
+        self.name = name
+        Worker.count += 1
+
+w1 = Worker('A')
+w2 = Worker('B')
+w1.shared_tags.append('gpu')
+w1.count = 99
+print(w2.shared_tags, w2.count, Worker.count)
+```
+
+- **(1)** [] 2 99
+- **(2)** ['gpu'] 99 99
+- **(3)** ['gpu'] 2 2
+- **(4)** [] 2 2
+
+- **정답**: `2` (보기 3번: ['gpu'] 2 2)
+- **해설**: w1.shared_tags.append('gpu')는 클래스 변수인 리스트 객체 자체를 제자리(In-place)에서 수정하므로 w2.shared_tags에서도 ['gpu']가 조회됩니다. 반면 w1.count = 99는 불변 정수에 대한 대입이므로 클래스 변수 Worker.count를 바꾸는 것이 아니라 w1 인스턴스만의 독립적인 인스턴스 변수 count=99를 새로 생성(Shadowing)합니다. 따라서 w2.count와 Worker.count는 여전히 2입니다.
+
+---
+
+### Q48. [중급] 클래스 상속(Inheritance)에서 `super()`를 통한 부모 클래스 초기화와 메서드 오버라이딩(Method Overriding)이 적용된 아래 코드의 출력 결과는?
+
+```python
+class BaseLayer:
+    def __init__(self, dim):
+        self.dim = dim
+    def forward(self, x):
+        return x + self.dim
+
+class ResidualLayer(BaseLayer):
+    def __init__(self, dim, scale=2):
+        super().__init__(dim)
+        self.scale = scale
+    def forward(self, x):
+        base_out = super().forward(x)
+        return base_out * self.scale
+
+layer = ResidualLayer(3, scale=4)
+print(layer.forward(7))
+```
+
+- **(1)** 40
+- **(2)** 28
+- **(3)** 31
+- **(4)** 10
+
+- **정답**: `0` (보기 1번: 40)
+- **해설**: ResidualLayer(3, scale=4)는 super().__init__(3)을 통해 self.dim = 3을 설정하고 self.scale = 4를 설정합니다. layer.forward(7) 호출 시 super().forward(7)이 먼저 실행되어 7 + 3 = 10을 반환하고, 여기에 self.scale(4)을 곱해 40이 반환됩니다.
+
+---
+
+### Q49. [중급] 파이썬의 매직 메서드(Special/Dunder Method)인 `__len__`, `__str__`, `__eq__`를 구현한 커스텀 데이터셋 클래스의 실행 결과는?
+
+```python
+class Batch:
+    def __init__(self, items):
+        self.items = items
+    def __len__(self):
+        return len(self.items)
+    def __str__(self):
+        return f'Batch(n={len(self)})'
+    def __eq__(self, other):
+        return len(self) == len(other)
+
+b1 = Batch([10, 20, 30])
+b2 = Batch(['a', 'b', 'c'])
+print(str(b1), len(b1), b1 == b2)
+```
+
+- **(1)** Batch(n=3) 3 True
+- **(2)** Batch(n=3) 3 False
+- **(3)** <Batch object> 3 True
+- **(4)** Batch(n=3) 3 TypeError
+
+- **정답**: `0` (보기 1번: Batch(n=3) 3 True)
+- **해설**: str(b1)은 __str__을 호출하여 'Batch(n=3)'을 반환하고, len(b1)은 __len__을 호출하여 3을 반환합니다. b1 == b2 연산은 __eq__를 호출하며 두 객체의 길이가 모두 3으로 같으므로 원소 내용과 무관하게 정의된 규칙에 따라 True를 반환합니다.
+
+---
+
+### Q50. [초급] 파이썬 모듈 파일 내부에서 `if __name__ == '__main__':` 블록을 작성하는 이유와 `__name__` 내장 변수의 값에 대한 설명으로 가장 정확한 것은?
+
+```python
+# utils.py 파일 내부
+if __name__ == '__main__':
+    print('Run directly')
+```
+
+- **(1)** 해당 파일을 다른 모듈에서 `import utils`로 불러올 때만 `__name__`이 `'__main__'`이 되어 초기화 코드가 실행된다.
+- **(2)** `__name__` 변수는 언제나 파일의 절대 경로 문자열을 담고 있다.
+- **(3)** 해당 파일을 `python utils.py`로 직접 실행할 때는 `__name__`이 `'__main__'`이 되어 블록 내부가 실행되고, 다른 파일에서 `import utils`로 임포트할 때는 `__name__`이 모듈 이름인 `'utils'`가 되어 블록 내부가 실행되지 않는다.
+- **(4)** `if __name__ == '__main__':` 블록이 없으면 파이썬 인터프리터가 해당 파일을 임포트할 수 없다.
+
+- **정답**: `2` (보기 3번: 해당 파일을 `python utils.py`로 직접 실행할 때는 `__name__`이 `'__main__'`이 되어 블록 내부가 실행되고, 다른 파일에서 `import utils`로 임포트할 때는 `__name__`이 모듈 이름인 `'utils'`가 되어 블록 내부가 실행되지 않는다.)
+- **해설**: 파이썬 인터프리터는 스크립트 파일을 직접 실행할 때 그 파일의 __name__ 전역 변수에 '__main__'을 할당하고, 다른 모듈에서 import할 때는 모듈의 이름('utils')을 할당합니다. 이를 이용해 직접 실행 시에만 테스트/엔트리포인트 코드가 동작하도록 분기할 수 있습니다.
+
+---
+
+### Q51. [중급] 파이썬 패키지(Package) 구조에서 디렉터리 내부의 `__init__.py` 파일과 `__all__` 리스트의 역할로 가장 올바른 것은?
+
+```python
+# pkg/__init__.py
+__all__ = ['loader', 'preprocess']
+```
+
+- **(1)** `__all__`에 포함되지 않은 하위 모듈 `pkg.metrics`는 `import pkg.metrics`처럼 명시적으로 임포트하는 것도 문법적으로 차단된다.
+- **(2)** `__init__.py`에 정의된 `__all__` 리스트는 외부에서 `from pkg import *` 구문을 사용했을 때 공개적으로 임포트될 하위 모듈이나 심볼의 목록을 지정한다.
+- **(3)** `__init__.py` 파일은 패키지 내부의 모든 `.py` 파일을 실행 직후 자동으로 삭제하는 정리 스크립트이다.
+- **(4)** 패키지 임포트 시 `__init__.py`는 절대 실행되지 않으며 단순 주석 문서 역할만 수행한다.
+
+- **정답**: `1` (보기 2번: `__init__.py`에 정의된 `__all__` 리스트는 외부에서 `from pkg import *` 구문을 사용했을 때 공개적으로 임포트될 하위 모듈이나 심볼의 목록을 지정한다.)
+- **해설**: 패키지가 처음 임포트될 때 __init__.py가 실행되어 패키지 수준 초기화를 수행하며, __all__ 리스트는 와일드카드 임포트(`from pkg import *`) 시 가져올 대상 목록을 정의합니다(명시적인 `import pkg.metrics`는 __all__과 무관하게 언제든 가능합니다).
+
+---
+
+### Q52. [중급] 예외 처리 구문인 `try - except - else - finally`의 각 블록 실행 흐름을 확인하는 아래 코드의 출력 결과는?
+
+```python
+def parse_int(s):
+    log = []
+    try:
+        val = int(s)
+    except ValueError:
+        log.append('ERR')
+    else:
+        log.append(f'OK:{val}')
+    finally:
+        log.append('DONE')
+    return '-'.join(log)
+
+print(parse_int('42'), '|', parse_int('NaN'))
+```
+
+- **(1)** OK:42 | ERR
+- **(2)** OK:42-ERR-DONE | ERR-DONE
+- **(3)** OK:42-DONE | ERR-OK-DONE
+- **(4)** OK:42-DONE | ERR-DONE
+
+- **정답**: `3` (보기 4번: OK:42-DONE | ERR-DONE)
+- **해설**: try 블록에서 예외가 발생하지 않았을 때만 else 블록이 실행되고, 예외가 발생하면 except 블록이 실행됩니다. finally 블록은 예외 발생 여부나 return 여부와 상관없이 항상 마지막에 실행됩니다. 따라서 '42'는 'OK:42-DONE', 'NaN'은 'ERR-DONE'을 반환합니다.
+
+---
+
+### Q53. [중급] 사용자 정의 예외(Custom Exception) 클래스를 설계하고 `raise`로 발생시킬 때의 표준 관례와 아래 코드의 동작 결과는?
+
+```python
+class InvalidShapeError(Exception):
+    pass
+
+def check_tensor(shape):
+    if len(shape) != 3:
+        raise InvalidShapeError(f'Expected 3D, got {len(shape)}D')
+    return True
+
+try:
+    check_tensor((32, 128))
+except Exception as e:
+    print(type(e).__name__, isinstance(e, Exception), str(e))
+```
+
+- **(1)** Exception False Expected 3D, got 2D
+- **(2)** InvalidShapeError True Expected 3D, got 2D
+- **(3)** ValueError True Expected 3D, got 2D
+- **(4)** BaseException은 상속할 수 없어 TypeError 발생
+
+- **정답**: `1` (보기 2번: InvalidShapeError True Expected 3D, got 2D)
+- **해설**: 파이썬에서 사용자 정의 예외는 내장 Exception 클래스를 상속받아 정의합니다. InvalidShapeError는 Exception의 하위 클래스이므로 except Exception as e:에서 포착되며, type(e).__name__은 'InvalidShapeError', isinstance(e, Exception)은 True입니다.
+
+---
+
+### Q54. [초급] 파이썬 핵심 내장 함수 `map()`, `filter()`, `divmod()`, `any()`, `all()`을 조합한 아래 코드의 실행 결과는?
+
+```python
+nums = [1, 2, 3, 4]
+evens_sq = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, nums)))
+q, r = divmod(17, 5)
+print(evens_sq, (q, r), any([0, '', False]), all([1, 'a', [0]]))
+```
+
+- **(1)** [1, 4, 9, 16] (3, 2) False False
+- **(2)** [4, 16] (3, 2) True False
+- **(3)** [2, 4] (2, 3) False True
+- **(4)** [4, 16] (3, 2) False True
+
+- **정답**: `3` (보기 4번: [4, 16] (3, 2) False True)
+- **해설**: filter로 짝수 [2, 4]를 걸러낸 뒤 map으로 제곱하여 [4, 16]이 됩니다. divmod(17, 5)는 몫과 나머지 튜플 (3, 2)를 반환합니다. any([0, '', False])는 모든 원소가 Falsy이므로 False, all([1, 'a', [0]])은 비어 있지 않은 리스트 [0]을 포함해 모든 원소가 Truthy이므로 True입니다.
+
+---
+
+### Q55. [고급] 이터레이터(Iterator)와 제너레이터(Generator, `yield`)의 일회성 소진(Exhaustion) 특성을 보여주는 아래 코드의 출력 결과는?
+
+```python
+def gen_batches(n):
+    for i in range(1, n + 1):
+        yield i * 10
+
+g = gen_batches(3)
+first_val = next(g)
+rest_list = list(g)
+again_list = list(g)
+print(first_val, rest_list, again_list)
+```
+
+- **(1)** 10 [20, 30] []
+- **(2)** 10 [10, 20, 30] [10, 20, 30]
+- **(3)** 10 [20, 30] [10, 20, 30]
+- **(4)** StopIteration 예외 발생
+
+- **정답**: `0` (보기 1번: 10 [20, 30] [])
+- **해설**: 함수 내부에 yield가 있으면 호출 시 제너레이터 이터레이터 객체 g가 반환됩니다. next(g)로 첫 번째 값 10을 소비한 뒤 list(g)를 호출하면 남은 20, 30만 소비되어 [20, 30]이 됩니다. 이미 끝까지 소진된 이터레이터에 다시 list(g)를 호출하면 StopIteration이 내부적으로 처리되어 빈 리스트 []가 반환됩니다.
+
+---
+
+### Q56. [고급] 클로저(Closure)와 데코레이터(Decorator, `@`) 및 `functools.wraps`의 동작 원리를 보여주는 아래 코드의 출력 결과는?
+
+```python
+from functools import wraps
+
+def scale_output(factor):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs) * factor
+        return wrapper
+    return decorator
+
+@scale_output(10)
+def predict(x):
+    """Predict score"""
+    return x + 2
+
+print(predict(3), predict.__name__)
+```
+
+- **(1)** 50 wrapper
+- **(2)** 32 predict
+- **(3)** 50 predict
+- **(4)** 15 wrapper
+
+- **정답**: `2` (보기 3번: 50 predict)
+- **해설**: @scale_output(10)은 인자를 받는 데코레이터 팩토리로, predict(3)이 반환한 (3 + 2) = 5에 클로저 변수 factor(10)를 곱해 50을 반환합니다. 또한 @wraps(func)를 사용했기 때문에 원래 함수의 메타데이터(__name__, __doc__)가 보존되어 predict.__name__은 'wrapper'가 아닌 'predict'가 됩니다.
+
+---
+
+### Q57. [중급] 표준 라이브러리 `collections` 모듈의 `Counter`와 `defaultdict`를 활용한 아래 코드의 실행 결과는?
+
+```python
+from collections import Counter, defaultdict
+
+tokens = ['ai', 'ml', 'ai', 'dl', 'ai', 'ml']
+c = Counter(tokens)
+dd = defaultdict(list)
+for idx, tok in enumerate(tokens):
+    dd[tok].append(idx)
+
+print(c.most_common(1)[0], dd['ml'], dd['nlp'])
+```
+
+- **(1)** ('ai', 3) [1, 5] KeyError 발생
+- **(2)** 'ai' [1, 5] None
+- **(3)** ('ai', 3) [1, 5] []
+- **(4)** ('ml', 2) [0, 2, 4] []
+
+- **정답**: `2` (보기 3번: ('ai', 3) [1, 5] [])
+- **해설**: Counter.most_common(1)은 가장 빈도가 높은 원소와 빈도수의 튜플 리스트 [('ai', 3)]을 반환하므로 [0]번째는 ('ai', 3)입니다. defaultdict(list)는 존재하지 않는 키 'nlp'를 조회할 때 KeyError 대신 팩토리 함수 list()를 호출해 빈 리스트 []를 자동 생성 및 반환합니다.
+
+---
+
+### Q58. [중급] 표준 라이브러리 `itertools`의 조합론 함수인 `product`(데카르트 곱), `permutations`(순열), `combinations`(조합)을 사용하여 하이퍼파라미터 그리드 및 조합 개수를 구한 아래 코드의 출력 결과는?
+
+```python
+from itertools import product, permutations, combinations
+
+grid = list(product(['l1', 'l2'], [0.1, 0.01, 0.001]))
+perms = list(permutations([1, 2, 3], 2))
+combs = list(combinations([1, 2, 3], 2))
+print(len(grid), len(perms), len(combs))
+```
+
+- **(1)** 6 6 3
+- **(2)** 5 6 3
+- **(3)** 6 3 6
+- **(4)** 6 9 3
+
+- **정답**: `0` (보기 1번: 6 6 3)
+- **해설**: product는 2개 × 3개 = 6개의 데카르트 곱 순서쌍을 생성합니다. 3개 원소에서 2개를 뽑는 순열(permutations, 순서 고려: 3P2 = 3×2)은 6개이고, 조합(combinations, 순서 무관: 3C2 = 3)은 3개입니다.
+
+---
+
+### Q59. [초급] 표준 라이브러리 `json` 모듈에서 파이썬 딕셔너리 객체를 JSON 문자열로 직렬화(Serialization)할 때 한글이 `\uXXXX` 유니코드 이스케이프 형태로 깨지지 않고 원문 그대로 출력되게 하는 옵션과 함수 조합은?
+
+```python
+import json
+data = {'이름': '홍길동', '점수': 95}
+```
+
+- **(1)** json.loads(data, ensure_ascii=True)
+- **(2)** json.dump(data, ascii=True)
+- **(3)** json.read(data, encoding='utf-8')
+- **(4)** json.dumps(data, ensure_ascii=False)
+
+- **정답**: `3` (보기 4번: json.dumps(data, ensure_ascii=False))
+- **해설**: 파이썬 객체를 JSON 문자열(str)로 변환하는 함수는 json.dumps()(파일에 직접 쓸 때는 json.dump())이며, 기본값인 ensure_ascii=True 대신 ensure_ascii=False를 지정해야 비ASCII 문자(한글 등)가 유니코드 코드포인트로 이스케이프되지 않고 그대로 보존됩니다.
+
+---
+
+### Q60. [중급] 표준 라이브러리 `datetime`의 날짜 연산(`timedelta`)과 객체지향 경로 다루기 모듈 `pathlib.Path`의 연산자(`/`) 및 속성을 활용한 아래 코드의 실행 결과는?
+
+```python
+from datetime import date, timedelta
+from pathlib import Path
+
+d = date(2026, 11, 1) + timedelta(days=14)
+p = Path('/workspace/models') / 'bert_v2.pt'
+print(d.strftime('%Y-%m-%d'), p.stem, p.suffix)
+```
+
+- **(1)** 2026-11-15 bert_v2.pt .pt
+- **(2)** 2026-11-15 bert_v2 .pt
+- **(3)** 2026-11-14 bert_v2 pt
+- **(4)** 2026/11/15 models .pt
+
+- **정답**: `1` (보기 2번: 2026-11-15 bert_v2 .pt)
+- **해설**: 2026년 11월 1일에 14일을 더하면 2026-11-15가 됩니다. pathlib.Path는 슬래시(/) 연산자로 운영체제에 맞게 경로를 안전하게 결합하며, p.name은 'bert_v2.pt', 확장자를 제외한 파일명인 p.stem은 'bert_v2', 점(.)을 포함한 확장자인 p.suffix는 '.pt'입니다.
+
+---
+
+## 5. 파이썬 프로그래밍, 어떻게 시작해야 할까?
+
+### Q61. [초급] 프로그래밍 문제를 해결하기 위해 '입력(Input) - 처리(Process) - 출력(Output)'을 구조화할 때, 1 이상 100 미만의 자연수 중 4의 배수이거나 6의 배수이지만 12의 공배수는 제외한 수들의 총합을 구하는 한 줄 표현식으로 가장 올바른 것은?
+
+```python
+# 조건: (4의 배수 또는 6의 배수) 이면서 (12의 배수는 아님)
+```
+
+- **(1)** sum(n for n in range(1, 100) if n % 4 == 0 and n % 6 == 0 and n % 12 != 0)
+- **(2)** sum(n for n in range(1, 101) if n % 4 == 0 or (n % 6 == 0 and n % 12 != 0))
+- **(3)** sum(n for n in range(1, 100) if n % 4 == 0 ^ n % 6 == 0)
+- **(4)** sum(n for n in range(1, 100) if (n % 4 == 0 or n % 6 == 0) and n % 12 != 0)
+
+- **정답**: `3` (보기 4번: sum(n for n in range(1, 100) if (n % 4 == 0 or n % 6 == 0) and n % 12 != 0))
+- **해설**: '1 이상 100 미만'이므로 range(1, 100)을 사용해야 하며, 논리 연산자 우선순위에서 and가 or보다 높기 때문에 반드시 (n % 4 == 0 or n % 6 == 0)을 괄호로 묶은 뒤 and n % 12 != 0 조건을 결합해야 합니다.
+
+---
+
+### Q62. [중급] 데이터 대시보드나 게시판 페이지네이션(Pagination)을 설계할 때, 전체 데이터 건수 `total`(단, `total >= 0`)와 한 페이지당 표시할 건수 `per_page`(`per_page >= 1`)가 주어졌을 때 `math` 모듈 없이 정수 나눗셈(`//`)만으로 필요한 총 페이지 수를 정확히 산출하는 수식(단, `total == 0`일 때는 0페이지 반환)과 그 실행 결과는?
+
+```python
+def get_total_pages(total, per_page):
+    if total == 0:
+        return 0
+    return (total - 1) // per_page + 1
+
+print(get_total_pages(0, 10), get_total_pages(20, 10), get_total_pages(21, 10))
+```
+
+- **(1)** 1 2 3
+- **(2)** 0 2 3
+- **(3)** 0 3 3
+- **(4)** 0 2 2
+
+- **정답**: `1` (보기 2번: 0 2 3)
+- **해설**: 단순히 total // per_page + 1을 쓰면 total이 per_page로 나누어떨어질 때(예: 20건, 10건씩) 2페이지가 아니라 3페이지로 잘못 계산됩니다. 반면 (total - 1) // per_page + 1 올림(Ceiling) 공식을 사용하면 20건일 때 (19 // 10) + 1 = 2페이지, 21건일 때 (20 // 10) + 1 = 3페이지로 경계값(Boundary case)까지 완벽히 처리됩니다.
+
+---
+
+### Q63. [중급] 명령행 인자에 따라 메모장이나 실험 로그 파일에 새 기록을 추가(`-a`)하거나 전체 기록을 조회(`-v`)하는 자동화 스크립트를 작성할 때, 기존 로그를 보존하면서 끝에 한 줄씩 안전하게 기록하기 위한 파일 처리 방식으로 올바른 것은?
+
+```python
+# python exp_memo.py -a "epoch=10, val_loss=0.082"
+# python exp_memo.py -v
+```
+
+- **(1)** 추가(`-a`) 시 `open('memo.txt', 'w', encoding='utf-8')` 모드로 열어 기록한다.
+- **(2)** 추가(`-a`) 시 `'r'` 모드로 열어 `f.write()`를 호출한다.
+- **(3)** 추가(`-a`) 시 `open('memo.txt', 'a', encoding='utf-8')` 모드로 열어 메시지와 개행 문자(`\n`)를 기록하고, 조회(`-v`) 시 `Path('memo.txt').exists()`로 파일 존재 여부를 확인한 뒤 `'r'` 모드로 읽는다.
+- **(4)** 텍스트 파일 입출력 시 한글 깨짐 방지를 위해 반드시 `'rb'` 이진 읽기 전용 모드로만 데이터를 써야 한다.
+
+- **정답**: `2` (보기 3번: 추가(`-a`) 시 `open('memo.txt', 'a', encoding='utf-8')` 모드로 열어 메시지와 개행 문자(`\n`)를 기록하고, 조회(`-v`) 시 `Path('memo.txt').exists()`로 파일 존재 여부를 확인한 뒤 `'r'` 모드로 읽는다.)
+- **해설**: 'w' 모드는 기존 파일 내용을 모두 지워버리므로, 기존 로그 뒤에 새 줄을 덧붙이려면 반드시 추가 모드인 'a'(Append)를 사용해야 합니다. 또한 조회('-v') 시 아직 파일이 생성되기 전이라면 FileNotFoundError가 발생할 수 있으므로 파일 존재 여부를 확인하거나 예외 처리를 함께 설계해야 합니다.
+
+---
+
+### Q64. [중급] 소스 코드나 텍스트 파일 전처리 파이프라인에서 탭(`\t`) 문자를 공백 4칸으로 변환하고 각 줄 오른쪽 끝의 불필요한 공백(Trailing whitespace)만 제거하면서 들여쓰기(왼쪽 공백)는 그대로 유지하는 코드로 올바른 것은?
+
+```python
+raw_line = '\tdef forward(x):   \n'
+```
+
+- **(1)** clean_line = raw_line.replace('\t', ' ' * 4).rstrip()
+- **(2)** clean_line = raw_line.replace('\t', ' ' * 4).strip()
+- **(3)** clean_line = raw_line.replace('\t', ' ' * 4).lstrip()
+- **(4)** clean_line = raw_line.split().join(' ')
+
+- **정답**: `0` (보기 1번: clean_line = raw_line.replace('\t', ' ' * 4).rstrip())
+- **해설**: strip()이나 lstrip()을 사용하면 파이썬 코드에서 가장 중요한 문법 요소인 왼쪽 들여쓰기 공백까지 모두 사라집니다. 따라서 탭을 공백 4칸으로 치환한 뒤 오른쪽 끝의 공백과 개행 문자만 제거하는 rstrip()을 사용해야 들여쓰기가 보존됩니다.
+
+---
+
+### Q65. [중급] 특정 루트 디렉터리 아래의 모든 하위 디렉터리를 재귀적으로(Recursively) 탐색하여 확장자가 `.py`인 파일만 찾아내는 두 가지 표준 방법(`os.walk`와 `pathlib.Path.rglob`)에 대한 설명으로 올바른 것은?
+
+```python
+import os
+from pathlib import Path
+```
+
+- **(1)** `for root, dirs, files in os.walk(top_dir):`는 하위 디렉터리를 재귀 순회하며, `Path(top_dir).rglob('*.py')`(또는 `glob('**/*.py')`) 역시 하위 폴더 전체에서 `.py` 파일을 재귀적으로 찾아 제너레이터로 반환한다.
+- **(2)** `os.listdir(root)` 함수 하나만 호출하면 모든 하위 폴더 내부의 파일까지 자동으로 재귀 탐색해 전체 경로를 반환한다.
+- **(3)** `os.walk()`는 파일의 내용( 텍스트 문자열 )만 반환할 뿐 디렉터리 경로는 반환하지 않는다.
+- **(4)** `Path.glob('*.py')`는 기본적으로 모든 하위 디렉터리까지 무한 깊이로 재귀 탐색한다.
+
+- **정답**: `0` (보기 1번: `for root, dirs, files in os.walk(top_dir):`는 하위 디렉터리를 재귀 순회하며, `Path(top_dir).rglob('*.py')`(또는 `glob('**/*.py')`) 역시 하위 폴더 전체에서 `.py` 파일을 재귀적으로 찾아 제너레이터로 반환한다.)
+- **해설**: os.listdir()이나 Path.glob('*.py')는 현재(직속) 디렉터리 1단계만 탐색합니다. 하위 디렉터리 전체를 재귀적으로 탐색하려면 os.walk()를 사용하여 (dirpath, dirnames, filenames) 3-튜플을 순회하거나, pathlib의 Path.rglob('*.py') / Path.glob('**/*.py')를 사용해야 합니다.
+
+---
+
+### Q66. [초급] 정규표현식(`re` 모듈)에서 사용하는 문자 클래스와 메타문자(`\d`, `\D`, `\w`, `\s`, `+`, `*`, `?`, `{m,n}`)에 대한 설명으로 옳지 않은 것은?
+
+```python
+import re
+```
+
+- **(1)** `\d`는 숫자와 매치되며 `[0-9]`와 동등하고, 대문자 `\D`는 숫자가 아닌 모든 문자(`[^0-9]`)와 매치된다.
+- **(2)** `\s`는 공백 문자(스페이스, 탭 `\t`, 줄바꿈 `\n` 등)와 매치된다.
+- **(3)** 반복 수량자 `+`는 앞의 패턴이 0번 이상 반복됨을 의미하고, `*`는 반드시 1번 이상 반복됨을 의미한다.
+- **(4)** `{2,4}`는 앞의 패턴이 최소 2번 이상, 최대 4번 이하 반복됨을 의미하며, `?`는 `{0,1}`(0번 또는 1번)과 같다.
+
+- **정답**: `2` (보기 3번: 반복 수량자 `+`는 앞의 패턴이 0번 이상 반복됨을 의미하고, `*`는 반드시 1번 이상 반복됨을 의미한다.)
+- **해설**: 반복 수량자에서 `*`가 0번 이상 반복(Zero or more)을 의미하고, `+`가 최소 1번 이상 반복(One or more)을 의미합니다. 두 수량자의 의미가 반대로 서술된 보기가 틀린 설명입니다.
+
+---
+
+### Q67. [중급] 파이썬 `re` 모듈의 탐색 함수인 `re.match()`와 `re.search()`의 결정적인 동작 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+import re
+text = 'epoch 10: loss=0.25'
+m1 = re.match(r'\d+', text)
+m2 = re.search(r'\d+', text)
+print(m1, m2.group())
+```
+
+- **(1)** 10 10
+- **(2)** None 10
+- **(3)** None 0
+- **(4)** <re.Match object> 10
+
+- **정답**: `1` (보기 2번: None 10)
+- **해설**: re.match()는 대상 문자열의 맨 처음(시작 위치, 인덱스 0)부터 패턴이 일치하는지 검사하므로, 영문자 'epoch'로 시작하는 text에서는 숫자와 매치되지 않아 None을 반환합니다. 반면 re.search()는 문자열 전체를 스캔하여 처음으로 패턴과 일치하는 구간인 '10'을 찾아 Match 객체를 반환하므로 m2.group()은 '10'입니다.
+
+---
+
+### Q68. [중급] 정규표현식의 `re.findall()`과 `re.finditer()`를 사용할 때, 정규식 패턴 안에 캡처 그룹 `()`이 있는 경우 `re.findall()`의 반환 결과가 어떻게 달라지는지 보여주는 아래 코드의 출력 결과는?
+
+```python
+import re
+log = 'acc=92%, f1=88%'
+r1 = re.findall(r'[a-z0-9]+=[0-9]+%', log)
+r2 = re.findall(r'([a-z0-9]+)=([0-9]+)%', log)
+print(r1[0], '|', r2[0])
+```
+
+- **(1)** acc=92% | acc=92%
+- **(2)** ('acc', '92') | ('acc', '92')
+- **(3)** acc | 92
+- **(4)** acc=92% | ('acc', '92')
+
+- **정답**: `3` (보기 4번: acc=92% | ('acc', '92'))
+- **해설**: re.findall()은 패턴에 캡처 그룹 ()이 없을 때는 전체 매치된 문자열 리스트(['acc=92%', 'f1=88%'])를 반환하지만, 캡처 그룹이 2개 이상 포함되어 있으면 각 그룹에 매치된 문자열들의 튜플 리스트([('acc', '92'), ('f1', '88')])를 반환합니다.
+
+---
+
+### Q69. [중급] 정규표현식 컴파일 옵션(Flags)인 `re.DOTALL`(`re.S`), `re.IGNORECASE`(`re.I`), `re.MULTILINE`(`re.M`)의 동작을 확인하는 아래 코드의 실행 결과는?
+
+```python
+import re
+text = 'Hello\nWorld'
+m_default = re.search(r'Hello.World', text)
+m_dotall = re.search(r'Hello.World', text, re.DOTALL)
+lines = 'cat\ndog\ncar'
+m_multi = re.findall(r'^c\w+', lines, re.MULTILINE)
+print(m_default is None, m_dotall is not None, m_multi)
+```
+
+- **(1)** False True ['cat']
+- **(2)** True True ['cat', 'car']
+- **(3)** True False ['cat', 'car']
+- **(4)** True True ['cat']
+
+- **정답**: `1` (보기 2번: True True ['cat', 'car'])
+- **해설**: 정규표현식의 점(.) 메타문자는 기본적으로 줄바꿈 문자(\n)를 제외한 모든 문자와 매치되므로 m_default는 None입니다. re.DOTALL(re.S) 옵션을 주면 점(.)이 \n까지 포함하여 매치됩니다. 또한 ^ 메타문자는 기본적으로 전체 문자열의 맨 처음만 의미하지만, re.MULTILINE(re.M) 옵션을 주면 각 줄(Line)의 시작 부분마다 ^가 적용되어 ['cat', 'car']를 모두 찾습니다.
+
+---
+
+### Q70. [고급] 정규표현식의 탐욕적(Greedy) 수량자 `*`와 비탐욕적(Non-greedy / Lazy, 최소 매칭) 수량자 `*?`의 매칭 결과 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+import re
+html = '<div>Title</div><div>Body</div>'
+greedy = re.findall(r'<div>.*</div>', html)
+lazy = re.findall(r'<div>.*?</div>', html)
+print(len(greedy), len(lazy), lazy[0])
+```
+
+- **(1)** 2 2 <div>Title</div>
+- **(2)** 1 1 <div>Title</div><div>Body</div>
+- **(3)** 2 1 <div>Title</div>
+- **(4)** 1 2 <div>Title</div>
+
+- **정답**: `3` (보기 4번: 1 2 <div>Title</div>)
+- **해설**: 탐욕적(Greedy) 패턴 `<div>.*</div>`는 가능한 한 가장 긴 문자열을 소비하므로 첫 `<div>`부터 맨 마지막 `</div>`까지 전체를 하나의 매치(['<div>Title</div><div>Body</div>'])로 묶어 길이가 1이 됩니다. 반면 뒤에 `?`를 붙인 비탐욕적(Lazy) 패턴 `<div>.*?</div>`는 가장 먼저 만나는 `</div>`에서 매칭을 멈추므로 ['<div>Title</div>', '<div>Body</div>'] 2개를 분리해 추출합니다.
+
+---
+
+### Q71. [고급] 정규표현식의 명명된 그룹(Named Capturing Group, `(?P<name>...)`)과 `re.sub()`를 활용한 문자열 구조 변환(역참조 `\g<name>`) 코드의 실행 결과는?
+
+```python
+import re
+record = 'Kim 010-1234-5678'
+m = re.search(r'(?P<user>\w+)\s+(?P<head>\d{3})-(?P<mid>\d{4})-(?P<tail>\d{4})', record)
+masked = re.sub(r'(?P<user>\w+)\s+(?P<head>\d{3})-\d{4}-(?P<tail>\d{4})', r'\g<user>: \g<head>-****-\g<tail>', record)
+print(m.group('user'), '|', masked)
+```
+
+- **(1)** Kim | Kim: 010-****-5678
+- **(2)** 010 | Kim: 010-1234-****
+- **(3)** Kim | \g<user>: 010-****-5678
+- **(4)** SyntaxError 발생
+
+- **정답**: `0` (보기 1번: Kim | Kim: 010-****-5678)
+- **해설**: (?P<name>pattern) 문법으로 그룹에 이름을 부여하면 Match 객체에서 m.group('user')로 값을 꺼낼 수 있고('Kim'), re.sub()의 치환 문자열에서는 \g<name> 문법으로 해당 그룹을 역참조하여 'Kim: 010-****-5678'과 같이 개인정보 마스킹 및 포맷 변환을 깔끔하게 수행할 수 있습니다.
+
+---
+
+### Q72. [고급] 정규표현식의 긍정형 전방탐색(Positive Lookahead, `(?=...)`)과 부정형 전방탐색(Negative Lookahead, `(?!...)`)의 핵심 특징(문자를 소비하지 않음)을 보여주는 아래 코드의 실행 결과는?
+
+```python
+import re
+prices = '100USD 250KRW 40USD 90EUR'
+usd_values = re.findall(r'\d+(?=USD)', prices)
+non_usd = re.findall(r'\b\d+(?!USD)\b', '100 250')
+print(usd_values)
+```
+
+- **(1)** ['100USD', '40USD']
+- **(2)** ['USD', 'USD']
+- **(3)** ['100', '40']
+- **(4)** ['100', '250', '40', '90']
+
+- **정답**: `2` (보기 3번: ['100', '40'])
+- **해설**: 긍정형 전방탐색 `(?=USD)`는 숫자 뒤에 'USD'가 뒤따라오는 조건을 검사하되, 'USD' 자체는 매치 결과에서 소비(포함)하지 않습니다. 따라서 단위 기호 없이 숫자 값만 깔끔하게 추출된 ['100', '40']이 반환됩니다.
+
+---
+
+### Q73. [중급] 파이썬 문자열 앞에 `r`을 붙이는 Raw String 리터럴(`r'...'`)을 정규표현식 패턴 작성 시 사용하는 이유로 가장 적절한 것은?
+
+```python
+p1 = '\\section'
+p2 = r'\section'
+print(p1 == p2, len(p2))
+```
+
+- **(1)** Raw String을 사용하면 정규표현식 엔진이 C 언어 대신 GPU 커널에서 실행되기 때문이다.
+- **(2)** `p1 == p2`는 `False`이며, Raw String은 대소문자를 자동으로 무시하기 때문이다.
+- **(3)** 파이썬 문자열 리터럴 단계에서 백슬래시(`\`)가 이스케이프 문자로 먼저 해석되는 것을 막고, 정규표현식 엔진에 백슬래시를 있는 그대로 전달하여 백슬래시를 두 번씩(`\\`) 써야 하는 번거로움(Backslash Plague)을 방지하기 위해서이다.
+- **(4)** Raw String 내부에서는 영문자 외의 숫자를 사용할 수 없기 때문이다.
+
+- **정답**: `2` (보기 3번: 파이썬 문자열 리터럴 단계에서 백슬래시(`\`)가 이스케이프 문자로 먼저 해석되는 것을 막고, 정규표현식 엔진에 백슬래시를 있는 그대로 전달하여 백슬래시를 두 번씩(`\\`) 써야 하는 번거로움(Backslash Plague)을 방지하기 위해서이다.)
+- **해설**: 일반 문자열에서는 '\section'의 \s를 파이썬 문자열 파서가 먼저 해석하거나, 정규표현식에서 리터럴 백슬래시를 매치하려면 '\\\\'처럼 4개를 써야 합니다. Raw String(r'\section')을 사용하면 파이썬 문자열 이스케이프 처리를 비활성화하여 p1('\\section')과 p2(r'\section')가 완전히 동일한 8글자 문자열(True, 8)이 됩니다.
+
+---
+
+### Q74. [중급] 연속으로 반복되는 동일 문자(예: `'aaabbcddd'`)를 문자와 반복 횟수 형태(`'a3b2c1d3'`)로 압축하는 런-렝스 인코딩(Run-Length Encoding) 알고리즘을 구현한 아래 코드의 빈칸 동작 결과로 올바른 것은?
+
+```python
+def compress_rle(s):
+    if not s:
+        return ''
+    res = []
+    prev = s[0]
+    cnt = 1
+    for ch in s[1:]:
+        if ch == prev:
+            cnt += 1
+        else:
+            res.append(f'{prev}{cnt}')
+            prev = ch
+            cnt = 1
+    res.append(f'{prev}{cnt}')
+    return ''.join(res)
+
+print(compress_rle('aaabccccd'))
+```
+
+- **(1)** a3b1c4d1
+- **(2)** a3bc4d
+- **(3)** a3b1c4
+- **(4)** a4b1c4d1
+
+- **정답**: `0` (보기 1번: a3b1c4d1)
+- **해설**: 이전 문자 prev와 현재 문자 ch가 같으면 cnt를 1 증가시키고, 달라지면 그전까지의 문자와 개수를 res에 기록한 뒤 prev=ch, cnt=1로 초기화합니다. 루프 종료 후 마지막 문자 그룹('d1')까지 res.append()로 추가하므로 'a3b1c4d1'이 정확히 출력됩니다.
+
+---
+
+### Q75. [중급] 동일한 정규표현식 패턴을 수만 건의 로그 라인에 반복 적용할 때 `re.compile()`을 사용하는 성능·구조상 이점과 `re.sub()`에 함수를 전달하는 아래 코드의 실행 결과는?
+
+```python
+import re
+num_pat = re.compile(r'\d+')
+res = num_pat.sub(lambda m: str(int(m.group()) * 2), 'batch=16, epochs=5')
+print(res)
+```
+
+- **(1)** batch=1616, epochs=55
+- **(2)** batch=16, epochs=5
+- **(3)** re.sub()에는 문자열만 전달할 수 있어 TypeError 발생
+- **(4)** batch=32, epochs=10
+
+- **정답**: `3` (보기 4번: batch=32, epochs=10)
+- **해설**: re.compile()로 패턴 객체를 미리 컴파일해 두면 반복문에서 매번 패턴을 파싱하는 오버헤드를 줄이고 가독성을 높일 수 있습니다. 또한 sub(repl, string)의 첫 번째 인자 repl에는 문자열뿐만 아니라 Match 객체 m을 인자로 받는 콜백 함수를 전달할 수 있으며, int(m.group()) * 2를 통해 16은 '32'로, 5는 '10'으로 동적 치환됩니다.
+
+---
+
+## 6. 판다스
+
+### Q76. [중급] 판다스 `Series` 간의 산술 연산은 위치(Position)가 아니라 인덱스 라벨(Index Label)을 기준으로 자동 정렬(Index Alignment)되어 수행됩니다. 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+s1 = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+s2 = pd.Series([1, 2, 3], index=['b', 'c', 'd'])
+res = s1 + s2
+print(res['b'], pd.isna(res['a']), pd.isna(res['d']), s1.add(s2, fill_value=0)['a'])
+```
+
+- **(1)** 11.0 False False 10.0
+- **(2)** 21.0 True True 10.0
+- **(3)** 21.0 False True 11.0
+- **(4)** KeyError 예외 발생
+
+- **정답**: `1` (보기 2번: 21.0 True True 10.0)
+- **해설**: s1 + s2는 양쪽 인덱스의 합집합(['a', 'b', 'c', 'd'])을 기준으로 라벨을 맞춰 더합니다. 공통 라벨인 'b'는 20 + 1 = 21.0이 되지만, 한쪽에만 있는 'a'와 'd'는 NaN(결측치)이 되어 pd.isna()가 모두 True입니다. 반면 s1.add(s2, fill_value=0)을 사용하면 한쪽에 없는 값을 0으로 채운 뒤 연산하므로 'a'의 값은 10.0이 됩니다.
+
+---
+
+### Q77. [중급] 판다스 `DataFrame`에서 라벨 기반 인덱서 `loc`와 정수 위치 기반 인덱서 `iloc`의 슬라이싱 끝점 포함 여부 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+df = pd.DataFrame({'val': [10, 20, 30, 40]}, index=[100, 101, 102, 103])
+res_loc = df.loc[100:102, 'val']
+res_iloc = df.iloc[0:2, 0]
+print(len(res_loc), len(res_iloc), res_loc.iloc[-1], res_iloc.iloc[-1])
+```
+
+- **(1)** 2 2 20 20
+- **(2)** 3 3 30 30
+- **(3)** 2 3 20 30
+- **(4)** 3 2 30 20
+
+- **정답**: `3` (보기 4번: 3 2 30 20)
+- **해설**: loc[start:stop]은 인덱스 라벨 기반 슬라이싱으로 끝 라벨(102)을 포함(Inclusive)하므로 라벨 100, 101, 102의 3개 행(마지막 값 30)을 반환합니다. 반면 iloc[start:stop]은 파이썬 표준 정수 슬라이싱 규칙을 따라 끝 위치(2)를 미포함(Exclusive)하므로 위치 0, 1의 2개 행(마지막 값 20)을 반환합니다.
+
+---
+
+### Q78. [중급] 판다스에서 다중 조건 불리언 인덱싱(Boolean Indexing)을 작성할 때 연산자 우선순위와 기호 사용 규칙으로 가장 올바른 코드는?
+
+```python
+# 조건: df['score']가 80 이상이고, df['dept']가 'AI' 또는 'Data'인 행 필터링
+```
+
+- **(1)** df[df['score'] >= 80 and df['dept'] in ['AI', 'Data']]
+- **(2)** df[(df['score'] >= 80) & (df['dept'].isin(['AI', 'Data']))]
+- **(3)** df[df['score'] >= 80 & df['dept'].isin(['AI', 'Data'])]
+- **(4)** df[(df['score'] >= 80) && (!df['dept'].isna())]
+
+- **정답**: `1` (보기 2번: df[(df['score'] >= 80) & (df['dept'].isin(['AI', 'Data']))])
+- **해설**: 판다스 Series의 원소별 논리 연산에는 파이썬 키워드(and, or, not)가 아니라 비트 연산자(&, |, ~)를 사용해야 하며, 비트 연산자(&, |)는 비교 연산자(>=, ==)보다 연산자 우선순위가 높기 때문에 각 조건식을 반드시 소괄호 ()로 감싸야 합니다. 또한 다중 값 포함 여부는 .isin() 메서드로 간결하게 표현합니다.
+
+---
+
+### Q79. [중급] `DataFrame.query()` 메서드를 사용하여 문자열 표현식으로 필터링할 때, 외부 파이썬 지역 변수를 참조하는 기호와 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+df = pd.DataFrame({'model': ['A', 'B', 'C'], 'acc': [0.85, 0.92, 0.78]})
+threshold = 0.80
+sub = df.query('acc >= @threshold and model != "A"')
+print(list(sub['model']))
+```
+
+- **(1)** ['A', 'B']
+- **(2)** ['B', 'C']
+- **(3)** ['B']
+- **(4)** UndefinedVariableError 예외 발생
+
+- **정답**: `2` (보기 3번: ['B'])
+- **해설**: df.query() 내부 문자열에서 외부 파이썬 변수(threshold)를 참조할 때는 변수명 앞에 골뱅이(@) 기호를 붙여 @threshold 형태로 작성합니다. acc >= 0.80인 행은 A(0.85), B(0.92)이고 그중 model != 'A'인 행은 'B'뿐이므로 ['B']가 출력됩니다.
+
+---
+
+### Q80. [중급] 판다스의 결측치 제거 메서드 `dropna()`에서 `how`, `thresh`, `subset` 매개변수의 동작을 확인하는 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+import numpy as np
+df = pd.DataFrame({
+    'A': [1, np.nan, np.nan, 4],
+    'B': [10, 20, np.nan, 40],
+    'C': [100, np.nan, np.nan, 400]
+})
+r1 = df.dropna(how='all')
+r2 = df.dropna(thresh=2)
+r3 = df.dropna(subset=['B'])
+print(len(r1), len(r2), len(r3))
+```
+
+- **(1)** 3 2 3
+- **(2)** 2 2 3
+- **(3)** 3 3 2
+- **(4)** 2 3 3
+
+- **정답**: `0` (보기 1번: 3 2 3)
+- **해설**: how='all'은 모든 열이 NaN인 행(인덱스 2번 행)만 제거하므로 3개 행이 남습니다. thresh=2는 결측치가 아닌 정상 값(Non-NA)이 최소 2개 이상 존재하는 행만 유지하므로 인덱스 0번(3개)과 3번(3개) 2개 행만 남습니다(1번 행은 정상 값이 B 하나뿐이라 탈락). subset=['B']는 'B' 열에 결측치가 있는 행만 제거하므로 3개 행이 남습니다.
+
+---
+
+### Q81. [중급] 시계열이나 순서가 있는 데이터프레임에서 결측치를 채우는 `ffill()`(Forward Fill), `bfill()`(Backward Fill), `interpolate()`(선형 보간)를 적용한 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+import numpy as np
+s = pd.Series([10.0, np.nan, np.nan, 40.0])
+print(s.ffill().iloc[2], s.bfill().iloc[1], s.interpolate().iloc[1])
+```
+
+- **(1)** 10.0 40.0 20.0
+- **(2)** 40.0 10.0 25.0
+- **(3)** 10.0 40.0 25.0
+- **(4)** NaN 40.0 20.0
+
+- **정답**: `0` (보기 1번: 10.0 40.0 20.0)
+- **해설**: ffill()은 앞(위)의 유효값 10.0으로 뒤의 결측치들을 채우므로 iloc[2]는 10.0입니다. bfill()은 뒤(아래)의 유효값 40.0으로 앞의 결측치들을 채우므로 iloc[1]은 40.0입니다. interpolate()(기본 method='linear')는 등간격 선형 보간을 수행하여 [10.0, 20.0, 30.0, 40.0]으로 채우므로 iloc[1]은 20.0입니다.
+
+---
+
+### Q82. [초급] 중복 행을 제거하는 `drop_duplicates()`에서 특정 컬럼 기준(`subset`)과 남길 행 지정(`keep='first' | 'last' | False`)을 적용한 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+df = pd.DataFrame({'user': ['u1', 'u2', 'u1', 'u3'], 'ver': [1, 1, 2, 1]})
+d1 = df.drop_duplicates(subset=['user'], keep='last')
+d2 = df.drop_duplicates(subset=['user'], keep=False)
+print(d1.loc[d1['user'] == 'u1', 'ver'].iloc[0], len(d2))
+```
+
+- **(1)** 1 2
+- **(2)** 2 3
+- **(3)** 2 2
+- **(4)** 1 3
+
+- **정답**: `2` (보기 3번: 2 2)
+- **해설**: keep='last'는 중복된 'user' 중 가장 마지막에 등장한 행(ver=2)을 남기므로 'u1'의 ver는 2가 됩니다. keep=False는 한 번이라도 중복이 발생한 모든 행('u1'의 두 행 모두)을 완전히 삭제하고 유일한 행('u2', 'u3')만 남기므로 len(d2)는 2입니다.
+
+---
+
+### Q83. [고급] 판다스에서 함수를 적용하는 세 가지 메서드 `Series.map()`, `DataFrame.apply()`, `DataFrame.map()`(구 `applymap()`)의 적용 대상과 차이점으로 올바른 것은?
+
+```python
+# Series.map / DataFrame.apply / DataFrame.map
+```
+
+- **(1)** `DataFrame.apply(func, axis=0)`은 각 행(Row)마다 한 번씩 함수를 호출한다.
+- **(2)** `Series.map(arg)`는 Series의 각 원소를 변환할 때 함수뿐만 아니라 매핑용 딕셔너리(dict)나 다른 Series도 인자로 받을 수 있으며, `DataFrame.apply(func, axis=1)`은 행(Row) 단위로 함수를 호출한다.
+- **(3)** `Series.map()`은 DataFrame 전체에 대해서만 호출할 수 있고 단일 컬럼 Series에는 사용할 수 없다.
+- **(4)** `DataFrame.apply(func, axis=1)`은 C 언어 루프로 벡터화되어 있어 넘파이 유니버설 함수(ufunc)보다 항상 빠르다.
+
+- **정답**: `1` (보기 2번: `Series.map(arg)`는 Series의 각 원소를 변환할 때 함수뿐만 아니라 매핑용 딕셔너리(dict)나 다른 Series도 인자로 받을 수 있으며, `DataFrame.apply(func, axis=1)`은 행(Row) 단위로 함수를 호출한다.)
+- **해설**: Series.map()은 1차원 Series의 각 원소에 딕셔너리, Series, 함수를 매핑합니다. DataFrame.apply()는 axis=0(기본값)일 때 각 열(Column Series)에, axis=1일 때 각 행(Row Series)에 함수를 적용합니다(단, axis=1은 파이썬 레벨 루프이므로 벡터화 연산보다 느립니다). DataFrame의 모든 개별 셀(Element-wise)에 함수를 적용할 때는 Pandas 2.1+ 기준 DataFrame.map()(구 applymap)을 사용합니다.
+
+---
+
+### Q84. [중급] 결측치(`NaN`)가 포함된 문자열 Series에 벡터화 문자열 접근자 `.str` 메서드를 사용하는 이유와 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+import numpy as np
+s = pd.Series(['Model_A', np.nan, 'model_b'])
+cnt = s.str.lower().str.contains('model', na=False).sum()
+extracted = s.str.extract(r'_([A-Za-z])')[0].tolist()
+print(cnt, extracted[0])
+```
+
+- **(1)** 3 _A
+- **(2)** NaN이 포함되어 있어 AttributeError 발생
+- **(3)** 2 model_a
+- **(4)** 2 A
+
+- **정답**: `3` (보기 4번: 2 A)
+- **해설**: 일반 파이썬 루프(x.lower())는 np.nan(float)에서 AttributeError가 발생하지만, 판다스 .str 접근자는 결측치를 안전하게 건너뛰고 벡터화 처리합니다. s.str.lower().str.contains('model', na=False)는 결측치를 False로 처리하여 [True, False, True]가 되므로 합계(sum)는 2이며, str.extract()는 정규식 캡처 그룹 () 안의 문자 'A'를 추출합니다.
+
+---
+
+### Q85. [중급] 판다스에서 문자열 날짜를 시계열 타입으로 변환하는 `pd.to_datetime()`과 시계열 접근자 `.dt`를 활용한 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+dates = pd.Series(['2026-11-05 14:30:00', '2026-12-25 09:00:00'])
+dt_series = pd.to_datetime(dates)
+print(dt_series.dt.month.tolist(), dt_series.dt.hour.tolist(), (dt_series.iloc[1] - dt_series.iloc[0]).days)
+```
+
+- **(1)** [11, 12] [14, 9] 50
+- **(2)** [11, 12] [14, 9] 49
+- **(3)** ['11', '12'] ['14', '09'] 50
+- **(4)** [2026, 2026] [30, 0] 49
+
+- **정답**: `1` (보기 2번: [11, 12] [14, 9] 49)
+- **해설**: dt.month는 월 정수 [11, 12]를, dt.hour는 시간 정수 [14, 9]를 반환합니다. 두 시각의 차이(Timedelta)는 11월 5일 14:30부터 12월 25일 09:00까지로 50일에서 5시간 30분이 부족한 '49 days 18:30:00'이므로 .days 속성은 정수 일수인 49를 반환합니다.
+
+---
+
+### Q86. [고급] `groupby()` 후 집계를 수행하는 `agg()`와 원본 행 인덱스를 유지한 채 그룹 통계량을 브로드캐스팅하는 `transform()`의 결정적 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+df = pd.DataFrame({
+    'team': ['A', 'A', 'B', 'B', 'B'],
+    'score': [10, 20, 30, 40, 50]
+})
+agg_res = df.groupby('team')['score'].agg('mean')
+trans_res = df.groupby('team')['score'].transform('mean')
+df['diff'] = df['score'] - trans_res
+print(len(agg_res), len(trans_res), df['diff'].tolist())
+```
+
+- **(1)** 5 5 [-5.0, 5.0, -10.0, 0.0, 10.0]
+- **(2)** 2 2 [-5.0, 5.0]
+- **(3)** 2 5 [15.0, 15.0, 40.0, 40.0, 40.0]
+- **(4)** 2 5 [-5.0, 5.0, -10.0, 0.0, 10.0]
+
+- **정답**: `3` (보기 4번: 2 5 [-5.0, 5.0, -10.0, 0.0, 10.0])
+- **해설**: groupby().agg('mean')은 그룹 개수만큼 축약된 Series(길이 2: A=15.0, B=40.0)를 반환합니다. 반면 groupby().transform('mean')은 원본 DataFrame과 동일한 인덱스 및 길이(길이 5: [15.0, 15.0, 40.0, 40.0, 40.0])를 가진 Series를 반환하므로, 원본 컬럼에서 그룹 평균을 바로 빼는 파생변수 생성(df['score'] - trans_res)에 이상적입니다.
+
+---
+
+### Q87. [중급] `groupby()`와 Named Aggregation(`agg(새컬럼명=('대상컬럼', '집계함수'))`)을 사용하여 다중 통계량을 한 번에 산출하는 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+df = pd.DataFrame({
+    'dept': ['AI', 'AI', 'Cloud'],
+    'salary': [5000, 7000, 6000]
+})
+summary = df.groupby('dept', as_index=False).agg(
+    avg_sal=('salary', 'mean'),
+    cnt=('salary', 'count')
+)
+print(list(summary.columns), summary.loc[summary['dept'] == 'AI', 'avg_sal'].iloc[0])
+```
+
+- **(1)** ['dept', 'avg_sal', 'cnt'] 6000.0
+- **(2)** ['avg_sal', 'cnt'] 6000.0
+- **(3)** ['dept', 'salary'] 12000
+- **(4)** MultiIndex 컬럼 생성으로 KeyError 발생
+
+- **정답**: `0` (보기 1번: ['dept', 'avg_sal', 'cnt'] 6000.0)
+- **해설**: as_index=False를 지정하면 그룹화 키 'dept'가 인덱스가 아닌 일반 컬럼으로 유지되며, Named Aggregation 문법은 계층적 컬럼(MultiIndex) 대신 지정한 이름('avg_sal', 'cnt')의 단일 레벨 컬럼을 깔끔하게 생성합니다. AI 부서의 평균 급여는 (5000+7000)/2 = 6000.0입니다.
+
+---
+
+### Q88. [중급] 넓은 형식(Wide format)과 긴 형식(Long/Tidy format) 간에 데이터 구조를 재구조화(Reshaping)하는 `pivot_table()`과 `melt()`에 대한 설명 및 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+wide = pd.DataFrame({
+    'student': ['Kim', 'Lee'],
+    'math': [90, 80],
+    'eng': [85, 95]
+})
+long_df = pd.melt(wide, id_vars=['student'], value_vars=['math', 'eng'], var_name='subj', value_name='score')
+print(long_df.shape, list(long_df.columns))
+```
+
+- **(1)** (2, 4) ['student', 'math', 'eng', 'score']
+- **(2)** (4, 2) ['subj', 'score']
+- **(3)** (4, 3) ['student', 'subj', 'score']
+- **(4)** (2, 3) ['student', 'variable', 'value']
+
+- **정답**: `2` (보기 3번: (4, 3) ['student', 'subj', 'score'])
+- **해설**: pd.melt()는 열로 펼쳐져 있던 과목('math', 'eng')을 행 방향의 'subj' 컬럼 값으로 녹여내어(Unpivot) 긴 형식(Long format)으로 변환합니다. 학생 2명 × 과목 2개 = 4행이 되며, 컬럼은 ['student', 'subj', 'score'] 3개이므로 shape는 (4, 3)입니다.
+
+---
+
+### Q89. [중급] `pd.concat()`을 사용해 두 DataFrame을 위아래(행 방향) 또는 좌우(열 방향)로 이어 붙일 때 사용하는 매개변수(`axis`, `ignore_index`)의 동작을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+df1 = pd.DataFrame({'A': [1, 2]}, index=[0, 1])
+df2 = pd.DataFrame({'A': [3, 4]}, index=[0, 1])
+v_cat = pd.concat([df1, df2], axis=0, ignore_index=True)
+h_cat = pd.concat([df1, df2], axis=1)
+print(v_cat.shape, v_cat.index.tolist(), h_cat.shape)
+```
+
+- **(1)** (4, 1) [0, 1, 0, 1] (2, 2)
+- **(2)** (2, 2) [0, 1] (4, 1)
+- **(3)** (4, 1) [0, 1, 2, 3] (2, 2)
+- **(4)** (4, 2) [0, 1, 2, 3] (2, 1)
+
+- **정답**: `2` (보기 3번: (4, 1) [0, 1, 2, 3] (2, 2))
+- **해설**: axis=0은 위아래(행 방향)로 결합하여 (4, 1) 모양이 되며, ignore_index=True를 주면 기존 인덱스 [0, 1, 0, 1]을 버리고 [0, 1, 2, 3]으로 새로 번호를 매깁니다. axis=1은 같은 인덱스 라벨끼리 좌우(열 방향)로 결합하므로 (2, 2) 모양이 됩니다.
+
+---
+
+### Q90. [중급] SQL의 JOIN과 유사한 `pd.merge()`에서 조인 방식(`how='inner' | 'left' | 'right' | 'outer'`)에 따른 결과 행 개수를 묻는 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+users = pd.DataFrame({'uid': [1, 2, 3], 'name': ['A', 'B', 'C']})
+orders = pd.DataFrame({'uid': [2, 2, 4], 'item': ['Book', 'Pen', 'Laptop']})
+m_inner = pd.merge(users, orders, on='uid', how='inner')
+m_left = pd.merge(users, orders, on='uid', how='left')
+m_outer = pd.merge(users, orders, on='uid', how='outer')
+print(len(m_inner), len(m_left), len(m_outer))
+```
+
+- **(1)** 2 4 5
+- **(2)** 1 3 4
+- **(3)** 2 3 4
+- **(4)** 3 3 6
+
+- **정답**: `0` (보기 1번: 2 4 5)
+- **해설**: uid=2가 orders에 2건 있으므로: 1) inner 조인은 양쪽에 모두 있는 uid=2의 2건(길이 2), 2) left 조인은 users의 uid=1(1건, NaN), uid=2(2건 매칭), uid=3(1건, NaN)으로 총 4건(길이 4), 3) outer 조인은 left 결과 4건에 orders에만 있는 uid=4(1건)가 추가되어 총 5건(길이 5)이 됩니다.
+
+---
+
+### Q91. [초급] `DataFrame.sort_values()`에서 다중 컬럼 정렬 방향(`ascending`)과 결측치 배치 위치(`na_position`)를 지정한 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+import numpy as np
+df = pd.DataFrame({
+    'group': ['B', 'A', 'A', 'B'],
+    'score': [80.0, np.nan, 95.0, 90.0]
+})
+sorted_df = df.sort_values(by=['group', 'score'], ascending=[True, False], na_position='first')
+print(sorted_df['score'].tolist())
+```
+
+- **(1)** [95.0, nan, 90.0, 80.0]
+- **(2)** [95.0, 90.0, 80.0, nan]
+- **(3)** [80.0, 90.0, 95.0, nan]
+- **(4)** [nan, 95.0, 90.0, 80.0]
+
+- **정답**: `3` (보기 4번: [nan, 95.0, 90.0, 80.0])
+- **해설**: 먼저 'group'을 오름차순(True: 'A' -> 'B')으로 정렬하고, 같은 그룹 내에서는 'score'를 내림차순(False)으로 정렬하되 na_position='first'(기본값은 'last')가 지정되었으므로 'A' 그룹 내에서 NaN이 95.0보다 앞에 오고, 'B' 그룹 내에서는 90.0, 80.0 순서가 되어 [nan, 95.0, 90.0, 80.0]이 됩니다.
+
+---
+
+### Q92. [중급] 판다스에서 필터링이나 슬라이싱 결과에 값을 대입할 때 발생할 수 있는 `SettingWithCopyWarning`(또는 Copy-on-Write 동작 이슈)을 방지하는 가장 표준적인 작성법은?
+
+```python
+# 조건: df에서 'score'가 50 미만인 행의 'status' 컬럼 값을 'Fail'로 안전하게 변경하기
+```
+
+- **(1)** df[df['score'] < 50]['status'] = 'Fail'
+- **(2)** df.loc[df['score'] < 50, 'status'] = 'Fail'
+- **(3)** df.iloc[df['score'] < 50]['status'] = 'Fail'
+- **(4)** df.query('score < 50')['status'] = 'Fail'
+
+- **정답**: `1` (보기 2번: df.loc[df['score'] < 50, 'status'] = 'Fail')
+- **해설**: df[cond]['col'] = val 형태의 연쇄 인덱싱(Chained Indexing)은 첫 번째 인덱싱이 뷰(View)를 반환하는지 복사본(Copy)을 반환하는지 불확실하여 원본 df가 수정되지 않을 수 있습니다. 원본 DataFrame의 특정 조건 행과 열을 수정할 때는 항상 단일 호출인 df.loc[row_indexer, col_indexer] = val을 사용해야 합니다.
+
+---
+
+### Q93. [중급] 수백만 행을 가진 대용량 CSV 파일을 `pd.read_csv()`로 읽어들일 때 메모리 사용량을 획기적으로 줄이고 처리 효율을 높이는 기법으로 옳지 않은 것은?
+
+```python
+# 대용량 train_logs.csv (10GB) 로딩 최적화
+```
+
+- **(1)** `usecols=['id', 'target', 'score']` 매개변수를 지정하여 분석에 실제로 필요한 컬럼만 선택적으로 메모리에 적재한다.
+- **(2)** 고유값(Cardinality)의 개수가 적은 반복 문자열 컬럼(예: 등급, 국가 코드)의 데이터 타입을 `category` 타입으로 지정(`dtype={'grade': 'category'}`)하여 내부적으로 정수 코드 사전 방식으로 저장한다.
+- **(3)** `chunksize=100000` 매개변수를 지정하여 TextFileReader 이터레이터를 반환받은 뒤, 10만 행 단위로 순회하며 집계한다.
+- **(4)** 모든 정수형과 실수형 컬럼을 무조건 `object` 문자열 타입(`dtype=str`)으로 변환하여 적재하면 `int32`나 `float32`보다 메모리 사용량이 1/10로 줄어든다.
+
+- **정답**: `3` (보기 4번: 모든 정수형과 실수형 컬럼을 무조건 `object` 문자열 타입(`dtype=str`)으로 변환하여 적재하면 `int32`나 `float32`보다 메모리 사용량이 1/10로 줄어든다.)
+- **해설**: 파이썬 문자열(object) 타입은 각 셀마다 파이썬 객체 포인터 오버헤드가 발생하여 메모리를 가장 많이 소비합니다. 메모리를 절약하려면 범위가 작은 정수는 int8/int16/int32로, 실수는 float32로 다운캐스팅(Downcasting)하고, 카디널리티가 낮은 문자열은 category 타입으로 변환해야 합니다.
+
+---
+
+### Q94. [중급] `Series.value_counts()`의 옵션(`normalize`, `dropna`)과 연속형 변수를 구간화(Binning)하는 `pd.cut()`을 사용한 아래 코드의 실행 결과는?
+
+```python
+import pandas as pd
+s = pd.Series(['A', 'A', 'B', 'B', 'B'])
+prop_b = s.value_counts(normalize=True)['B']
+ages = pd.Series([15, 25, 35])
+bins = pd.cut(ages, bins=[0, 20, 30, 50], labels=['Teen', '20s', '30s+'])
+print(prop_b, bins.tolist())
+```
+
+- **(1)** 3 ['Teen', '20s', '30s+']
+- **(2)** 0.6 ['Teen', '20s', '30s+']
+- **(3)** 0.6 ['20s', '30s+', 'Teen']
+- **(4)** 0.4 ['Teen', '20s', '30s+']
+
+- **정답**: `1` (보기 2번: 0.6 ['Teen', '20s', '30s+'])
+- **해설**: value_counts(normalize=True)는 빈도수 대신 전체 대비 상대 비율(Proportion)을 계산하므로 5개 중 3개인 'B'의 비율은 3/5 = 0.6입니다. pd.cut()은 지정된 경계값 구간((0, 20], (20, 30], (30, 50])에 따라 15는 'Teen', 25는 '20s', 35는 '30s+'로 범주화합니다.
+
+---
+
+### Q95. [중급] 시계열 및 순차 데이터 분석에서 이동 평균(Rolling Mean), 직전 행과의 차분(`diff`), 행 이동(`shift`)을 계산하는 아래 코드의 출력 결과는?
+
+```python
+import pandas as pd
+s = pd.Series([10, 20, 35, 50])
+shifted = s.shift(1)
+diffed = s.diff(1)
+roll_mean = s.rolling(window=2).mean()
+print( pd.isna(shifted.iloc[0]), diffed.iloc[2], roll_mean.iloc[1] )
+```
+
+- **(1)** False 15.0 20.0
+- **(2)** True 10.0 15.0
+- **(3)** True 15.0 15.0
+- **(4)** True 15.0 27.5
+
+- **정답**: `2` (보기 3번: True 15.0 15.0)
+- **해설**: s.shift(1)은 데이터를 아래로 1칸씩 밀어 첫 번째 값(iloc[0])이 NaN(True)이 됩니다. s.diff(1)은 현재 값에서 직전 값을 뺀 [NaN, 10.0, 15.0, 15.0]이므로 iloc[2](35 - 20)는 15.0입니다. s.rolling(window=2).mean()은 크기 2인 윈도우의 이동 평균 [NaN, 15.0, 27.5, 42.5]이므로 iloc[1]((10+20)/2)은 15.0입니다.
+
+---
+
+## 7. 넘파이
+
+### Q96. [초급] 넘파이(NumPy) `ndarray`가 파이썬 기본 `list`보다 대규모 수치 연산에서 수십~수백 배 빠른 근본적인 이유와 동질적(Homogeneous) 타입 강제 변환(Upcasting) 결과를 확인하는 아래 코드의 출력은?
+
+```python
+import numpy as np
+arr = np.array([1, 2, 3.5])
+print(arr.dtype, arr.ndim, arr.shape, arr.size)
+```
+
+- **(1)** float64 1 (3,) 3
+- **(2)** object 1 (3,) 3
+- **(3)** int64 1 (3,) 3
+- **(4)** float64 2 (1, 3) 3
+
+- **정답**: `0` (보기 1번: float64 1 (3,) 3)
+- **해설**: ndarray는 모든 원소가 동일한 데이터 타입(Homogeneous)을 가지며 연속된 메모리 버퍼(Contiguous memory buffer)에 저장되어 C/포트란 기반의 SIMD 벡터화 연산을 수행합니다. 정수와 실수(3.5)가 섞인 리스트로 배열을 생성하면 데이터 손실을 막기 위해 상위 타입인 float64로 자동 업캐스팅되며, 1차원 배열이므로 ndim=1, shape=(3,), size=3입니다.
+
+---
+
+### Q97. [고급] 넘파이 배열의 메모리 레이아웃에서 각 차원(Axis)으로 한 칸 이동할 때 건너뛰어야 하는 바이트 수를 나타내는 `strides` 속성을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+a = np.zeros((3, 4), dtype=np.float64)
+print(a.itemsize, a.strides)
+```
+
+- **(1)** 8 (32, 8)
+- **(2)** 8 (4, 1)
+- **(3)** 4 (16, 4)
+- **(4)** 8 (24, 8)
+
+- **정답**: `0` (보기 1번: 8 (32, 8))
+- **해설**: float64는 원소 하나당 8바이트(itemsize=8)를 차지합니다. 기본 행 우선(C-contiguous, Row-major) 메모리 배치에서 (3, 4) 배열은 한 행에 4개의 원소가 연속 저장되므로, 열 방향(다음 열)으로 1칸 이동할 때는 8바이트, 행 방향(다음 행)으로 1칸 이동할 때는 4 × 8 = 32바이트를 건너뛰어야 합니다. 따라서 strides는 (32, 8)입니다.
+
+---
+
+### Q98. [초급] 넘파이 배열 생성 함수인 `np.arange()`, `np.linspace()`, `np.eye()`, `np.full()`의 동작 차이를 확인하는 아래 코드의 실행 결과는?
+
+```python
+import numpy as np
+a1 = np.arange(0, 10, 3)
+a2 = np.linspace(0, 1, 5)
+a3 = np.eye(3)
+print(len(a1), a2[1], int(np.trace(a3)))
+```
+
+- **(1)** 3 0.2 3
+- **(2)** 4 0.2 1
+- **(3)** 4 0.25 3
+- **(4)** 3 0.25 3
+
+- **정답**: `2` (보기 3번: 4 0.25 3)
+- **해설**: np.arange(0, 10, 3)은 끝점 10 미포함으로 [0, 3, 6, 9] 4개 원소를 생성합니다. np.linspace(0, 1, 5)는 끝점 1을 포함(endpoint=True 기본)하여 0부터 1까지 균등하게 5개 지점 [0.0, 0.25, 0.5, 0.75, 1.0]을 생성하므로 a2[1]은 0.25입니다. np.eye(3)은 3×3 단위행렬이므로 대각합(trace)은 3입니다.
+
+---
+
+### Q99. [중급] 파이썬 리스트의 슬라이싱과 달리 넘파이 `ndarray`의 기본 슬라이싱은 원본 메모리를 공유하는 뷰(View)를 반환합니다. 아래 코드의 실행 결과는?
+
+```python
+import numpy as np
+arr = np.array([10, 20, 30, 40])
+sub_view = arr[1:3]
+sub_copy = arr[1:3].copy()
+sub_view[0] = 999
+sub_copy[1] = 777
+print(arr[1], arr[2], np.shares_memory(arr, sub_view))
+```
+
+- **(1)** 20 30 False
+- **(2)** 999 30 True
+- **(3)** 999 777 True
+- **(4)** 20 777 False
+
+- **정답**: `1` (보기 2번: 999 30 True)
+- **해설**: arr[1:3]으로 만든 sub_view는 원본 arr의 메모리 버퍼를 공유하는 뷰(View)이므로 sub_view[0] = 999를 수행하면 원본의 arr[1]이 999로 변경됩니다. 반면 .copy()로 명시적 복사를 수행한 sub_copy를 수정해도 원본의 arr[2](30)는 바뀌지 않습니다.
+
+---
+
+### Q100. [중급] 2차원 배열에서 다차원 슬라이싱과 정수 배열을 이용한 팬시 인덱싱(Fancy Indexing)의 결과 형상(Shape) 및 메모리 복사 여부(View vs Copy)에 대한 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+mat = np.arange(1, 13).reshape(3, 4)
+sliced = mat[:2, 1:3]
+fancy = mat[[0, 2], [1, 3]]
+fancy[0] = 999
+print(sliced.shape, fancy.tolist(), mat[0, 1])
+```
+
+- **(1)** (2, 2) [2, 12] 999
+- **(2)** (2, 3) [2, 8] 2
+- **(3)** (2, 2) [[2, 4], [10, 12]] 2
+- **(4)** (2, 2) [2, 12] 2
+
+- **정답**: `3` (보기 4번: (2, 2) [2, 12] 2)
+- **해설**: mat[:2, 1:3]은 0~1행과 1~2열의 교차 영역을 슬라이싱하여 (2, 2) 형상의 뷰를 반환합니다. mat[[0, 2], [1, 3]]은 (0, 1) 위치의 원소 2와 (2, 3) 위치의 원소 12를 짝지어 추출하는 팬시 인덱싱이며, 팬시 인덱싱은 항상 새로운 복사본(Copy)을 반환하므로 fancy[0] = 999로 수정해도 원본 mat[0, 1]은 2 그대로 유지됩니다.
+
+---
+
+### Q101. [초급] 불리언 마스킹(Boolean Masking)을 사용하여 배열에서 특정 조건을 만족하는 원소만 추출하거나 값을 일괄 변경하는 아래 코드의 실행 결과는?
+
+```python
+import numpy as np
+x = np.array([-3, -1, 0, 2, 5])
+pos_sum = x[x > 0].sum()
+x[x < 0] = 0
+print(pos_sum, x.tolist())
+```
+
+- **(1)** 3 [-3, -1, 0, 2, 5]
+- **(2)** 7 [0, 0, 0, 2, 5]
+- **(3)** 7 [2, 5]
+- **(4)** 5 [0, 0, 2, 5]
+
+- **정답**: `1` (보기 2번: 7 [0, 0, 0, 2, 5])
+- **해설**: x[x > 0]은 양수 원소인 [2, 5]만 1차원 배열로 추출하므로 합계는 7입니다. 이어서 x[x < 0] = 0은 음수 위치의 원소들을 모두 0으로 제자리(In-place) 치환(ReLU 연산과 동일)하므로 [0, 0, 0, 2, 5]가 됩니다.
+
+---
+
+### Q102. [중급] 배열의 형상을 바꾸는 `reshape(-1, ...)`의 `-1`의 의미와 다차원 배열을 1차원으로 펼치는 `flatten()`과 `ravel()`의 차이점을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+a = np.arange(12).reshape(3, -1)
+f = a.flatten()
+r = a.ravel()
+f[0] = 100
+r[1] = 200
+print(a.shape, a[0, 0], a[0, 1])
+```
+
+- **(1)** (3, 4) 100 200
+- **(2)** (3, 4) 0 1
+- **(3)** (4, 3) 0 200
+- **(4)** (3, 4) 0 200
+
+- **정답**: `3` (보기 4번: (3, 4) 0 200)
+- **해설**: reshape(3, -1)에서 -1은 전체 원소 개수(12개)에 맞춰 나머지 차원 크기(12 // 3 = 4)를 자동 추론하라는 의미이므로 shape는 (3, 4)가 됩니다. flatten()은 언제나 독립된 복사본(Copy)을 반환하므로 f[0] = 100은 원본에 영향을 주지 않아 a[0, 0]은 0이지만, ravel()은 가능한 경우 원본 메모리를 공유하는 뷰(View)를 반환하므로 r[1] = 200은 원본 a[0, 1]을 200으로 변경합니다.
+
+---
+
+### Q103. [중급] 2차원 넘파이 배열에서 집계 함수(`sum`, `mean`, `argmax` 등)의 `axis=0`과 `axis=1`, 그리고 `keepdims=True` 매개변수의 동작을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+m = np.array([[1, 2, 3], [4, 5, 6]])
+s0 = m.sum(axis=0)
+s1 = m.sum(axis=1, keepdims=True)
+print(s0.tolist(), s1.shape, s1.flatten().tolist())
+```
+
+- **(1)** [5, 7, 9] (2, 1) [6, 15]
+- **(2)** [6, 15] (2, 1) [5, 7, 9]
+- **(3)** [5, 7, 9] (2,) [6, 15]
+- **(4)** [5, 7, 9] (1, 2) [6, 15]
+
+- **정답**: `0` (보기 1번: [5, 7, 9] (2, 1) [6, 15])
+- **해설**: axis=0은 첫 번째 축(행 인덱스 방향, 위에서 아래로)을 따라 원소를 합쳐서 차원을 축소하므로 각 열의 합인 [5, 7, 9]가 됩니다. axis=1은 두 번째 축(열 인덱스 방향, 가로로)을 따라 각 행의 합 [6, 15]를 구하며, keepdims=True를 지정했으므로 축소된 차원이 크기 1로 유지되어 shape는 (2, 1)이 됩니다.
+
+---
+
+### Q104. [고급] 넘파이의 브로드캐스팅(Broadcasting) 규칙은 두 배열의 형상(Shape)을 뒤(오른쪽 끝 차원)에서부터 앞으로 비교하며, 두 차원의 크기가 같거나 둘 중 하나가 1이면 호환됩니다. 다음 중 브로드캐스팅 연산이 불가능하여 `ValueError`가 발생하는 형상 조합은?
+
+```python
+# 두 배열 A와 B의 덧셈 A + B 수행 시
+```
+
+- **(1)** A.shape = (4, 3), B.shape = (3,)
+- **(2)** A.shape = (4, 1), B.shape = (1, 5)
+- **(3)** A.shape = (4, 3), B.shape = (4,)
+- **(4)** A.shape = (32, 10, 64), B.shape = (10, 1)
+
+- **정답**: `2` (보기 3번: A.shape = (4, 3), B.shape = (4,))
+- **해설**: 브로드캐스팅은 오른쪽 끝 차원(Trailing dimensions)부터 맞춰 비교합니다. A(4, 3)과 B(4,)를 비교하면 오른쪽 끝 차원이 3과 4로 서로 다르고 둘 중 어느 것도 1이 아니므로 ValueError(operands could not be broadcast together)가 발생합니다. (4, 3)에 길이 4인 벡터를 더하려면 B를 (4, 1)로 차원 확장해야 합니다.
+
+---
+
+### Q105. [중급] 크기가 1인 축을 추가하거나 제거하는 `np.newaxis`(`None`), `np.expand_dims()`, `np.squeeze()`를 활용한 외적 형태 브로드캐스팅 코드의 실행 결과는?
+
+```python
+import numpy as np
+v = np.array([1, 2, 3])  # shape: (3,)
+col = v[:, np.newaxis]   # shape: (3, 1)
+row = v[np.newaxis, :]   # shape: (1, 3)
+grid = col + row
+squeezed = np.squeeze(col)
+print(grid.shape, grid[0, 2], squeezed.shape)
+```
+
+- **(1)** (3,) 4 (3, 1)
+- **(2)** (3, 3) 3 (1,)
+- **(3)** (3, 3) 4 (3,)
+- **(4)** (1, 3) 4 (3,)
+
+- **정답**: `2` (보기 3번: (3, 3) 4 (3,))
+- **해설**: (3, 1) 배열과 (1, 3) 배열을 더하면 양쪽의 크기 1인 차원이 각각 3으로 브로드캐스팅되어 (3, 3) 행렬이 생성되며, grid[0, 2]는 v[0] + v[2] = 1 + 3 = 4입니다. np.squeeze()는 크기가 1인 차원을 제거하므로 (3, 1)을 다시 (3,)으로 되돌립니다.
+
+---
+
+### Q106. [중급] 배열을 결합하는 `np.concatenate()`, `np.vstack()`, `np.hstack()`, `np.stack()`의 결과 형상(Shape) 차이를 묻는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+a = np.ones((2, 3))
+b = np.zeros((2, 3))
+c0 = np.concatenate([a, b], axis=0)
+c1 = np.hstack([a, b])
+st = np.stack([a, b], axis=0)
+print(c0.shape, c1.shape, st.shape)
+```
+
+- **(1)** (4, 3) (2, 6) (2, 2, 3)
+- **(2)** (2, 6) (4, 3) (2, 2, 3)
+- **(3)** (4, 3) (2, 6) (4, 3)
+- **(4)** (2, 3, 2) (4, 3) (2, 6)
+
+- **정답**: `0` (보기 1번: (4, 3) (2, 6) (2, 2, 3))
+- **해설**: concatenate(axis=0)(vstack과 동일)은 기존 0번 축을 따라 이어 붙여 (4, 3)이 되고, hstack(2차원에서는 concatenate(axis=1)과 동일)은 열 방향으로 이어 붙여 (2, 6)이 됩니다. 반면 np.stack()은 기존 축을 늘리는 것이 아니라 새로운 차원(새로운 축)을 생성하여 쌓으므로 3차원인 (2, 2, 3)이 됩니다.
+
+---
+
+### Q107. [초급] 넘파이에서 원소별 곱셈(Element-wise / Hadamard Product) 연산자 `*`와 행렬 곱셈(Matrix Multiplication) 연산자 `@`(`np.matmul`)의 결과 차이를 확인하는 아래 코드의 출력은?
+
+```python
+import numpy as np
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[2, 0], [1, 3]])
+elem_mul = A * B
+mat_mul = A @ B
+print(elem_mul[0].tolist(), mat_mul[0].tolist())
+```
+
+- **(1)** [4, 6] [2, 0]
+- **(2)** [2, 0] [2, 6]
+- **(3)** [2, 2] [4, 6]
+- **(4)** [2, 0] [4, 6]
+
+- **정답**: `3` (보기 4번: [2, 0] [4, 6])
+- **해설**: A * B는 같은 위치의 원소끼리 곱하므로 첫 행은 [1×2, 2×0] = [2, 0]입니다. A @ B는 선형대수 행렬 곱셈을 수행하므로 첫 행 첫 열은 1×2 + 2×1 = 4, 첫 행 둘째 열은 1×0 + 2×3 = 6이 되어 첫 행은 [4, 6]입니다.
+
+---
+
+### Q108. [중급] 다차원 텐서의 축 순서를 재배열하는 `np.transpose()`(예: 이미지 텐서를 PyTorch 형식 NCHW에서 NHWC로 변환)의 동작을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+img_nchw = np.zeros((32, 3, 224, 224))
+img_nhwc = np.transpose(img_nchw, (0, 2, 3, 1))
+print(img_nhwc.shape)
+```
+
+- **(1)** (224, 224, 3, 32)
+- **(2)** (32, 224, 224, 3)
+- **(3)** (3, 32, 224, 224)
+- **(4)** (32, 3, 224, 224)
+
+- **정답**: `1` (보기 2번: (32, 224, 224, 3))
+- **해설**: transpose(arr, axes)에 축 인덱스 튜플 (0, 2, 3, 1)을 전달하면 기존 0번 축(32), 2번 축(224), 3번 축(224), 1번 축(3) 순서로 차원이 재배치되어 (32, 224, 224, 3) 형상의 뷰(View)가 반환됩니다.
+
+---
+
+### Q109. [고급] `np.linalg` 선형대수 모듈을 사용하여 역행렬(`inv`), 행렬식(`det`), 벡터의 L2 노름(`norm`), 연립선형방정식 해(`solve`)를 구하는 아래 코드의 실행 결과는?
+
+```python
+import numpy as np
+A = np.array([[2.0, 0.0], [0.0, 4.0]])
+b = np.array([6.0, 8.0])
+x = np.linalg.solve(A, b)  # Ax = b의 해
+det_A = np.linalg.det(A)
+norm_x = np.linalg.norm(x) # [3.0, 2.0]의 L2 노름 제곱
+print(x.tolist(), round(det_A), round(norm_x ** 2))
+```
+
+- **(1)** [12.0, 32.0] 8 13
+- **(2)** [3.0, 2.0] 6 5
+- **(3)** [2.0, 3.0] 8 25
+- **(4)** [3.0, 2.0] 8 13
+
+- **정답**: `3` (보기 4번: [3.0, 2.0] 8 13)
+- **해설**: 대각행렬 A = diag(2, 4)에 대해 Ax = b를 풀면 2*x1 = 6 -> x1 = 3.0, 4*x2 = 8 -> x2 = 2.0이므로 해 벡터 x는 [3.0, 2.0]입니다(역행렬 inv(A)를 직접 구해 곱하는 것보다 solve(A, b)가 수치적으로 훨씬 빠르고 안정적입니다). A의 행렬식(det)은 2×4 - 0 = 8이며, x의 L2 노름의 제곱은 3^2 + 2^2 = 13입니다.
+
+---
+
+### Q110. [중급] 벡터화된 삼항 연산자 역할을 하는 `np.where(condition, x, y)`와 조건을 만족하는 인덱스를 반환하는 `np.where(condition)`의 두 가지 용법을 확인하는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+scores = np.array([45, 80, 92, 60])
+labels = np.where(scores >= 70, 'Pass', 'Fail')
+idx = np.where(scores >= 70)[0]
+print(labels.tolist(), idx.tolist())
+```
+
+- **(1)** ['Fail', 'Pass', 'Pass', 'Fail'] [80, 92]
+- **(2)** ['Fail', 'Pass', 'Pass', 'Fail'] [1, 2]
+- **(3)** [False, True, True, False] [1, 2]
+- **(4)** ['Pass', 'Fail', 'Fail', 'Pass'] [0, 3]
+
+- **정답**: `1` (보기 2번: ['Fail', 'Pass', 'Pass', 'Fail'] [1, 2])
+- **해설**: np.where(cond, x, y)처럼 인자 3개를 전달하면 조건이 참인 곳은 x('Pass'), 거짓인 곳은 y('Fail')로 채운 배열을 반환합니다. 반면 np.where(cond)처럼 조건식 하나만 전달하면 np.nonzero(cond)와 동일하게 참인 원소의 인덱스 좌표 튜플을 반환하므로 [0]번째 축 인덱스는 [1, 2]입니다.
+
+---
+
+### Q111. [중급] 배열에서 최댓값/최솟값의 값 자체가 아니라 '인덱스 위치'를 반환하는 `np.argmax()` / `np.argmin()`과 정렬된 인덱스 순서를 반환하는 `np.argsort()`의 실행 결과는?
+
+```python
+import numpy as np
+probs = np.array([0.1, 0.7, 0.05, 0.15])
+best_cls = np.argmax(probs)
+sorted_idx = np.argsort(probs)[::-1]
+print(int(best_cls), sorted_idx.tolist())
+```
+
+- **(1)** 0.7 [2, 0, 3, 1]
+- **(2)** 1 [2, 0, 3, 1]
+- **(3)** 1 [1, 3, 0, 2]
+- **(4)** 2 [1, 3, 0, 2]
+
+- **정답**: `2` (보기 3번: 1 [1, 3, 0, 2])
+- **해설**: probs에서 가장 큰 값 0.7의 인덱스는 1이므로 argmax는 1을 반환합니다. np.argsort(probs)는 오름차순 정렬 시의 인덱스 순서인 [2, 0, 3, 1](0.05 -> 0.1 -> 0.15 -> 0.7)을 반환하며, 이를 [::-1]로 뒤집으면 확률이 높은 상위 클래스 인덱스 순서인 [1, 3, 0, 2]가 됩니다.
+
+---
+
+### Q112. [초급] 그레이디언트 클리핑(Gradient Clipping)이나 이미지 픽셀 범위 제한에 자주 쓰이는 `np.clip()`과 고유값 및 빈도수를 구하는 `np.unique()`의 실행 결과는?
+
+```python
+import numpy as np
+arr = np.array([-5, 0, 3, 10, 3, -5])
+clipped = np.clip(arr, 0, 5)
+vals, counts = np.unique(clipped, return_counts=True)
+print(clipped.tolist(), vals.tolist(), counts.tolist())
+```
+
+- **(1)** [0, 0, 3, 5, 3, 0] [0, 3, 5] [3, 2, 1]
+- **(2)** [-5, 0, 3, 5, 3, -5] [-5, 0, 3, 5] [2, 1, 2, 1]
+- **(3)** [0, 3, 5] [0, 3, 5] [3, 2, 1]
+- **(4)** [0, 0, 3, 5, 3, 0] [3, 0, 5] [2, 3, 1]
+
+- **정답**: `0` (보기 1번: [0, 0, 3, 5, 3, 0] [0, 3, 5] [3, 2, 1])
+- **해설**: np.clip(arr, 0, 5)는 최솟값 0보다 작은 값은 0으로, 최댓값 5보다 큰 값은 5로 제한하여 [0, 0, 3, 5, 3, 0]을 만듭니다. np.unique(..., return_counts=True)는 오름차순으로 정렬된 고유값 배열 [0, 3, 5]와 각 값의 등장 횟수 배열 [3, 2, 1]을 반환합니다.
+
+---
+
+### Q113. [중급] 결측치(`np.nan`)가 포함된 넘파이 배열에서 일반 집계 함수 `np.mean()`과 결측치 무시 집계 함수 `np.nanmean()`의 동작 차이를 보여주는 아래 코드의 출력 결과는?
+
+```python
+import numpy as np
+data = np.array([10.0, 20.0, np.nan, 30.0])
+m1 = np.mean(data)
+m2 = np.nanmean(data)
+print(np.isnan(m1), m2, (np.nan == np.nan))
+```
+
+- **(1)** True 20.0 False
+- **(2)** False 15.0 True
+- **(3)** True 15.0 False
+- **(4)** True 20.0 True
+
+- **정답**: `0` (보기 1번: True 20.0 False)
+- **해설**: IEEE 754 표준에 따라 NaN과의 모든 산술 연산 결과는 NaN이 되므로 np.mean(data)는 NaN(np.isnan(m1)은 True)입니다. 결측치를 제외하고 평균을 구하려면 np.nanmean(data)를 써야 하며 (10+20+30)/3 = 20.0이 됩니다. 또한 np.nan == np.nan 비교는 정의상 항상 False이므로 결측치 여부는 반드시 np.isnan()으로 확인해야 합니다.
+
+---
+
+### Q114. [중급] 최신 넘파이 권장 난수 생성기인 `np.random.default_rng(seed)`를 사용하여 재현 가능한(Reproducible) 난수를 생성할 때, 표준정규분포($\mu=0, \sigma=1$)와 균등분포($[0, 1)$) 난수를 생성하는 메서드 조합으로 올바른 것은?
+
+```python
+import numpy as np
+rng = np.random.default_rng(seed=42)
+```
+
+- **(1)** 표준정규분포: `rng.integers(0, 1, size=(3, 4))`, 균등분포: `rng.choice(size=(3, 4))`
+- **(2)** 표준정규분포: `rng.linspace(0, 1)`, 균등분포: `rng.arange(0, 1)`
+- **(3)** 표준정규분포: `rng.standard_normal(size=(3, 4))`, 균등분포: `rng.random(size=(3, 4))`
+- **(4)** 표준정규분포: `rng.shuffle()`, 균등분포: `rng.permutation()`
+
+- **정답**: `2` (보기 3번: 표준정규분포: `rng.standard_normal(size=(3, 4))`, 균등분포: `rng.random(size=(3, 4))`)
+- **해설**: Generator 인스턴스(rng = np.random.default_rng(42))에서 [0.0, 1.0) 구간의 연속 균등분포 난수는 rng.random(size=...)으로, 평균 0·표준편차 1인 표준정규분포 난수는 rng.standard_normal(size=...)(또는 임의 평균·표준편차는 rng.normal(loc, scale, size))로 생성합니다.
+
+---
+
+### Q115. [고급] 딥러닝 분류 모델의 출력 로짓(Logit) 벡터 $z$에 대해 소프트맥스(Softmax) 함수를 넘파이로 구현할 때, 지수 함수 `np.exp(z)`에서 발생할 수 있는 수치 오버플로(Numerical Overflow, `inf`)를 방지하면서 수학적으로 완전히 동일한 확률 분포를 얻는 표준 기법은?
+
+```python
+import numpy as np
+z = np.array([1000.0, 1001.0, 1002.0])  # np.exp(1000.0)은 overflow로 inf 발생!
+```
+
+- **(1)** `z`의 모든 원소를 `0`으로 바꾼 뒤 `np.exp(z)`를 계산한다.
+- **(2)** `z_shifted = z - np.max(z)`와 같이 입력 벡터에서 최댓값을 뺀 뒤 `exp_z = np.exp(z_shifted)`를 계산하여 `exp_z / np.sum(exp_z)`로 정규화한다.
+- **(3)** `np.exp(z)` 대신 `np.log(z)`를 분자와 분모에 그대로 사용한다.
+- **(4)** `dtype`을 `np.int8`로 변환하여 지수 함수를 계산한다.
+
+- **정답**: `1` (보기 2번: `z_shifted = z - np.max(z)`와 같이 입력 벡터에서 최댓값을 뺀 뒤 `exp_z = np.exp(z_shifted)`를 계산하여 `exp_z / np.sum(exp_z)`로 정규화한다.)
+- **해설**: 소프트맥스 수식에서 분자와 분모에 동일한 상수 exp(-c)를 곱해도 약분되어 결과 확률값은 변하지 않습니다(Shift Invariance: exp(z_i - c) / Σ exp(z_j - c)). 여기서 c = max(z)로 두면 지수 함수의 입력값 중 최댓값이 0이 되고 나머지는 음수가 되어 exp() 결과가 (0, 1] 범위 안에 안전하게 들어오므로 오버플로(inf/inf = nan)가 완벽히 방지됩니다.
+
+---
+
+## 8. ML/DL
+
+### Q116. [초급] 머신러닝의 3대 학습 패러다임인 지도학습(Supervised Learning), 비지도학습(Unsupervised Learning), 강화학습(Reinforcement Learning)과 대표 알고리즘의 연결이 올바른 것은?
+
+```python
+# ML 패러다임 분류: 지도학습(회귀/분류) vs 비지도학습(군집/차원축소) vs 강화학습
+```
+
+- **(1)** 지도학습: K-Means 군집화, PCA 주성분 분석 / 비지도학습: 로지스틱 회귀, 랜덤 포레스트
+- **(2)** 비지도학습은 반드시 정답 라벨(Target)이 있어야만 학습할 수 있는 방법론이다.
+- **(3)** 강화학습은 정적인 테이블 데이터의 결측치를 평균값으로 채우는 전처리 기법만을 의미한다.
+- **(4)** 지도학습: 선형 회귀, SVM, XGBoost(정답 라벨 y가 주어짐) / 비지도학습: K-Means, DBSCAN, PCA(정답 라벨 없이 데이터 내부 구조 파악) / 강화학습: 에이전트가 환경과 상호작용하며 누적 보상(Reward)을 최대화하는 정책(Policy) 학습
+
+- **정답**: `3` (보기 4번: 지도학습: 선형 회귀, SVM, XGBoost(정답 라벨 y가 주어짐) / 비지도학습: K-Means, DBSCAN, PCA(정답 라벨 없이 데이터 내부 구조 파악) / 강화학습: 에이전트가 환경과 상호작용하며 누적 보상(Reward)을 최대화하는 정책(Policy) 학습)
+- **해설**: 지도학습은 입력 피처 X와 정답 타깃 y의 쌍을 학습하여 연속형 값을 예측(회귀)하거나 이산형 범주를 예측(분류)합니다. 비지도학습은 정답 라벨 y 없이 X의 분포만으로 군집화(K-Means)나 차원 축소(PCA)를 수행하며, 강화학습은 상태(State)에서 행동(Action)을 취해 얻는 누적 보상(Return)을 극대화하도록 학습합니다.
+
+---
+
+### Q117. [중급] 클래스 불균형(예: 정상 95%, 불량 5%)이 심한 분류 데이터셋을 훈련 세트와 테스트 세트로 나눌 때, 원본 데이터의 클래스 비율을 훈련/테스트 세트에서도 동일하게 유지하도록 설정하는 `train_test_split`의 핵심 매개변수는?
+
+```python
+from sklearn.model_selection import train_test_split
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, ???)
+```
+
+- **(1)** shuffle=False
+- **(2)** stratify=y
+- **(3)** normalize=True
+- **(4)** balance=X
+
+- **정답**: `1` (보기 2번: stratify=y)
+- **해설**: stratify=y(계층적 샘플링, Stratified Sampling)를 지정하면 타깃 변수 y의 클래스 분포 비율(예: 95:5)이 분할된 train 세트와 test 세트 양쪽에 똑같이 보존되어 소수 클래스가 한쪽 세트에서 누락되는 현상을 방지합니다.
+
+---
+
+### Q118. [고급] 머신러닝 파이프라인에서 테스트 데이터의 정보가 학습 과정에 유입되는 데이터 누수(Data Leakage)를 방지하기 위해 스케일러(`StandardScaler`)나 인코더를 적용하는 올바른 코드는?
+
+```python
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+```
+
+- **(1)** 전체 데이터 X를 분할하기 전에 `scaler.fit_transform(X)`를 먼저 수행한 뒤 `train_test_split`으로 나눈다.
+- **(2)** `X_train_scaled = scaler.fit_transform(X_train)`을 수행한 뒤, 테스트 데이터도 `X_test_scaled = scaler.fit_transform(X_test)`로 새로 fit한다.
+- **(3)** 테스트 데이터 `X_test`에 대해서만 `scaler.fit(X_test)`를 수행하고 그 기준으로 `X_train`을 변환한다.
+- **(4)** `X_train_scaled = scaler.fit_transform(X_train)`으로 훈련 데이터의 평균·표준편차만 학습해 변환하고, 테스트 데이터는 `X_test_scaled = scaler.transform(X_test)`로 변환만 수행한다.
+
+- **정답**: `3` (보기 4번: `X_train_scaled = scaler.fit_transform(X_train)`으로 훈련 데이터의 평균·표준편차만 학습해 변환하고, 테스트 데이터는 `X_test_scaled = scaler.transform(X_test)`로 변환만 수행한다.)
+- **해설**: fit() 또는 fit_transform()은 반드시 훈련 데이터(X_train)에 대해서만 호출해야 합니다. 분할 전 전체 데이터에 fit하거나 X_test에 다시 fit_transform을 호출하면 테스트 세트의 분포 정보(평균, 분산)가 유출(Data Leakage)되거나 스케일 기준이 달라져 모델 평가가 왜곡됩니다.
+
+---
+
+### Q119. [중급] $K$-겹 교차 검증($K$-Fold Cross Validation)과 `GridSearchCV`를 사용할 때 총 모델 학습(Fitting) 횟수를 계산하는 문제입니다. 하이퍼파라미터 후보 조합이 총 12개(`param_grid` 조합 수 = 12)이고 `cv=5`, `refit=True`(기본값)일 때 `grid_search.fit(X_train, y_train)` 실행 시 내부적으로 모델이 학습(`fit`)되는 총 횟수는?
+
+```python
+from sklearn.model_selection import GridSearchCV
+# param_grid: {'max_depth': [3, 5, 7], 'n_estimators': [50, 100, 200, 300]} -> 3 * 4 = 12조합
+# cv = 5, refit = True
+```
+
+- **(1)** 61회
+- **(2)** 12회
+- **(3)** 17회
+- **(4)** 60회
+
+- **정답**: `0` (보기 1번: 61회)
+- **해설**: 12개의 하이퍼파라미터 조합 각각에 대해 5-Fold 교차 검증을 수행하므로 12 × 5 = 60회 학습이 이루어집니다. 이후 refit=True(기본값)에 의해 가장 검증 점수가 높았던 최적의 하이퍼파라미터로 전체 훈련 데이터(X_train 전체)에 대해 최종 모델을 1회 다시 학습하므로 총 60 + 1 = 61회 fit이 수행됩니다.
+
+---
+
+### Q120. [중급] 사이킷런(Scikit-learn)의 피처 스케일링 기법인 `StandardScaler`, `MinMaxScaler`, `RobustScaler`의 수식적 특징과 이상치(Outlier) 민감도에 대한 설명으로 가장 적절한 것은?
+
+```python
+# StandardScaler vs MinMaxScaler vs RobustScaler
+```
+
+- **(1)** `MinMaxScaler`는 중앙값과 IQR을 사용하여 이상치에 전혀 영향을 받지 않는다.
+- **(2)** 결정 트리(Decision Tree)와 랜덤 포레스트 모델은 피처 스케일링을 수행하지 않으면 분할 기준을 전혀 찾지 못해 학습이 불가능하다.
+- **(3)** `StandardScaler`는 평균을 0, 표준편차를 1로 변환하며, `MinMaxScaler`는 최솟값과 최댓값을 이용해 [0, 1] 구간으로 압축하므로 극단적인 이상치(Outlier)가 존재하면 정상 데이터들이 매우 좁은 구간에 몰리게 된다. 반면 `RobustScaler`는 중앙값(Median)과 사분위수 범위(IQR = Q3 - Q1)를 사용하므로 이상치의 영향을 가장 적게 받는다.
+- **(4)** `RobustScaler`는 모든 데이터를 무조건 양수 [0, 1] 범위 내로만 변환한다.
+
+- **정답**: `2` (보기 3번: `StandardScaler`는 평균을 0, 표준편차를 1로 변환하며, `MinMaxScaler`는 최솟값과 최댓값을 이용해 [0, 1] 구간으로 압축하므로 극단적인 이상치(Outlier)가 존재하면 정상 데이터들이 매우 좁은 구간에 몰리게 된다. 반면 `RobustScaler`는 중앙값(Median)과 사분위수 범위(IQR = Q3 - Q1)를 사용하므로 이상치의 영향을 가장 적게 받는다.)
+- **해설**: MinMaxScaler는 (x - min) / (max - min)을 사용하므로 극단적인 이상치 하나만 있어도 min이나 max가 크게 왜곡됩니다. StandardScaler는 평균과 표준편차를 사용하며, 이상치가 많을 때는 중앙값(Q2)과 IQR(Q3 - Q1)을 쓰는 RobustScaler가 가장 강건합니다(참고로 트리 기반 모델은 대소 비교 기반 분할을 하므로 스케일링에 불변입니다).
+
+---
+
+### Q121. [중급] 범주형 변수(Categorical Feature, 예: 지역 `['서울', '부산', '제주']`)를 선형 회귀나 신경망의 입력 피처로 변환할 때 `LabelEncoder`(`OrdinalEncoder`) 대신 `OneHotEncoder`를 사용해야 하는 이유와 미지의 범주 처리 옵션(`handle_unknown`)에 대한 설명으로 올바른 것은?
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+```
+
+- **(1)** `OneHotEncoder`를 사용하면 피처의 차원(컬럼 수)이 항상 1개로 줄어든다.
+- **(2)** `handle_unknown='ignore'`를 설정하면 테스트 데이터에 학습 때 보지 못한 새로운 범주가 등장했을 때 즉시 `ValueError`를 발생시켜 프로그램을 중단시킨다.
+- **(3)** 순서가 없는 명목형(Nominal) 피처에 0, 1, 2 같은 정수 인코딩을 그대로 적용하면 선형 모델이 '제주(2)가 부산(1)보다 2배 크다'거나 '서울(0)과 제주(2)의 평균이 부산(1)이다'와 같은 거짓된 대소·거리 관계를 학습하기 때문이다.
+- **(4)** `LabelEncoder`는 사이킷런에서 입력 피처 행렬 `X`의 다중 컬럼 변환 전용으로 설계된 클래스이다.
+
+- **정답**: `2` (보기 3번: 순서가 없는 명목형(Nominal) 피처에 0, 1, 2 같은 정수 인코딩을 그대로 적용하면 선형 모델이 '제주(2)가 부산(1)보다 2배 크다'거나 '서울(0)과 제주(2)의 평균이 부산(1)이다'와 같은 거짓된 대소·거리 관계를 학습하기 때문이다.)
+- **해설**: 순서 의미가 없는 명목형 변수에 정수를 부여하면 거리·선형 기반 모델이 숫자의 크기를 가중치 연산에 반영하는 왜곡이 발생하므로 원-핫 인코딩을 사용해야 합니다. 또한 handle_unknown='ignore'를 설정하면 테스트 세트에 미지의 범주가 나타났을 때 에러 없이 모든 원-핫 성분이 0인 벡터로 안전하게 변환합니다.
+
+---
+
+### Q122. [중급] 회귀(Regression) 모델의 성능 평가 지표인 MAE, MSE, RMSE, 결정계수($R^2$)에 대한 설명과 아래 코드의 계산 결과로 올바른 것은?
+
+```python
+import numpy as np
+y_true = np.array([10.0, 20.0, 30.0])
+y_pred = np.array([13.0, 20.0, 26.0])
+mae = np.mean(np.abs(y_true - y_pred))
+mse = np.mean((y_true - y_pred) ** 2)
+rmse = np.sqrt(mse)
+print(round(mae, 2), round(mse, 2), round(rmse, 2))
+```
+
+- **(1)** 2.33 8.33 2.89
+- **(2)** 3.50 12.50 3.54
+- **(3)** 2.33 5.44 2.33
+- **(4)** 7.00 25.00 5.00
+
+- **정답**: `0` (보기 1번: 2.33 8.33 2.89)
+- **해설**: 오차(y_true - y_pred)는 [-3.0, 0.0, 4.0]입니다. 절댓값의 평균인 MAE는 (3 + 0 + 4) / 3 = 7 / 3 ≈ 2.33이고, 제곱의 평균인 MSE는 (9 + 0 + 16) / 3 = 25 / 3 ≈ 8.33이며, 그 제곱근인 RMSE는 sqrt(25/3) = 5 / sqrt(3) ≈ 2.89입니다.
+
+---
+
+### Q123. [고급] 선형 회귀의 과적합(Overfitting)을 억제하기 위해 손실 함수에 가중치 페널티 항을 추가하는 규제 회귀 모델 Ridge(L2 규제), Lasso(L1 규제), ElasticNet에 대한 설명으로 가장 올바른 것은?
+
+```python
+# Loss(w) = MSE(w) + alpha * Penalty(w)
+```
+
+- **(1)** Ridge 회귀는 가중치 절댓값의 합($\sum |w_j|$)을 페널티로 사용하여 불필요한 피처의 가중치를 정확히 0으로 만든다.
+- **(2)** 규제 강도 하이퍼파라미터 $\alpha$(alpha)를 0으로 설정하면 모든 가중치 $w_j$가 즉시 0이 된다.
+- **(3)** ElasticNet은 트리 모델의 깊이(max_depth)만 제한하는 기법이다.
+- **(4)** Lasso(L1 규제)는 가중치 절댓값의 합($\alpha \sum |w_j|$)을 페널티로 부과하여 덜 중요한 피처의 가중치를 정확히 0으로 만드는 희소성(Sparsity, 자동 변수 선택 효과)을 가지며, Ridge(L2 규제)는 가중치 제곱합($\alpha \sum w_j^2$)을 페널티로 부과하여 가중치를 0에 가깝게 줄이지만 정확히 0으로 만들지는 않는다.
+
+- **정답**: `3` (보기 4번: Lasso(L1 규제)는 가중치 절댓값의 합($\alpha \sum |w_j|$)을 페널티로 부과하여 덜 중요한 피처의 가중치를 정확히 0으로 만드는 희소성(Sparsity, 자동 변수 선택 효과)을 가지며, Ridge(L2 규제)는 가중치 제곱합($\alpha \sum w_j^2$)을 페널티로 부과하여 가중치를 0에 가깝게 줄이지만 정확히 0으로 만들지는 않는다.)
+- **해설**: L1 규제(Lasso)는 마름모 형태의 제약 영역 꼭짓점에서 등고선이 접하기 쉬워 불필요한 회귀 계수를 정확히 0으로 만들어 변수 선택(Feature Selection) 효과를 제공합니다. L2 규제(Ridge)는 원형 제약 영역을 가져 계수들을 전반적으로 부드럽게 축소하며, ElasticNet은 L1과 L2 규제를 결합한 모델입니다(alpha=0이면 규제가 없는 일반 선형 회귀 OLS와 동일해집니다).
+
+---
+
+### Q124. [중급] 로지스틱 회귀(Logistic Regression)에 대한 설명으로 가장 올바른 것은?
+
+```python
+# P(y=1 | x) = sigmoid(w^T x + b) = 1 / (1 + exp(-(w^T x + b)))
+```
+
+- **(1)** 이름에 '회귀'가 들어가므로 연속형 실수 타깃을 예측하는 회귀 전용 알고리즘이며 분류에는 사용할 수 없다.
+- **(2)** 선형 결합값(Logit, $z = w^T x + b$)에 시그모이드(Sigmoid) 함수를 적용하여 출력을 $(0, 1)$ 사이의 클래스 1 속할 확률로 변환하는 이진 분류(다중 클래스는 Softmax) 알고리즘이며, 손실 함수로 평균제곱오차(MSE) 대신 이진 교차 엔트로피(Binary Cross-Entropy / Log Loss)를 최소화한다.
+- **(3)** 로지스틱 회귀에서 선형 결합값 $z = 0$일 때 시그모이드 함수 출력 확률 $\sigma(0)$은 $0.0$이다.
+- **(4)** 로지스틱 회귀의 결정 경계(Decision Boundary)는 입력 공간에서 항상 복잡한 비선형 원형 곡선이다.
+
+- **정답**: `1` (보기 2번: 선형 결합값(Logit, $z = w^T x + b$)에 시그모이드(Sigmoid) 함수를 적용하여 출력을 $(0, 1)$ 사이의 클래스 1 속할 확률로 변환하는 이진 분류(다중 클래스는 Softmax) 알고리즘이며, 손실 함수로 평균제곱오차(MSE) 대신 이진 교차 엔트로피(Binary Cross-Entropy / Log Loss)를 최소화한다.)
+- **해설**: 로지스틱 회귀는 선형 결합 $z = w^T x + b$를 시그모이드 함수 $\sigma(z) = 1 / (1 + e^{-z})$에 통과시켜 클래스 확률을 추정하는 선형 분류기입니다. $z=0$일 때 $\sigma(0) = 0.5$(기본 임계값)이며, 볼록성(Convexity) 보장과 빠른 수렴을 위해 이진 교차 엔트로피(Log Loss) 손실 함수를 사용합니다.
+
+---
+
+### Q125. [중급] 이진 분류 모델의 오차 행렬(Confusion Matrix) 결과가 아래와 같을 때, 정밀도(Precision), 재현율(Recall, 민감도), 조화평균인 F1-Score를 순서대로 바르게 계산한 것은?
+
+```python
+# TP(진양성) = 40, FP(위양성) = 10, FN(위음성) = 40, TN(진음성) = 110
+# Precision = TP / (TP + FP)
+# Recall    = TP / (TP + FN)
+# F1-Score  = 2 * (Precision * Recall) / (Precision + Recall)
+```
+
+- **(1)** Precision = 0.50, Recall = 0.80, F1-Score ≈ 0.62
+- **(2)** Precision = 0.80, Recall = 0.50, F1-Score = 0.65
+- **(3)** Precision = 0.75, Recall = 0.75, F1-Score = 0.75
+- **(4)** Precision = 0.80, Recall = 0.50, F1-Score ≈ 0.62
+
+- **정답**: `3` (보기 4번: Precision = 0.80, Recall = 0.50, F1-Score ≈ 0.62)
+- **해설**: 정밀도(Precision, 양성 예측 중 실제 양성 비율) = 40 / (40 + 10) = 40 / 50 = 0.80입니다. 재현율(Recall, 실제 양성 중 양성으로 찾아낸 비율) = 40 / (40 + 40) = 40 / 80 = 0.50입니다. F1-Score는 두 지표의 산술평균(0.65)이 아니라 조화평균이므로 2 × (0.8 × 0.5) / (0.8 + 0.5) = 0.8 / 1.3 ≈ 0.615(0.62)입니다.
+
+---
+
+### Q126. [중급] 분류 임계값(Threshold) 변화에 따른 정밀도-재현율 트레이드오프(Trade-off)와 ROC 곡선 및 ROC-AUC 지표에 대한 설명으로 올바른 것은?
+
+```python
+# 분류 임계값(Threshold) 조정 및 ROC Curve (FPR vs TPR)
+```
+
+- **(1)** 분류 임계값을 0.5에서 0.9로 높이면 양성으로 예측하는 기준이 엄격해져서 재현율(Recall)이 항상 상승하고 정밀도(Precision)는 하락한다.
+- **(2)** 암 진단이나 제조 불량 탐지처럼 실제 양성(환자/불량)을 놓치는 것(FN)이 치명적인 도메인에서는 재현율(Recall)을 높이기 위해 분류 임계값(Threshold)을 기본값 0.5보다 낮추는 전략을 고려하며, ROC 곡선은 가로축에 FPR(위양성률), 세로축에 TPR(재현율)을 두고 임계값을 변화시키며 그린 곡선이다.
+- **(3)** 무작위 추측(Random Guessing) 분류기의 기대 ROC-AUC 값은 0.0이며, 완벽한 분류기의 ROC-AUC 값은 100.0이다.
+- **(4)** 불균형이 극심한 데이터셋(예: 정상 99.9%, 사기 0.1%)에서는 모든 샘플을 무조건 '정상'으로만 예측해도 재현율(Recall)이 99.9%가 나오는 착시가 발생한다.
+
+- **정답**: `1` (보기 2번: 암 진단이나 제조 불량 탐지처럼 실제 양성(환자/불량)을 놓치는 것(FN)이 치명적인 도메인에서는 재현율(Recall)을 높이기 위해 분류 임계값(Threshold)을 기본값 0.5보다 낮추는 전략을 고려하며, ROC 곡선은 가로축에 FPR(위양성률), 세로축에 TPR(재현율)을 두고 임계값을 변화시키며 그린 곡선이다.)
+- **해설**: 임계값을 낮추면 더 많은 샘플을 양성으로 판정하므로 재현율(Recall = TPR)이 올라가고 정밀도가 낮아지는 경향이 있습니다. 무작위 분류기의 ROC-AUC는 0.5, 완벽한 분류기는 1.0이며, 불균형 데이터에서 모두 정상(음성)으로 예측할 때 99.9%가 나오는 착시 지표는 재현율이 아니라 정확도(Accuracy)입니다(이때 사기 클래스의 재현율은 0%입니다).
+
+---
+
+### Q127. [중급] 결정 트리(Decision Tree)에서 분할 기준이 되는 지니 불순도(Gini Impurity, $G = 1 - \sum p_k^2$) 계산과 과적합 제어를 위한 사전 가지치기(Pre-pruning) 하이퍼파라미터에 대한 설명으로 올바른 것은?
+
+```python
+# 어떤 노드에 클래스 0 샘플이 50개, 클래스 1 샘플이 50개 섞여 있을 때의 지니 불순도 G_A와
+# 한쪽 클래스 샘플만 100개 모인 순수 노드의 지니 불순도 G_B는?
+```
+
+- **(1)** G_A = 1.0, G_B = 0.5 이며, 과적합을 방지하려면 `max_depth=None`으로 무제한 깊게 성장시켜야 한다.
+- **(2)** G_A = 0.0, G_B = 1.0 이다.
+- **(3)** G_A = 0.5, G_B = 0.0 이며, 과적합을 방지하려면 `max_depth`를 적절히 낮추거나 `min_samples_split` / `min_samples_leaf` 값을 키워야 한다.
+- **(4)** G_A = 0.25, G_B = 0.0 이다.
+
+- **정답**: `2` (보기 3번: G_A = 0.5, G_B = 0.0 이며, 과적합을 방지하려면 `max_depth`를 적절히 낮추거나 `min_samples_split` / `min_samples_leaf` 값을 키워야 한다.)
+- **해설**: 두 클래스가 50:50(p0=0.5, p1=0.5)으로 반반 섞여 불확실성이 최대인 노드의 지니 불순도는 1 - (0.5^2 + 0.5^2) = 1 - 0.5 = 0.5(엔트로피는 1.0 bit)이고, 단일 클래스만 있는 순수 노드(p=1.0)의 지니 불순도는 1 - 1^2 = 0.0입니다. 트리가 너무 깊어지면 훈련 데이터에 과적합되므로 max_depth를 제한하거나 리프 노드 최소 샘플 수를 늘려 규제합니다.
+
+---
+
+### Q128. [중급] 앙상블(Ensemble) 기법 중 배깅(Bagging: 예, Random Forest)과 부스팅(Boosting: 예, Gradient Boosting, XGBoost, LightGBM)의 핵심 차이점으로 가장 올바른 것은?
+
+```python
+# Random Forest (Bagging) vs Gradient Boosting / XGBoost / LightGBM (Boosting)
+```
+
+- **(1)** 랜덤 포레스트는 부트스트랩 샘플링(중복 허용 복원 추출)과 무작위 피처 부분집합 선택을 통해 여러 개의 독립적인 트리를 병렬적으로 학습시켜 주로 분산(Variance)을 줄이는 반면, 부스팅 계열은 이전 트리가 만든 오차(잔차/그레이디언트)를 보완하도록 다음 트리를 순차적으로(Sequential) 학습시켜 주로 편향(Bias)을 줄인다.
+- **(2)** 랜덤 포레스트는 반드시 이전 트리의 학습이 완전히 끝나야만 다음 트리를 만들 수 있어 병렬 처리(`n_jobs=-1`)가 원천적으로 불가능하다.
+- **(3)** LightGBM은 항상 모든 노드를 같은 깊이로 동시에 분할하는 균형 트리 분할(Level-wise) 방식만 사용하며, 리프 중심 분할(Leaf-wise)은 지원하지 않는다.
+- **(4)** 배깅은 단일 약한 학습기 하나만 사용하는 기법이다.
+
+- **정답**: `0` (보기 1번: 랜덤 포레스트는 부트스트랩 샘플링(중복 허용 복원 추출)과 무작위 피처 부분집합 선택을 통해 여러 개의 독립적인 트리를 병렬적으로 학습시켜 주로 분산(Variance)을 줄이는 반면, 부스팅 계열은 이전 트리가 만든 오차(잔차/그레이디언트)를 보완하도록 다음 트리를 순차적으로(Sequential) 학습시켜 주로 편향(Bias)을 줄인다.)
+- **해설**: 배깅(Random Forest)은 부트스트랩 샘플과 피처 서브샘플링으로 상호 상관성이 낮은 다수의 트리를 독립적·병렬적으로 학습해 평균/다수결을 내어 분산(과적합)을 낮춥니다. 부스팅(GBM, XGBoost, LightGBM)은 이전 모델의 잔차(또는 손실 함수의 음의 그레이디언트)를 후속 트리가 순차적으로 학습하여 예측력을 높이며, 특히 LightGBM은 손실 감소량이 가장 큰 리프를 계속 분할하는 Leaf-wise 방식을 채택해 속도가 빠릅니다.
+
+---
+
+### Q129. [중급] 서포트 벡터 머신(SVM)에서 마진(Margin), 규제 매개변수 `C`, 그리고 비선형 분류를 위한 커널 트릭(Kernel Trick, 예: RBF 커널)에 대한 설명으로 올바른 것은?
+
+```python
+from sklearn.svm import SVC
+clf = SVC(kernel='rbf', C=1.0, gamma='scale')
+```
+
+- **(1)** 커널 트릭은 저차원에서 선형 분리가 불가능한 데이터를 실제로 무한/고차원 벡터로 명시적 변환 연산을 수행하지 않고도 고차원 공간에서의 내적(Inner Product) 값만을 커널 함수로 직접 계산하여 비선형 결정 경계를 효율적으로 학습하는 기법이다.
+- **(2)** 매개변수 `C` 값을 매우 작게 설정하면 오분류를 절대 허용하지 않는 하드 마진(Hard Margin)에 가까워져 마진 폭이 극도로 좁아진다.
+- **(3)** SVM의 결정 경계는 서포트 벡터(Support Vector)와는 무관하며 결정 경계에서 가장 멀리 떨어진 샘플들에 의해서만 결정된다.
+- **(4)** SVM은 입력 피처들의 스케일(단위) 차이에 전혀 영향을 받지 않으므로 `StandardScaler`를 적용할 필요가 없다.
+
+- **정답**: `0` (보기 1번: 커널 트릭은 저차원에서 선형 분리가 불가능한 데이터를 실제로 무한/고차원 벡터로 명시적 변환 연산을 수행하지 않고도 고차원 공간에서의 내적(Inner Product) 값만을 커널 함수로 직접 계산하여 비선형 결정 경계를 효율적으로 학습하는 기법이다.)
+- **해설**: 커널 트릭은 고차원 매핑 함수를 직접 계산하는 비용 없이 커널 함수 K(x_i, x_j)만으로 고차원 내적을 계산합니다. C가 클수록 오분류 페널티가 커져 마진이 좁아지고(과적합 위험), C가 작을수록 오분류를 허용하며 마진이 넓어집니다. 또한 SVM은 거리·내적 기반이므로 피처 스케일링이 필수적입니다.
+
+---
+
+### Q130. [중급] 비지도 군집화 알고리즘인 K-Means의 동작 원리와 최적 군집 수 $K$를 평가하는 이너셔(Inertia, 엘보우 기법) 및 실루엣 계수(Silhouette Coefficient)에 대한 설명으로 올바른 것은?
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+```
+
+- **(1)** 군집 수 $K$를 늘릴수록 군집 내 오차제곱합인 Inertia(`kmeans.inertia_`) 값은 항상 증가한다.
+- **(2)** K-Means는 밀도 기반 군집화 알고리즘이므로 초승달 모양이나 동심원 형태의 비구형(Non-convex) 군집도 완벽하게 분리하며 군집 개수 $K$를 미리 지정할 필요가 없다.
+- **(3)** 실루엣 계수 $s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$는 $[-1, 1]$ 범위의 값을 가지며, 같은 군집 내 평균 거리 $a(i)$가 작고 가장 가까운 타 군집과의 평균 거리 $b(i)$가 커서 전체 실루엣 점수가 $1$에 가까울수록 군집화가 잘 된 것으로 해석한다.
+- **(4)** K-Means는 초기 중심점(Centroid) 위치에 전혀 영향을 받지 않아 매번 동일한 결과를 보장하므로 `k-means++` 초기화가 필요 없다.
+
+- **정답**: `2` (보기 3번: 실루엣 계수 $s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$는 $[-1, 1]$ 범위의 값을 가지며, 같은 군집 내 평균 거리 $a(i)$가 작고 가장 가까운 타 군집과의 평균 거리 $b(i)$가 커서 전체 실루엣 점수가 $1$에 가까울수록 군집화가 잘 된 것으로 해석한다.)
+- **해설**: 군집 수 K가 증가하면 각 샘플에서 가장 가까운 중심점까지의 거리 제곱합인 Inertia는 단조 감소하므로, 감소율이 급격히 완만해지는 꺾임 지점(Elbow)을 찾습니다. 실루엣 계수는 군집 내 응집도(a)와 군집 간 분리도(b)를 함께 평가하며 1에 가까울수록 우수합니다(비구형 밀도 기반 군집화는 DBSCAN입니다).
+
+---
+
+### Q131. [중급] 주성분 분석(PCA, Principal Component Analysis)을 통한 차원 축소 원리와 사이킷런 `PCA` 객체의 `explained_variance_ratio_` 속성에 대한 아래 코드의 해석으로 올바른 것은?
+
+```python
+from sklearn.decomposition import PCA
+pca = PCA(n_components=0.95)
+X_reduced = pca.fit_transform(X_scaled)
+print(pca.n_components_, round(pca.explained_variance_ratio_.sum(), 2))
+```
+
+- **(1)** PCA는 타깃 정답 라벨 `y`와의 상관계수가 가장 높은 원본 컬럼만 골라내는 지도학습 필터 기법이다.
+- **(2)** `PCA(n_components=0.95)`와 같이 0과 1 사이의 실수를 전달하면 원본 데이터 전체 분산의 최소 95% 이상을 보존하는 데 필요한 최소한의 서로 직교(Orthogonal)하는 주성분 축 개수를 자동으로 선택한다.
+- **(3)** 서로 다른 주성분 축(예: PC1과 PC2) 사이의 상관계수는 항상 1.0이다.
+- **(4)** PCA를 수행하기 전에 피처 스케일링을 하면 분산 정보가 사라지므로 스케일링이 금지된다.
+
+- **정답**: `1` (보기 2번: `PCA(n_components=0.95)`와 같이 0과 1 사이의 실수를 전달하면 원본 데이터 전체 분산의 최소 95% 이상을 보존하는 데 필요한 최소한의 서로 직교(Orthogonal)하는 주성분 축 개수를 자동으로 선택한다.)
+- **해설**: PCA는 데이터의 공분산 행렬을 고유값 분해(또는 SVD)하여 분산이 가장 큰 방향부터 서로 직교(상관계수 0)하는 주성분 축을 찾습니다. n_components에 0~1 사이 실수(예: 0.95)를 주면 설명된 분산 비율의 누적합(cumsum)이 95% 이상이 되는 주성분 개수를 자동 결정합니다(단위가 큰 변수가 분산을 지배하지 않도록 PCA 전 StandardScaler 적용이 필수적입니다).
+
+---
+
+### Q132. [중급] 단층 퍼셉트론(Single-Layer Perceptron)의 한계였던 XOR(배타적 논리합) 비선형 분리 문제를 다층 퍼셉트론(MLP)이 해결할 수 있게 해주는 핵심 요소와, 은닉층에 비선형 활성화 함수(Activation Function)를 반드시 넣어야 하는 이유는?
+
+```python
+# h = sigma(W1 * x + b1), y = W2 * h + b2
+```
+
+- **(1)** 은닉층을 2개 이상 쌓으면 활성화 함수로 항등 함수 $f(x) = x$만 사용해도 모든 비선형 함수를 근사할 수 있다.
+- **(2)** 단층 퍼셉트론은 AND와 OR 게이트는 학습할 수 없지만 XOR 게이트만 유일하게 학습할 수 있다.
+- **(3)** 다층 퍼셉트론에서는 가중치 행렬 없이 편향(Bias) 스칼라 하나만으로 이미지를 분류한다.
+- **(4)** 은닉층에 비선형 활성화 함수 없이 선형 변환만 여러 층 쌓으면 $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)x + (W_2 b_1 + b_2) = W' x + b'$가 되어 아무리 층을 깊게 쌓아도 수학적으로 단일 선형 계층과 동일해지기 때문에, 비선형 결정 경계를 학습하려면 반드시 비선형 활성화 함수가 필요하다.
+
+- **정답**: `3` (보기 4번: 은닉층에 비선형 활성화 함수 없이 선형 변환만 여러 층 쌓으면 $W_2(W_1 x + b_1) + b_2 = (W_2 W_1)x + (W_2 b_1 + b_2) = W' x + b'$가 되어 아무리 층을 깊게 쌓아도 수학적으로 단일 선형 계층과 동일해지기 때문에, 비선형 결정 경계를 학습하려면 반드시 비선형 활성화 함수가 필요하다.)
+- **해설**: 단층 퍼셉트론은 선형 분리 가능한 AND, OR는 표현할 수 있지만 비선형인 XOR는 분리할 수 없습니다. 선형 행렬 곱의 합성은 여전히 하나의 선형 변환($W' = W_2 W_1$)으로 축약되므로, 층 사이에 비선형 활성화 함수(ReLU, GELU 등)를 삽입해야만 보편 근사 정리(Universal Approximation Theorem)에 따라 복잡한 비선형 함수를 표현할 수 있습니다.
+
+---
+
+### Q133. [고급] 신경망의 역전파(Backpropagation) 알고리즘이 출력층의 손실(Loss)로부터 입력층 방향의 가중치 그레이디언트를 계산할 때 기반이 되는 미적분 원리와, 깊은 신경망에서 시그모이드($\sigma(x)$) 활성화 함수를 반복 사용했을 때 기울기 소실(Vanishing Gradient)이 발생하는 수학적 원인은?
+
+```python
+# dsigma(x)/dx = sigma(x) * (1 - sigma(x)) <= 0.25
+```
+
+- **(1)** 시그모이드 함수의 도함수 최댓값은 항상 $10.0$ 이상이어서 기울기 폭발(Exploding Gradient)만 발생한다.
+- **(2)** 합성함수의 미분인 연쇄 법칙(Chain Rule)에 의해 각 층의 국소 미분값들이 계속 곱해지는데, 시그모이드 함수의 도함수 $\sigma'(x) = \sigma(x)(1 - \sigma(x))$의 최댓값이 $x=0$에서조차 $0.25(1/4)$에 불과하고 양끝에서는 $0$에 수렴하므로, 층을 거슬러 올라갈수록 $0.25$ 이하의 값들이 거듭 곱해져 앞쪽 층의 기울기가 $0$으로 소멸한다.
+- **(3)** 역전파 알고리즘은 미분을 사용하지 않고 모든 가중치 후보를 무작위로 대입해보는 그리드 탐색 방식이다.
+- **(4)** 연쇄 법칙(Chain Rule)은 각 층의 미분값들을 곱하는 것이 아니라 모두 더하기만 하는 법칙이다.
+
+- **정답**: `1` (보기 2번: 합성함수의 미분인 연쇄 법칙(Chain Rule)에 의해 각 층의 국소 미분값들이 계속 곱해지는데, 시그모이드 함수의 도함수 $\sigma'(x) = \sigma(x)(1 - \sigma(x))$의 최댓값이 $x=0$에서조차 $0.25(1/4)$에 불과하고 양끝에서는 $0$에 수렴하므로, 층을 거슬러 올라갈수록 $0.25$ 이하의 값들이 거듭 곱해져 앞쪽 층의 기울기가 $0$으로 소멸한다.)
+- **해설**: 역전파는 연쇄 법칙($\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial h_n} \cdots \frac{\partial h_1}{\partial w_1}$)을 통해 그레이디언트를 곱셈으로 전파합니다. 시그모이드 도함수 $\sigma'(x)$는 최댓값이 0.25이므로 10개 층만 거쳐도 $0.25^{10} < 10^{-6}$으로 줄어들어 입력층 근처 가중치가 거의 업데이트되지 않는 기울기 소실 문제가 발생합니다.
+
+---
+
+### Q134. [중급] 현대 딥러닝의 은닉층 기본 활성화 함수인 ReLU($f(x) = \max(0, x)$)의 장점과 '죽은 뉴런(Dying ReLU)' 현상, 그리고 이를 보완한 Leaky ReLU / GELU에 대한 설명으로 올바른 것은?
+
+```python
+# ReLU(x) = max(0, x)
+# LeakyReLU(x) = x if x > 0 else alpha * x (예: alpha = 0.01)
+```
+
+- **(1)** ReLU는 양수 구간에서 미분값이 $0$이고 음수 구간에서 미분값이 $1$이다.
+- **(2)** ReLU는 지수 함수(`exp`) 연산을 포함하고 있어 시그모이드보다 연산 비용이 10배 이상 높다.
+- **(3)** 다중 클래스 분류의 최종 출력층 확률 분포를 얻을 때는 Softmax 대신 반드시 ReLU만 사용해야 출력의 총합이 1이 된다.
+- **(4)** ReLU는 양수 구간($x > 0$)에서 미분값이 상수 $1$이므로 시그모이드 대비 기울기 소실 문제를 크게 완화하고 연산이 매우 빠르지만, 음수 구간($x < 0$)에서는 출력과 미분값이 모두 $0$이어서 뉴런이 한 번 음수 영역에 빠지면 가중치가 영구히 업데이트되지 않는 Dying ReLU 문제가 발생할 수 있으며, Leaky ReLU는 음수 구간에 작은 기울기 $\alpha$를 부여해 이를 해결한다.
+
+- **정답**: `3` (보기 4번: ReLU는 양수 구간($x > 0$)에서 미분값이 상수 $1$이므로 시그모이드 대비 기울기 소실 문제를 크게 완화하고 연산이 매우 빠르지만, 음수 구간($x < 0$)에서는 출력과 미분값이 모두 $0$이어서 뉴런이 한 번 음수 영역에 빠지면 가중치가 영구히 업데이트되지 않는 Dying ReLU 문제가 발생할 수 있으며, Leaky ReLU는 음수 구간에 작은 기울기 $\alpha$를 부여해 이를 해결한다.)
+- **해설**: ReLU는 x > 0에서 기울기가 1로 유지되어 깊은 네트워크 학습을 가능하게 했고 단순 비교 연산이라 매우 빠릅니다. 다만 x < 0에서 기울기가 0이 되는 Dying ReLU 현상을 막기 위해 음수 영역에 미세한 기울기를 둔 Leaky ReLU, ELU나 Transformer에서 표준으로 쓰이는 부드러운 확률적 게이팅 함수 GELU 등이 활용됩니다.
+
+---
+
+### Q135. [고급] 딥러닝 문제 유형별 출력층 활성화 함수와 손실 함수(Loss Function)의 표준 조합, 그리고 PyTorch의 `nn.CrossEntropyLoss()` 사용 시 주의할 점으로 가장 정확한 것은?
+
+```python
+import torch.nn as nn
+criterion = nn.CrossEntropyLoss()
+# logits: 모델 마지막 선형 계층 출력 (shape: [batch_size, num_classes])
+```
+
+- **(1)** PyTorch의 `nn.CrossEntropyLoss()`는 내부적으로 `LogSoftmax`와 `NLLLoss`를 결합하여 수치적으로 안정하게 계산하므로, 모델의 마지막 출력층에는 `Softmax`를 별도로 통과시키지 않은 원시 점수(Logits) 텐서를 그대로 입력해야 한다.
+- **(2)** `nn.CrossEntropyLoss()`에 입력하기 전에 모델 마지막 층에 반드시 `nn.Softmax()`를 먼저 적용해야 정확한 그레이디언트가 계산된다.
+- **(3)** 연속적인 주택 가격을 예측하는 회귀 문제에서는 출력층에 `Sigmoid`를 씌우고 `CrossEntropyLoss`를 사용한다.
+- **(4)** 이진 분류에서 `nn.BCEWithLogitsLoss()`는 이미 `Sigmoid`를 거친 확률값만 입력으로 받을 수 있다.
+
+- **정답**: `0` (보기 1번: PyTorch의 `nn.CrossEntropyLoss()`는 내부적으로 `LogSoftmax`와 `NLLLoss`를 결합하여 수치적으로 안정하게 계산하므로, 모델의 마지막 출력층에는 `Softmax`를 별도로 통과시키지 않은 원시 점수(Logits) 텐서를 그대로 입력해야 한다.)
+- **해설**: PyTorch의 nn.CrossEntropyLoss(다중 분류)와 nn.BCEWithLogitsLoss(이진 분류)는 수치 안정성(Log-Sum-Exp 트릭)을 위해 내부에 각각 LogSoftmax와 Sigmoid가 이미 통합되어 있습니다. 따라서 모델의 순전파(forward) 마지막 층에서는 활성화 함수를 거치지 않은 Raw Logits를 반환해야 중복 적용 오류가 발생하지 않습니다.
+
+---
+
+### Q136. [중급] 신경망 가중치를 업데이트하는 옵티마이저(Optimizer)인 확률적 경사하강법(Mini-batch SGD), 모멘텀(Momentum), RMSProp, 그리고 Adam(Adaptive Moment Estimation) 및 AdamW에 대한 설명으로 가장 올바른 것은?
+
+```python
+import torch.optim as optim
+optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-2)
+```
+
+- **(1)** Mini-batch SGD는 매 스텝마다 전체 데이터셋 100%를 모두 읽어야만 가중치를 단 1회 업데이트할 수 있는 방식이다.
+- **(2)** Momentum 옵티마이저는 이전 스텝의 이동 방향을 완전히 무시하고 현재 스텝의 기울기 부호만 반대로 뒤집는다.
+- **(3)** Adam은 그레이디언트의 지수이동평균(1차 모멘트, 관성 방향 반영)과 그레이디언트 제곱의 지수이동평균(2차 모멘트, 파라미터별 적응적 학습률 조정)을 모두 결합하고 초기 편향 보정(Bias Correction)을 수행하는 옵티마이저이며, AdamW는 L2 규제 대신 가중치 감쇠(Weight Decay)를 모멘텀 계산과 분리(Decoupled)하여 일반화 성능을 개선한 방식이다.
+- **(4)** 학습률(Learning Rate)을 너무 크게 설정하면 항상 최적점에 매우 천천히 안정적으로 수렴한다.
+
+- **정답**: `2` (보기 3번: Adam은 그레이디언트의 지수이동평균(1차 모멘트, 관성 방향 반영)과 그레이디언트 제곱의 지수이동평균(2차 모멘트, 파라미터별 적응적 학습률 조정)을 모두 결합하고 초기 편향 보정(Bias Correction)을 수행하는 옵티마이저이며, AdamW는 L2 규제 대신 가중치 감쇠(Weight Decay)를 모멘텀 계산과 분리(Decoupled)하여 일반화 성능을 개선한 방식이다.)
+- **해설**: Adam은 Momentum(1차 모멘트 추정치 $m_t$)과 RMSProp(2차 모멘트 추정치 $v_t$)의 장점을 결합해 각 파라미터마다 적응적 학습률을 적용합니다. AdamW는 기존 Adam에서 L2 정규화 항이 적응적 학습률 스케일링에 섞여 감쇠 효과가 왜곡되던 문제를 가중치 감쇠(Weight Decay) 분리로 해결하여 현대 Transformer/LLM 학습의 표준 옵티마이저로 쓰입니다.
+
+---
+
+### Q137. [고급] 딥러닝의 정규화 및 규제 기법인 배치 정규화(Batch Normalization)와 드롭아웃(Dropout)이 '학습 시(`model.train()`)'와 '추론/평가 시(`model.eval()`)'에 각각 어떻게 다르게 동작하는지 설명한 것으로 가장 정확한 것은?
+
+```python
+model.train()  # 학습 모드
+# vs
+model.eval()   # 추론/평가 모드
+```
+
+- **(1)** 추론 시(`model.eval()`)에도 Dropout은 매번 무작위로 뉴런의 50%를 제거하여 예측할 때마다 다른 결과를 내야 한다.
+- **(2)** Batch Normalization은 추론 시(`model.eval()`) 테스트 샘플이 1개만 들어와도 무조건 그 1개 샘플의 분산(0)으로 나누어 정규화한다.
+- **(3)** 학습 시 Dropout은 지정된 확률 $p$만큼 뉴런을 무작위로 비활성화(0으로 마스킹)하고 남은 뉴런 출력을 $1/(1-p)$로 스케일링(Inverted Dropout)하지만 추론 시(`model.eval()`)에는 모든 뉴런을 활성화하며, Batch Normalization은 학습 시 현재 미니배치의 평균·분산으로 정규화하면서 이동평균(Running mean/var)을 누적 기록해 두었다가 추론 시에는 고정된 이동평균·이동분산을 사용해 정규화한다.
+- **(4)** `model.eval()`을 호출하면 모델의 모든 가중치 텐서가 메모리에서 삭제된다.
+
+- **정답**: `2` (보기 3번: 학습 시 Dropout은 지정된 확률 $p$만큼 뉴런을 무작위로 비활성화(0으로 마스킹)하고 남은 뉴런 출력을 $1/(1-p)$로 스케일링(Inverted Dropout)하지만 추론 시(`model.eval()`)에는 모든 뉴런을 활성화하며, Batch Normalization은 학습 시 현재 미니배치의 평균·분산으로 정규화하면서 이동평균(Running mean/var)을 누적 기록해 두었다가 추론 시에는 고정된 이동평균·이동분산을 사용해 정규화한다.)
+- **해설**: Inverted Dropout은 학습 시 1/(1-p)를 곱해 기댓값을 맞춰두므로 추론 시(model.eval())에는 아무런 마스킹이나 스케일링 없이 모든 뉴런을 그대로 사용하여 결정론적(Deterministic) 출력을 보장합니다. BatchNorm 역시 추론 시에는 배치 크기가 1일 수도 있고 일관된 출력이 필요하므로 학습 중 갱신해 둔 running_mean과 running_var를 고정 사용하여 정규화합니다.
+
+---
+
+### Q138. [중급] PyTorch에서 모델의 일반화 성능을 향상시키기 위해 조기 종료(Early Stopping)를 적용할 때 모니터링해야 하는 기준 지표와 과적합(Overfitting) 징후에 대한 설명으로 올바른 것은?
+
+```python
+# Epoch 진행에 따른 Train Loss vs Validation Loss 추이 관찰
+```
+
+- **(1)** 에포크(Epoch)가 진행됨에 따라 훈련 손실(Train Loss)은 계속 감소하는데 검증 손실(Validation Loss)이 어느 시점부터 더 이상 감소하지 않고 오히려 상승하기 시작하면 과적합(Overfitting)이 시작된 신호이므로, 지정한 인내 횟수(`patience`) 동안 검증 손실이 개선되지 않으면 학습을 멈추고 검증 손실이 가장 낮았던 시점의 모델 가중치(`state_dict`)를 복원한다.
+- **(2)** 과적합 여부는 오직 훈련 손실(Train Loss)만 보고 판단하며, 훈련 손실이 0이 될 때까지 무조건 수만 에포크를 학습시켜야 일반화 성능이 가장 좋다.
+- **(3)** 조기 종료(Early Stopping)는 최종 테스트 세트(`X_test`, `y_test`)의 점수를 매 에포크마다 확인하며 멈추는 기법이다.
+- **(4)** 훈련 손실과 검증 손실이 모두 매우 높고 전혀 줄어들지 않는 현상을 과적합(Overfitting)이라고 부른다.
+
+- **정답**: `0` (보기 1번: 에포크(Epoch)가 진행됨에 따라 훈련 손실(Train Loss)은 계속 감소하는데 검증 손실(Validation Loss)이 어느 시점부터 더 이상 감소하지 않고 오히려 상승하기 시작하면 과적합(Overfitting)이 시작된 신호이므로, 지정한 인내 횟수(`patience`) 동안 검증 손실이 개선되지 않으면 학습을 멈추고 검증 손실이 가장 낮았던 시점의 모델 가중치(`state_dict`)를 복원한다.)
+- **해설**: 훈련 손실과 검증 손실이 모두 높은 상태는 과소적합(Underfitting)이며, 훈련 손실은 계속 내려가지만 검증 손실이 다시 올라가는 분기점 이후가 과적합(Overfitting) 구간입니다. Early Stopping은 검증 세트(Validation Set)의 손실/지표를 모니터링하여 최적 체크포인트를 저장하고 불필요한 과적합 학습을 조기에 중단합니다.
+
+---
+
+### Q139. [고급] PyTorch 학습 루프(Training Loop)에서 매 미니배치 스텝마다 수행하는 핵심 메서드 호출 순서와, `optimizer.zero_grad()`를 생략했을 때 발생하는 문제점으로 올바른 것은?
+
+```python
+for inputs, targets in train_loader:
+    # 올바른 4단계 순서는?
+```
+
+- **(1)** 1) `loss.backward()` -> 2) `optimizer.step()` -> 3) `optimizer.zero_grad()` -> 4) `outputs = model(inputs)` 순서로 수행한다.
+- **(2)** `optimizer.zero_grad()`는 모델의 학습된 가중치(`weight`) 값 자체를 모두 0으로 초기화하는 함수이므로 학습 중에는 절대 호출하면 안 된다.
+- **(3)** `loss.backward()`만 호출하면 옵티마이저 없이도 가중치가 자동으로 업데이트된다.
+- **(4)** 1) `optimizer.zero_grad()` -> 2) `outputs = model(inputs)` 및 `loss = criterion(outputs, targets)` -> 3) `loss.backward()` -> 4) `optimizer.step()` 순서로 수행하며, PyTorch의 `backward()`는 기본적으로 기존 `.grad` 버퍼에 새로운 기울기를 누적(더하기, `+=`)하므로 `zero_grad()`를 생략하면 이전 배치의 그레이디언트가 계속 합산되어 학습이 엉망이 된다.
+
+- **정답**: `3` (보기 4번: 1) `optimizer.zero_grad()` -> 2) `outputs = model(inputs)` 및 `loss = criterion(outputs, targets)` -> 3) `loss.backward()` -> 4) `optimizer.step()` 순서로 수행하며, PyTorch의 `backward()`는 기본적으로 기존 `.grad` 버퍼에 새로운 기울기를 누적(더하기, `+=`)하므로 `zero_grad()`를 생략하면 이전 배치의 그레이디언트가 계속 합산되어 학습이 엉망이 된다.)
+- **해설**: PyTorch는 순환신경망(RNN)이나 Gradient Accumulation(배치 누적)을 유연하게 지원하기 위해 loss.backward() 호출 시 param.grad에 기울기를 덮어쓰지 않고 누적(+=)합니다. 따라서 일반 미니배치 학습에서는 매 스텝마다 optimizer.zero_grad()로 이전 그레이디언트를 0으로 비운 뒤 순전파 -> 역전파(backward) -> 가중치 갱신(step)을 수행해야 합니다.
+
+---
+
+### Q140. [중급] PyTorch에서 모델 검증(Validation)이나 추론(Inference)을 수행할 때 `model.eval()`과 함께 `with torch.no_grad():` 컨텍스트 매니저를 함께 사용하는 핵심 이유는?
+
+```python
+model.eval()
+with torch.no_grad():
+    preds = model(val_inputs)
+```
+
+- **(1)** `model.eval()`만 호출해도 `torch.no_grad()`가 자동으로 활성화되어 그레이디언트 계산이 완전히 중단된다.
+- **(2)** `model.eval()`은 Dropout과 BatchNorm 같은 레이어의 동작 모드를 추론 모드로 전환할 뿐 Autograd 엔진의 계산 그래프 생성을 끄지는 않으므로, `with torch.no_grad():`를 함께 사용해야 역전파용 중간 활성화 텐서 저장(계산 그래프 추적)을 비활성화하여 GPU 메모리(VRAM) 사용량을 줄이고 추론 속도를 높일 수 있다.
+- **(3)** `with torch.no_grad():`만 사용하면 `model.eval()`을 호출하지 않아도 Dropout이 자동으로 꺼진다.
+- **(4)** `torch.no_grad()` 블록 안에서는 텐서의 행렬 곱셈 연산 결과가 모두 0으로 바뀐다.
+
+- **정답**: `1` (보기 2번: `model.eval()`은 Dropout과 BatchNorm 같은 레이어의 동작 모드를 추론 모드로 전환할 뿐 Autograd 엔진의 계산 그래프 생성을 끄지는 않으므로, `with torch.no_grad():`를 함께 사용해야 역전파용 중간 활성화 텐서 저장(계산 그래프 추적)을 비활성화하여 GPU 메모리(VRAM) 사용량을 줄이고 추론 속도를 높일 수 있다.)
+- **해설**: model.eval()과 torch.no_grad()는 역할이 완전히 다릅니다. model.eval()은 레이어(Dropout 비활성화, BatchNorm 이동통계량 고정)의 동작 스위치를 바꾸는 것이고, torch.no_grad()는 Autograd 엔진이 requires_grad=True인 텐서들의 연산 기록을 추적하지 않게 하여 메모리 소비와 연산 오버헤드를 제거합니다. 따라서 추론 시에는 두 가지를 모두 사용해야 합니다.
+
+---
+
+### Q141. [고급] 합성곱 신경망(CNN)에서 입력 특성 맵의 공간 크기가 $W_{in} = 32 \times 32$, 커널(필터) 크기가 $K = 3 \times 3$, 패딩이 $P = 1$, 스트라이드가 $S = 2$인 합성곱 계층(`nn.Conv2d`)을 통과했을 때 출력 특성 맵의 공간 크기($W_{out} \times H_{out}$)는?
+
+```python
+# 출력 크기 공식: W_out = floor((W_in - K + 2*P) / S) + 1
+# W_in = 32, K = 3, P = 1, S = 2
+```
+
+- **(1)** 32 × 32
+- **(2)** 15 × 15
+- **(3)** 30 × 30
+- **(4)** 16 × 16
+
+- **정답**: `3` (보기 4번: 16 × 16)
+- **해설**: 합성곱 출력 공간 크기 공식 W_out = floor((W_in - K + 2P) / S) + 1에 대입하면, floor((32 - 3 + 2×1) / 2) + 1 = floor(31 / 2) + 1 = 15 + 1 = 16이 됩니다. 따라서 출력 특성 맵의 해상도는 절반으로 줄어든 16 × 16이 됩니다(만약 S=1이었다면 32 × 32로 크기가 유지되는 Same Padding 조건입니다).
+
+---
+
+### Q142. [고급] CNN에서 입력 채널 수가 $C_{in} = 3$, 출력 채널(필터 개수)이 $C_{out} = 16$, 커널 크기가 $3 \times 3$이고 편향(`bias=True`)을 사용하는 `nn.Conv2d(3, 16, kernel_size=3, bias=True)` 계층의 학습 가능한 총 파라미터(가중치 + 편향) 개수는?
+
+```python
+# Conv2d 파라미터 수 = (K_h * K_w * C_in + 1) * C_out
+```
+
+- **(1)** 144개
+- **(2)** 448개
+- **(3)** 432개
+- **(4)** 160개
+
+- **정답**: `1` (보기 2번: 448개)
+- **해설**: 각 필터 하나는 입력 채널 전체(3채널)에 걸친 3 × 3 × 3 = 27개의 가중치와 1개의 편향(Bias)을 가집니다. 이러한 필터가 총 16개(C_out = 16) 존재하므로 전체 학습 파라미터 수는 (3 × 3 × 3 + 1) × 16 = 28 × 16 = 448개입니다(가중치 공유 특성 덕분에 입력 이미지의 가로·세로 해상도와 무관하게 파라미터 수가 일정합니다).
+
+---
+
+### Q143. [중급] 시계열 및 자연어와 같은 순차 데이터(Sequential Data)를 처리하는 기본 순환신경망(Vanilla RNN)의 장기 의존성(Long-Term Dependency) 한계를 극복하기 위해 고안된 LSTM(Long Short-Term Memory)과 GRU의 핵심 구조적 특징은?
+
+```python
+# Vanilla RNN vs LSTM (Forget Gate, Input Gate, Output Gate, Cell State)
+```
+
+- **(1)** LSTM은 시퀀스의 첫 번째 토큰만 읽고 나머지 토큰은 모두 버리는 방식으로 연산량을 줄인다.
+- **(2)** GRU(Gated Recurrent Unit)는 LSTM보다 게이트 수를 10개로 늘려 파라미터 수가 LSTM의 3배에 달한다.
+- **(3)** Vanilla RNN은 시퀀스가 길어질수록 시간 축 역전파(BPTT) 과정에서 은닉 상태 가중치 행렬이 반복 곱해지며 기울기 소실/폭발이 발생하지만, LSTM은 망각 게이트(Forget Gate)·입력 게이트(Input Gate)·출력 게이트(Output Gate)와 덧셈 연산 기반의 셀 상태(Cell State) 고속도로 경로를 도입하여 장기 문맥 정보를 선택적으로 보존하고 기울기 전파를 안정화한다.
+- **(4)** Vanilla RNN과 LSTM은 입력 시퀀스의 단어 순서를 무작위로 섞어도 항상 완전히 동일한 은닉 상태를 출력한다.
+
+- **정답**: `2` (보기 3번: Vanilla RNN은 시퀀스가 길어질수록 시간 축 역전파(BPTT) 과정에서 은닉 상태 가중치 행렬이 반복 곱해지며 기울기 소실/폭발이 발생하지만, LSTM은 망각 게이트(Forget Gate)·입력 게이트(Input Gate)·출력 게이트(Output Gate)와 덧셈 연산 기반의 셀 상태(Cell State) 고속도로 경로를 도입하여 장기 문맥 정보를 선택적으로 보존하고 기울기 전파를 안정화한다.)
+- **해설**: LSTM은 시그모이드 기반의 3개 게이트(Forget, Input, Output)로 정보의 삭제·추가·출력을 제어하고, 셀 상태(Cell State, C_t)가 원소별 덧셈 연산을 통해 흐르도록 설계하여 긴 시퀀스에서도 그레이디언트가 소실되지 않고 전달되게 합니다. GRU는 셀 상태와 은닉 상태를 하나로 합치고 리셋·업데이트 2개 게이트만 사용하여 LSTM보다 파라미터 수를 줄인 경량화 구조입니다.
+
+---
+
+### Q144. [고급] 현대 LLM의 근간인 트랜스포머(Transformer) 아키텍처의 스케일드 닷-프로덕트 어텐션(Scaled Dot-Product Attention) 수식 $\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$에서 내적 결과 $QK^T$를 $\sqrt{d_k}$로 나누어 스케일링하는 이유와 포지셔널 인코딩(Positional Encoding)의 역할로 올바른 것은?
+
+```python
+# Attention(Q, K, V) = softmax((Q @ K.T) / sqrt(d_k)) @ V
+```
+
+- **(1)** 키(Key) 벡터의 차원 $d_k$가 커질수록 내적 $QK^T$의 분산이 $d_k$배로 커져서 Softmax 함수가 기울기가 거의 0인 극단적 포화(Saturation) 영역으로 밀려나는 것을 막기 위해 $\sqrt{d_k}$로 나누어 분산을 $1$ 수준으로 유지하며, 순환 구조를 제거해 병렬 처리를 달성한 대신 토큰의 위치 순서 정보를 주입하기 위해 Positional Encoding을 사용한다.
+- **(2)** $\sqrt{d_k}$로 나누는 이유는 행렬 곱셈의 출력 차원 개수를 절반으로 줄이기 위해서이다.
+- **(3)** Transformer는 RNN과 동일하게 첫 번째 토큰부터 마지막 토큰까지 반드시 순차적으로만 연산해야 하므로 학습 시 병렬 처리가 불가능하다.
+- **(4)** Self-Attention 자체에 이미 토큰의 절대적·상대적 위치 순서가 내장되어 있으므로 Positional Encoding 없이도 어순 변화를 완벽히 구분한다.
+
+- **정답**: `0` (보기 1번: 키(Key) 벡터의 차원 $d_k$가 커질수록 내적 $QK^T$의 분산이 $d_k$배로 커져서 Softmax 함수가 기울기가 거의 0인 극단적 포화(Saturation) 영역으로 밀려나는 것을 막기 위해 $\sqrt{d_k}$로 나누어 분산을 $1$ 수준으로 유지하며, 순환 구조를 제거해 병렬 처리를 달성한 대신 토큰의 위치 순서 정보를 주입하기 위해 Positional Encoding을 사용한다.)
+- **해설**: 평균 0, 분산 1인 독립 확률변수들의 내적 합($\sum_{i=1}^{d_k} q_i k_i$)은 평균 0, 분산 $d_k$(표준편차 $\sqrt{d_k}$)를 가집니다. $d_k$가 클 때 스케일링 없이 Softmax에 넣으면 가장 큰 값 하나만 1이 되고 나머지는 0이 되어 그레이디언트가 소실되므로 $\sqrt{d_k}$로 나누어 정규화합니다. 또한 어텐션 연산 자체는 순서에 불변(Permutation-equivariant)이므로 위치 인코딩이 필수입니다.
+
+---
+
+### Q145. [중급] 사전학습된 대규모 모델(Pre-trained Model)을 새로운 하위 작업(Downstream Task)에 맞게 미세조정(Fine-Tuning)하거나 특성 추출기(Feature Extractor)로 활용할 때, PyTorch에서 백본(Backbone) 계층의 가중치를 동결(Freeze)하고 분류 헤드(Head)만 학습시키는 올바른 코드 패턴은?
+
+```python
+# 사전학습된 모델 model의 backbone 파라미터는 고정하고, model.head만 학습시키기
+```
+
+- **(1)** `for param in model.backbone.parameters(): param.requires_grad = False`로 백본의 기울기 계산을 비활성화하고, `model.head`의 파라미터만 `requires_grad = True` 상태로 옵티마이저에 전달하여 학습한다.
+- **(2)** `for param in model.backbone.parameters(): param.data.zero_()`를 호출하여 사전학습된 백본 가중치를 모두 0으로 지운 뒤 학습한다.
+- **(3)** `model.backbone`의 모든 파라미터에 `param.backward()`를 매 스텝 수동으로 호출한다.
+- **(4)** 전이 학습(Transfer Learning)은 데이터가 수억 건 이상일 때만 사용할 수 있으며 소규모 데이터셋에서는 항상 처음부터 무작위 초기화(Scratch)로 학습하는 것보다 성능이 낮다.
+
+- **정답**: `0` (보기 1번: `for param in model.backbone.parameters(): param.requires_grad = False`로 백본의 기울기 계산을 비활성화하고, `model.head`의 파라미터만 `requires_grad = True` 상태로 옵티마이저에 전달하여 학습한다.)
+- **해설**: 전이 학습(Transfer Learning)에서 백본 가중치를 동결(Freeze)할 때는 해당 파라미터들의 param.requires_grad = False로 설정하여 역전파 시 기울기가 계산·업데이트되지 않도록 막고, 새로 교체한 분류기 헤드(model.head)만 학습시켜 적은 데이터로도 빠르고 과적합 없이 높은 성능을 달성합니다.
+
+---
