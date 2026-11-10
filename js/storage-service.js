@@ -20,7 +20,7 @@
 
   const LS_KEYS = {
     SUBMISSIONS: 'dmdg_python_ai_exam_submissions_v1',
-    SETTINGS: 'dmdg_python_ai_exam_settings_v2',
+    SETTINGS: 'dmdg_python_ai_exam_settings_v3',
     CUSTOM_QUESTIONS: 'dmdg_python_ai_exam_custom_questions_v1',
     DEVICE_ID: 'dmdg_python_ai_exam_device_id_v1',
     ACTIVE_SESSION: 'dmdg_python_ai_exam_active_session_v1',
@@ -32,17 +32,19 @@
   ];
 
   const ALLOWED_EXAM_DATE = '2026-11-09';
+  const OPEN_ACCESS_VERSION = '2026-11-10-open';
 
   const DEFAULT_SETTINGS = {
     examTitle: '파이썬 판다스·넘파이·ML/DL 역량 평가 (총 145문항)',
     choiceTimeLimit: 60,        // 객관식 1문항 1분 (60초)
     passScore: 80,              // 합격 기준 점수 (100점 환산 기준 80점)
     shuffleQuestions: true,     // 응시자마다 문제 순서 섞기
-    blockDuplicateDevice: true, // 동일인(동일 이름 또는 동일 기기) 재응시 차단
-    enforceAllowedStudents: true, // 12명 지정 명단 외 응시 불가
-    enforceExamDate: true,      // 2026-11-09 당일만 응시 허용
+    blockDuplicateDevice: false, // 상시 공개 오픈: 동일 기기/재응시 허용
+    enforceAllowedStudents: false, // 상시 공개 오픈: 누구나 응시 가능
+    enforceExamDate: false,      // 상시 공개 오픈: 날짜 제한 해제
     allowedExamDate: ALLOWED_EXAM_DATE,
     allowedStudents: ALLOWED_STUDENTS,
+    openAccessVersion: OPEN_ACCESS_VERSION,
     examOpen: true,             // 시험 응시 열림/닫힘
     showExplanationOnResult: true,
     updatedAt: new Date().toISOString(),
@@ -109,7 +111,19 @@
     try {
       const doc = await db.collection('python_ai_exam_config').doc('settings').get();
       if (doc.exists) {
-        const merged = Object.assign({}, DEFAULT_SETTINGS, doc.data());
+        const cloudData = doc.data() || {};
+        let merged = Object.assign({}, DEFAULT_SETTINGS, cloudData);
+        if (cloudData.openAccessVersion !== OPEN_ACCESS_VERSION) {
+          merged = Object.assign({}, merged, {
+            blockDuplicateDevice: false,
+            enforceAllowedStudents: false,
+            enforceExamDate: false,
+            examOpen: true,
+            openAccessVersion: OPEN_ACCESS_VERSION,
+            updatedAt: new Date().toISOString(),
+          });
+          db.collection('python_ai_exam_config').doc('settings').set(merged, { merge: true }).catch(function () {});
+        }
         localStorage.setItem(LS_KEYS.SETTINGS, JSON.stringify(merged));
         return merged;
       }
